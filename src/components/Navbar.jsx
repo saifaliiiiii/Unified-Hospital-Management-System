@@ -1,6 +1,8 @@
 import { useMemo, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { ChevronDown, Menu, Stethoscope } from 'lucide-react'
+import { CURANEX_PATH } from '../utils/curaNexRoute'
+import { FIND_DOCTORS_PATH } from '../utils/findDoctorRoute'
 import { FIND_HOSPITALS_PATH } from '../utils/findHospitalRoute'
 import { useAuth } from '../context/AuthContext'
 import { logout } from '../auth'
@@ -60,6 +62,12 @@ export default function Navbar() {
         <nav className="hidden items-center gap-8 text-sm font-medium text-slate-300 md:flex">
           <Link to={FIND_HOSPITALS_PATH} className="hover:text-emerald-300">
             Find Hospitals
+          </Link>
+          <Link to={FIND_DOCTORS_PATH} className="hover:text-emerald-300">
+            Find Doctors
+          </Link>
+          <Link to={CURANEX_PATH} className="hover:text-emerald-300">
+            CuraNex
           </Link>
           <div className="group relative">
             <button
@@ -148,6 +156,20 @@ export default function Navbar() {
                 onClick={closeMobileMenu}
               >
                 Find Hospitals
+              </Link>
+              <Link
+                to={FIND_DOCTORS_PATH}
+                className="rounded-xl border border-white/10 bg-white/5 px-4 py-3 transition hover:border-emerald-300/40 hover:bg-white/10"
+                onClick={closeMobileMenu}
+              >
+                Find Doctors
+              </Link>
+              <Link
+                to={CURANEX_PATH}
+                className="rounded-xl border border-white/10 bg-white/5 px-4 py-3 transition hover:border-emerald-300/40 hover:bg-white/10"
+                onClick={closeMobileMenu}
+              >
+                CuraNex
               </Link>
 
               <button

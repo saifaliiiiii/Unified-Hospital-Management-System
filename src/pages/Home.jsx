@@ -1,6 +1,8 @@
 import { Link } from 'react-router-dom'
 import Features from '../components/Features'
 import Hero from '../components/Hero'
+import CuraNexCommunitySection from '../components/home/CuraNexCommunitySection'
+import { FIND_DOCTORS_PATH } from '../utils/findDoctorRoute'
 import { FIND_HOSPITALS_PATH } from '../utils/findHospitalRoute'
 
 export default function Home() {
@@ -8,6 +10,7 @@ export default function Home() {
     <div className="bg-[#020617]">
       <Hero />
       <Features />
+      <CuraNexCommunitySection />
 
       <section
         id="support"
@@ -31,12 +34,12 @@ export default function Home() {
               >
                 Find Hospitals
               </Link>
-              <a
-                href="#services"
+              <Link
+                to={FIND_DOCTORS_PATH}
                 className="inline-flex items-center justify-center rounded-full border border-white/15 bg-white/5 px-4 py-2.5 text-xs font-semibold text-slate-100 transition hover:border-emerald-300/80 hover:bg-white/10"
               >
                 Find Doctors
-              </a>
+              </Link>
             </div>
           </div>
         </div>

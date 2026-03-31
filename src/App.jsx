@@ -8,6 +8,8 @@ import Blogs from './pages/Blogs'
 import Research from './pages/Research'
 import PatientStories from './pages/PatientStories'
 import FindHospitals from './pages/FindHospitals'
+import FindDoctors from './pages/FindDoctors'
+import CuraNex from './pages/CuraNex'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
 import Dashboard from './pages/Dashboard'
@@ -23,6 +25,8 @@ function App() {
           <Route path="/support" element={<Support />} />
           <Route path="/health-tips" element={<HealthTips />} />
           <Route path="/find-hospitals" element={<FindHospitals />} />
+          <Route path="/find-doctors" element={<FindDoctors />} />
+          <Route path="/curanex" element={<CuraNex />} />
           <Route path="/blogs" element={<Blogs />} />
           <Route path="/research" element={<Research />} />
           <Route path="/patient-stories" element={<PatientStories />} />
