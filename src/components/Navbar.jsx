@@ -1,18 +1,32 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useRef, useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
-import { ChevronDown, Menu, Stethoscope } from 'lucide-react'
+import { AnimatePresence, motion } from 'framer-motion'
+import { Bell, ChevronDown, Menu, Stethoscope } from 'lucide-react'
 import { CURANEX_PATH } from '../utils/curaNexRoute'
 import { FIND_DOCTORS_PATH } from '../utils/findDoctorRoute'
 import { FIND_HOSPITALS_PATH } from '../utils/findHospitalRoute'
 import { useAuth } from '../context/AuthContext'
+import NotificationDropdown from './notifications/NotificationDropdown'
+import { useNotifications } from '../hooks/useNotifications'
 import { logout } from '../auth'
 
 export default function Navbar() {
   const [mobileOpen, setMobileOpen] = useState(false)
   const [mobileExploreOpen, setMobileExploreOpen] = useState(false)
+  const [isNotificationsOpen, setIsNotificationsOpen] = useState(false)
   const [isLoggingOut, setIsLoggingOut] = useState(false)
   const { user, isAuthenticated } = useAuth()
+  const {
+    notifications,
+    unreadCount,
+    isLoading: notificationsLoading,
+    error: notificationsError,
+    toastNotification,
+    markAsRead,
+  } = useNotifications()
   const navigate = useNavigate()
+  const desktopNotificationsRef = useRef(null)
+  const mobileNotificationsRef = useRef(null)
 
   const exploreItems = useMemo(
     () => [
@@ -24,6 +38,27 @@ export default function Navbar() {
     [],
   )
 
+  useEffect(() => {
+    const handlePointerDown = (event) => {
+      const clickedInsideDesktop = desktopNotificationsRef.current?.contains(
+        event.target,
+      )
+      const clickedInsideMobile = mobileNotificationsRef.current?.contains(
+        event.target,
+      )
+
+      if (!clickedInsideDesktop && !clickedInsideMobile) {
+        setIsNotificationsOpen(false)
+      }
+    }
+
+    document.addEventListener('mousedown', handlePointerDown)
+
+    return () => {
+      document.removeEventListener('mousedown', handlePointerDown)
+    }
+  }, [])
+
   const closeMobileMenu = () => {
     setMobileOpen(false)
     setMobileExploreOpen(false)
@@ -33,12 +68,25 @@ export default function Navbar() {
     try {
       setIsLoggingOut(true)
       await logout()
+      setIsNotificationsOpen(false)
       closeMobileMenu()
       navigate('/login')
     } catch (error) {
       console.error(error.message)
     } finally {
       setIsLoggingOut(false)
+    }
+  }
+
+  const handleNotificationClick = async (notification) => {
+    setIsNotificationsOpen(false)
+
+    if (!notification.isRead) {
+      try {
+        await markAsRead(notification.id)
+      } catch (error) {
+        console.error('Unable to mark notification as read:', error)
+      }
     }
   }
 
@@ -79,8 +127,8 @@ export default function Navbar() {
               <ChevronDown className="h-4 w-4 transition group-hover:rotate-180" />
             </button>
 
-            <div className="absolute left-0 top-full z-50 pt-2">
-              <div className="invisible w-56 translate-y-2 rounded-2xl border border-white/10 bg-[#0b1226] p-2 opacity-0 shadow-lg shadow-black/30 transition-all duration-300 group-hover:visible group-hover:translate-y-0 group-hover:opacity-100">
+            <div className="pointer-events-none absolute left-0 top-full z-50 opacity-0 transition-all duration-200 group-hover:pointer-events-auto group-hover:opacity-100">
+              <div className="mt-2 w-56 rounded-2xl border border-white/10 bg-[#0b1226] p-2 shadow-lg shadow-black/30">
                 {exploreItems.map((item) => (
                   <Link
                     key={item.to}
@@ -100,6 +148,33 @@ export default function Navbar() {
         </nav>
 
         <div className="hidden items-center gap-3 md:flex">
+          <div ref={desktopNotificationsRef} className="relative">
+            <button
+              type="button"
+              onClick={() => setIsNotificationsOpen((value) => !value)}
+              className="relative inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/15 bg-white/5 text-slate-200 transition hover:border-sky-300/40 hover:bg-white/10 hover:text-sky-200"
+              aria-label="Open notifications"
+              aria-expanded={isNotificationsOpen}
+            >
+              <Bell className="h-4 w-4" />
+              {unreadCount > 0 ? (
+                <span className="absolute -right-1 -top-1 inline-flex min-h-5 min-w-5 items-center justify-center rounded-full bg-rose-500 px-1 text-[10px] font-bold text-white shadow-lg shadow-rose-500/30">
+                  {unreadCount > 9 ? '9+' : unreadCount}
+                </span>
+              ) : null}
+            </button>
+
+            <NotificationDropdown
+              isOpen={isNotificationsOpen}
+              notifications={notifications}
+              unreadCount={unreadCount}
+              isLoading={notificationsLoading}
+              error={notificationsError}
+              isAuthenticated={isAuthenticated}
+              onNotificationClick={handleNotificationClick}
+            />
+          </div>
+
           {isAuthenticated ? (
             <>
               <Link
@@ -135,15 +210,44 @@ export default function Navbar() {
           )}
         </div>
 
-        <button
-          type="button"
-          className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/15 text-slate-200 md:hidden"
-          aria-label="Open menu"
-          aria-expanded={mobileOpen}
-          onClick={() => setMobileOpen((value) => !value)}
-        >
-          <Menu className="h-4 w-4" />
-        </button>
+        <div className="flex items-center gap-2 md:hidden">
+          <div ref={mobileNotificationsRef} className="relative">
+            <button
+              type="button"
+              onClick={() => setIsNotificationsOpen((value) => !value)}
+              className="relative inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/15 text-slate-200"
+              aria-label="Open notifications"
+              aria-expanded={isNotificationsOpen}
+            >
+              <Bell className="h-4 w-4" />
+              {unreadCount > 0 ? (
+                <span className="absolute -right-1 -top-1 inline-flex min-h-5 min-w-5 items-center justify-center rounded-full bg-rose-500 px-1 text-[10px] font-bold text-white">
+                  {unreadCount > 9 ? '9+' : unreadCount}
+                </span>
+              ) : null}
+            </button>
+
+            <NotificationDropdown
+              isOpen={isNotificationsOpen}
+              notifications={notifications}
+              unreadCount={unreadCount}
+              isLoading={notificationsLoading}
+              error={notificationsError}
+              isAuthenticated={isAuthenticated}
+              onNotificationClick={handleNotificationClick}
+            />
+          </div>
+
+          <button
+            type="button"
+            className="inline-flex h-9 w-9 items-center justify-center rounded-full border border-white/15 text-slate-200"
+            aria-label="Open menu"
+            aria-expanded={mobileOpen}
+            onClick={() => setMobileOpen((value) => !value)}
+          >
+            <Menu className="h-4 w-4" />
+          </button>
+        </div>
       </div>
 
       {mobileOpen ? (
@@ -252,6 +356,34 @@ export default function Navbar() {
           </div>
         </div>
       ) : null}
+
+      <AnimatePresence>
+        {toastNotification ? (
+          <motion.div
+            initial={{ opacity: 0, y: -10, scale: 0.98 }}
+            animate={{ opacity: 1, y: 0, scale: 1 }}
+            exit={{ opacity: 0, y: -10, scale: 0.98 }}
+            transition={{ duration: 0.18 }}
+            className="pointer-events-none fixed right-4 top-20 z-[75] hidden w-80 rounded-2xl border border-sky-400/20 bg-[#0b1226]/95 px-4 py-3 shadow-2xl shadow-slate-950/40 backdrop-blur md:block"
+          >
+            <div className="flex items-start gap-3">
+              <div className="mt-0.5 flex h-9 w-9 items-center justify-center rounded-full bg-sky-400/10 text-sky-300">
+                <Bell className="h-4 w-4" />
+              </div>
+              <div className="min-w-0">
+                <p className="text-sm font-semibold text-slate-50">
+                  {toastNotification.ticketId
+                    ? `Ticket #${toastNotification.ticketId}`
+                    : 'Notification'}
+                </p>
+                <p className="mt-1 text-xs leading-5 text-slate-400">
+                  {toastNotification.message}
+                </p>
+              </div>
+            </div>
+          </motion.div>
+        ) : null}
+      </AnimatePresence>
     </header>
   )
 }

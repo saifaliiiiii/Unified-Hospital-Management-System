@@ -10,7 +10,7 @@ export default function SearchBar({ value, onChange, resultCount }) {
             type="text"
             value={value}
             onChange={(event) => onChange(event.target.value)}
-            placeholder="Search by doctor name, specialization, or hospital"
+            placeholder="Search by doctor name"
             className="min-w-0 flex-1 bg-transparent text-[15px] text-slate-900 outline-none placeholder:text-slate-400"
           />
           {value ? (

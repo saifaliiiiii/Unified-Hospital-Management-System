@@ -13,6 +13,8 @@ import HospitalDetailsModal from '../components/findHospitals/HospitalDetailsMod
 import Results from '../components/findHospitals/Results'
 import SearchBar from '../components/findHospitals/SearchBar'
 import SkeletonGrid from '../components/findHospitals/SkeletonGrid'
+import { useAuth } from '../context/AuthContext'
+import { useFavorites } from '../context/FavoritesContext'
 import hospitals, {
   hospitalLocations,
   hospitalRatingOptions,
@@ -52,13 +54,14 @@ function normalizeFallbackHospital(hospital, index) {
 }
 
 export default function FindHospitals() {
+  const { isAuthenticated } = useAuth()
+  const { likedHospitals, favoritesLoading, toggleFavorite } = useFavorites()
   const [searchParams, setSearchParams] = useSearchParams()
   const [searchQuery, setSearchQuery] = useState(searchParams.get('search') ?? '')
   const [selectedLocation, setSelectedLocation] = useState('')
   const [selectedSpeciality, setSelectedSpeciality] = useState('')
   const [selectedRating, setSelectedRating] = useState('')
   const [sortBy, setSortBy] = useState('rating')
-  const [favorites, setFavorites] = useState(() => new Set())
   const [selectedHospital, setSelectedHospital] = useState(null)
   const [isLoading, setIsLoading] = useState(true)
   const [visibleCount, setVisibleCount] = useState(INITIAL_VISIBLE_COUNT)
@@ -197,18 +200,6 @@ export default function FindHospitals() {
     [setSearchParams],
   )
 
-  const handleToggleFavorite = useCallback((hospitalId) => {
-    setFavorites((current) => {
-      const next = new Set(current)
-      if (next.has(hospitalId)) {
-        next.delete(hospitalId)
-      } else {
-        next.add(hospitalId)
-      }
-      return next
-    })
-  }, [])
-
   const handleLoadMore = useCallback(() => {
     setVisibleCount((current) => current + INITIAL_VISIBLE_COUNT)
   }, [])
@@ -339,8 +330,12 @@ export default function FindHospitals() {
             <Results
               hospitals={filteredHospitals}
               onClear={clearFilters}
-              favorites={favorites}
-              onToggleFavorite={handleToggleFavorite}
+              favorites={likedHospitals}
+              favoritesLoading={favoritesLoading}
+              isAuthenticated={isAuthenticated}
+              onToggleFavorite={(hospitalId) =>
+                toggleFavorite(hospitalId, 'hospital')
+              }
               onViewDetails={setSelectedHospital}
               visibleCount={visibleCount}
               onLoadMore={handleLoadMore}
@@ -351,9 +346,11 @@ export default function FindHospitals() {
 
       <HospitalDetailsModal
         hospital={selectedHospital}
-        isFavorite={selectedHospital ? favorites.has(selectedHospital.id) : false}
+        isFavorite={
+          selectedHospital ? likedHospitals.has(selectedHospital.id) : false
+        }
         onClose={() => setSelectedHospital(null)}
-        onToggleFavorite={handleToggleFavorite}
+        onToggleFavorite={(hospitalId) => toggleFavorite(hospitalId, 'hospital')}
       />
     </div>
   )

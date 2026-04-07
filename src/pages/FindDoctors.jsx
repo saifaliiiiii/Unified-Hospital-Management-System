@@ -10,24 +10,47 @@ import { Search, Sparkles, Stethoscope } from 'lucide-react'
 import { useSearchParams } from 'react-router-dom'
 import DoctorCard from '../components/findDoctors/DoctorCard'
 import SearchBar from '../components/findDoctors/SearchBar'
-import doctorsData, { doctorSpecializations } from '../data/doctorsData'
+import { useAuth } from '../context/AuthContext'
+import { useFavorites } from '../context/FavoritesContext'
+import doctorsData, {
+  doctorLocations,
+  doctorSpecializations,
+} from '../data/doctorsData'
 
 const INITIAL_VISIBLE_COUNT = 12
 
 export default function FindDoctors() {
+  const { isAuthenticated } = useAuth()
+  const { likedDoctors, favoritesLoading, toggleFavorite } = useFavorites()
   const [searchParams, setSearchParams] = useSearchParams()
   const [searchQuery, setSearchQuery] = useState(searchParams.get('search') ?? '')
-  const [selectedSpecialization, setSelectedSpecialization] = useState('')
+  const [selectedSpecialization, setSelectedSpecialization] = useState(
+    searchParams.get('specialization') ?? '',
+  )
+  const [selectedLocation, setSelectedLocation] = useState(
+    searchParams.get('location') ?? '',
+  )
   const [visibleCount, setVisibleCount] = useState(INITIAL_VISIBLE_COUNT)
   const [isLoading, setIsLoading] = useState(true)
   const deferredQuery = useDeferredValue(searchQuery)
 
   useEffect(() => {
-    const next = searchParams.get('search') ?? ''
-    if (next !== searchQuery) {
-      setSearchQuery(next)
+    const nextSearch = searchParams.get('search') ?? ''
+    const nextSpecialization = searchParams.get('specialization') ?? ''
+    const nextLocation = searchParams.get('location') ?? ''
+
+    if (nextSearch !== searchQuery) {
+      setSearchQuery(nextSearch)
     }
-  }, [searchParams, searchQuery])
+
+    if (nextSpecialization !== selectedSpecialization) {
+      setSelectedSpecialization(nextSpecialization)
+    }
+
+    if (nextLocation !== selectedLocation) {
+      setSelectedLocation(nextLocation)
+    }
+  }, [searchParams, searchQuery, selectedLocation, selectedSpecialization])
 
   useEffect(() => {
     const timer = setTimeout(() => setIsLoading(false), 350)
@@ -36,30 +59,51 @@ export default function FindDoctors() {
 
   useEffect(() => {
     setVisibleCount(INITIAL_VISIBLE_COUNT)
-  }, [deferredQuery, selectedSpecialization])
+  }, [deferredQuery, selectedLocation, selectedSpecialization])
+
+  const syncSearchParams = ({
+    nextSearch = searchQuery,
+    nextSpecialization = selectedSpecialization,
+    nextLocation = selectedLocation,
+  } = {}) => {
+    const nextParams = {}
+
+    if (nextSearch.trim()) {
+      nextParams.search = nextSearch
+    }
+
+    if (nextSpecialization) {
+      nextParams.specialization = nextSpecialization
+    }
+
+    if (nextLocation) {
+      nextParams.location = nextLocation
+    }
+
+    setSearchParams(nextParams)
+  }
 
   const filteredDoctors = useMemo(() => {
     const normalizedQuery = deferredQuery.trim().toLowerCase()
 
     return doctorsData.filter((doctor) => {
-      const haystack = [
-        doctor.name,
-        doctor.specialization,
-        doctor.hospital,
-        doctor.city,
-      ]
-        .join(' ')
-        .toLowerCase()
-
-      const matchesQuery = !normalizedQuery || haystack.includes(normalizedQuery)
+      const matchesQuery =
+        !normalizedQuery ||
+        doctor.name.toLowerCase().includes(normalizedQuery)
       const matchesSpecialization =
         !selectedSpecialization ||
         doctor.specialization.toLowerCase() ===
           selectedSpecialization.toLowerCase()
+      const normalizedSelectedLocation = selectedLocation.toLowerCase()
+      const matchesLocation =
+        !selectedLocation ||
+        [doctor.city, doctor.district, doctor.state, doctor.location]
+          .filter(Boolean)
+          .some((value) => value.toLowerCase().includes(normalizedSelectedLocation))
 
-      return matchesQuery && matchesSpecialization
+      return matchesQuery && matchesSpecialization && matchesLocation
     })
-  }, [deferredQuery, selectedSpecialization])
+  }, [deferredQuery, selectedLocation, selectedSpecialization])
 
   const displayedDoctors = useMemo(
     () => filteredDoctors.slice(0, visibleCount),
@@ -73,10 +117,15 @@ export default function FindDoctors() {
 
   const clearFilters = () => {
     setSelectedSpecialization('')
+    setSelectedLocation('')
     startTransition(() => {
       setSearchQuery('')
     })
-    setSearchParams({})
+    syncSearchParams({
+      nextSearch: '',
+      nextSpecialization: '',
+      nextLocation: '',
+    })
   }
 
   const handleSearchChange = (value) => {
@@ -84,12 +133,7 @@ export default function FindDoctors() {
       setSearchQuery(value)
     })
 
-    if (value.trim()) {
-      setSearchParams({ search: value })
-      return
-    }
-
-    setSearchParams({})
+    syncSearchParams({ nextSearch: value })
   }
 
   return (
@@ -110,8 +154,7 @@ export default function FindDoctors() {
               </h1>
               <p className="mt-4 max-w-2xl text-base leading-7 text-slate-600">
                 Browse the doctor records extracted from your Punjab dataset and
-                narrow results instantly by name, specialization, or
-                hospital/department.
+                narrow results instantly by name, specialization, or location.
               </p>
 
               <div className="mt-6 grid gap-4 sm:grid-cols-3">
@@ -160,8 +203,8 @@ export default function FindDoctors() {
 
               <div className="mt-6 space-y-4">
                 {[
-                  'Real-time search across name, specialization, and hospital',
-                  'Case-insensitive filtering with responsive cards',
+                  'Real-time search across the Punjab doctor directory',
+                  'Case-insensitive specialization and location filtering',
                   'Graceful empty state when no doctors match',
                 ].map((item) => (
                   <div
@@ -191,7 +234,11 @@ export default function FindDoctors() {
                   </span>
                   <select
                     value={selectedSpecialization}
-                    onChange={(event) => setSelectedSpecialization(event.target.value)}
+                    onChange={(event) => {
+                      const nextValue = event.target.value
+                      setSelectedSpecialization(nextValue)
+                      syncSearchParams({ nextSpecialization: nextValue })
+                    }}
                     className="h-12 w-full rounded-2xl border border-slate-200 bg-white px-4 text-sm text-slate-700 shadow-sm outline-none transition focus:border-[#2A7FFF] focus:ring-4 focus:ring-blue-100"
                   >
                     <option value="">All specializations</option>
@@ -203,11 +250,37 @@ export default function FindDoctors() {
                   </select>
                 </label>
 
+                <label className="block md:min-w-[240px]">
+                  <span className="mb-2 block text-xs font-semibold uppercase tracking-[0.18em] text-slate-500">
+                    Filter By Location
+                  </span>
+                  <select
+                    value={selectedLocation}
+                    onChange={(event) => {
+                      const nextValue = event.target.value
+                      setSelectedLocation(nextValue)
+                      syncSearchParams({ nextLocation: nextValue })
+                    }}
+                    className="h-12 w-full rounded-2xl border border-slate-200 bg-white px-4 text-sm text-slate-700 shadow-sm outline-none transition focus:border-[#2A7FFF] focus:ring-4 focus:ring-blue-100"
+                  >
+                    <option value="">All cities in Punjab</option>
+                    {doctorLocations.map((location) => (
+                      <option key={location} value={location}>
+                        {location}
+                      </option>
+                    ))}
+                  </select>
+                </label>
+
                 <div className="flex flex-wrap items-center gap-3">
                   <div className="inline-flex items-center rounded-full bg-white px-4 py-2 text-sm font-medium text-slate-700 shadow-sm">
-                    {selectedSpecialization || 'All categories'}
+                    {selectedSpecialization || selectedLocation
+                      ? [selectedSpecialization, selectedLocation]
+                          .filter(Boolean)
+                          .join(' • ')
+                      : 'All categories'}
                   </div>
-                  {(searchQuery || selectedSpecialization) && (
+                  {(searchQuery || selectedSpecialization || selectedLocation) && (
                     <button
                       type="button"
                       onClick={clearFilters}
@@ -241,8 +314,8 @@ export default function FindDoctors() {
                 No doctors found
               </h2>
               <p className="mx-auto mt-3 max-w-md text-slate-600">
-                Try a broader search term or switch to another specialization to
-                explore more doctor matches.
+                Try a broader doctor name, switch specialization, or change the
+                city filter to explore more matches.
               </p>
               <button
                 type="button"
@@ -264,7 +337,11 @@ export default function FindDoctors() {
                   </h2>
                 </div>
                 <div className="inline-flex items-center rounded-full border border-slate-200 bg-white px-4 py-2 text-sm font-medium text-slate-700 shadow-sm">
-                  Live updates enabled
+                  {favoritesLoading
+                    ? 'Loading favorites...'
+                    : isAuthenticated
+                      ? `${likedDoctors.size} liked doctors`
+                      : 'Login to save favorites'}
                 </div>
               </div>
 
@@ -273,7 +350,14 @@ export default function FindDoctors() {
                 className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3"
               >
                 {displayedDoctors.map((doctor) => (
-                  <DoctorCard key={doctor.id} doctor={doctor} />
+                  <DoctorCard
+                    key={doctor.id}
+                    doctor={doctor}
+                    isFavorite={likedDoctors.has(doctor.id)}
+                    onToggleFavorite={(doctorId) =>
+                      toggleFavorite(doctorId, 'doctor')
+                    }
+                  />
                 ))}
               </motion.div>
 

@@ -1,5 +1,12 @@
 import { memo, useMemo } from 'react'
-import { Heart, MapPin, Navigation, ShieldCheck, Star } from 'lucide-react'
+import {
+  CalendarDays,
+  Heart,
+  MapPin,
+  Navigation,
+  Phone,
+  Star,
+} from 'lucide-react'
 import { motion } from 'framer-motion'
 
 function HospitalCard({
@@ -15,6 +22,7 @@ function HospitalCard({
       )}`,
     [hospital.directionsLabel, hospital.location, hospital.name],
   )
+  const bookingHref = hospital.bookingLink || (hospital.phone ? `tel:${hospital.phone}` : '')
 
   return (
     <motion.article
@@ -47,13 +55,13 @@ function HospitalCard({
         <button
           type="button"
           onClick={() => onToggleFavorite(hospital.id)}
-          className="absolute right-4 top-4 inline-flex h-11 w-11 items-center justify-center rounded-full bg-white/90 text-slate-600 shadow-md backdrop-blur transition hover:bg-white"
+          className="absolute right-4 top-4 inline-flex h-11 w-11 items-center justify-center rounded-full bg-white/90 text-slate-600 shadow-md backdrop-blur transition hover:scale-105 hover:bg-white"
           aria-label={isFavorite ? 'Remove favorite hospital' : 'Save hospital'}
         >
           <Heart
             className={[
-              'h-4 w-4 transition',
-              isFavorite ? 'fill-rose-500 text-rose-500' : '',
+              'h-4 w-4 transition-all duration-200',
+              isFavorite ? 'fill-rose-500 text-rose-500' : 'text-slate-500',
             ].join(' ')}
           />
         </button>
@@ -113,15 +121,15 @@ function HospitalCard({
         <div className="flex items-center justify-between rounded-2xl border border-slate-200 bg-slate-50 px-4 py-3">
           <div>
             <p className="text-[11px] font-semibold uppercase tracking-[0.16em] text-slate-500">
-              Availability
+              Contact
             </p>
             <p className="mt-1 text-sm font-medium text-slate-800">
-              {hospital.timings}
+              {hospital.phone || 'Not listed'}
             </p>
           </div>
           <div className="inline-flex items-center gap-2 text-sm font-medium text-emerald-700">
-            <ShieldCheck className="h-4 w-4" />
-            Verified
+            <Phone className="h-4 w-4" />
+            {hospital.phone ? 'Call available' : 'Details only'}
           </div>
         </div>
 
@@ -133,15 +141,31 @@ function HospitalCard({
           >
             View Details
           </button>
-          <a
-            href={mapsUrl}
-            target="_blank"
-            rel="noreferrer"
-            className="inline-flex min-h-11 flex-1 items-center justify-center gap-2 rounded-full border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
-          >
-            <Navigation className="h-4 w-4" />
-            Get Directions
-          </a>
+          {bookingHref ? (
+            <a
+              href={bookingHref}
+              target={hospital.bookingLink ? '_blank' : undefined}
+              rel={hospital.bookingLink ? 'noreferrer' : undefined}
+              className="inline-flex min-h-11 flex-1 items-center justify-center gap-2 rounded-full border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
+            >
+              {hospital.bookingLink ? (
+                <CalendarDays className="h-4 w-4" />
+              ) : (
+                <Phone className="h-4 w-4" />
+              )}
+              {hospital.bookingLink ? 'Book Appointment' : 'Call Hospital'}
+            </a>
+          ) : (
+            <a
+              href={mapsUrl}
+              target="_blank"
+              rel="noreferrer"
+              className="inline-flex min-h-11 flex-1 items-center justify-center gap-2 rounded-full border border-slate-200 px-4 py-2 text-sm font-semibold text-slate-700 transition hover:bg-slate-50"
+            >
+              <Navigation className="h-4 w-4" />
+              Get Directions
+            </a>
+          )}
         </div>
       </div>
     </motion.article>

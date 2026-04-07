@@ -1,0 +1,97 @@
+Doctor Name,Gender,Qualification,Department,Role/Designation,Hospital Name,Hospital Type,District,City
+Dr. Rajinder Singh,Male,MBBS MD,General Medicine,Senior Medical Officer,Government Medical College & Hospital,Government,Amritsar,Amritsar
+Dr. Harpreet Kaur,Female,MBBS MS,Obstetrics & Gynecology,Gynecologist,Civil Hospital Amritsar,Government,Amritsar,Amritsar
+Dr. Sukhwinder Pal,Male,MBBS MS,Orthopedics,Orthopedic Surgeon,Fortis Hospital Amritsar,Private,Amritsar,Amritsar
+Dr. Navneet Sharma,Female,MBBS MD,Pediatrics,Pediatrician,Healing Touch Hospital,Private,Amritsar,Amritsar
+Dr. Gurjot Singh,Male,MBBS MS,General Surgery,Surgeon,Government Medical College & Hospital,Government,Amritsar,Amritsar
+Dr. Manpreet Kaur,Female,MBBS MD,Dermatology,Dermatologist,Shri Guru Ram Dass Ji Institute,Government,Amritsar,Amritsar
+Dr. Amandeep Singh,Male,MBBS DM,Cardiology,Cardiologist,Grecian Super Speciality Hospital,Private,Mohali,Mohali
+Dr. Simran Bhatia,Female,MBBS MD,Radiology,Radiologist,Civil Hospital Mohali,Government,Mohali,Mohali
+Dr. Parminder Kaur,Female,MBBS MD,Anesthesiology,Anesthesiologist,Max Super Speciality Hospital,Private,Mohali,Mohali
+Dr. Hardeep Kumar,Male,MBBS MS,Urology,Urologist,Phase 6 Government Hospital,Government,Mohali,Mohali
+Dr. Jaswinder Singh,Male,MBBS DM,Neurology,Neurologist,Fortis Hospital Mohali,Private,Mohali,Mohali
+Dr. Navjot Gill,Female,MBBS MD,Psychiatry,Psychiatrist,Ivy Hospital Mohali,Private,Mohali,Mohali
+Dr. Ravinder Sharma,Male,MBBS MS,ENT,ENT Specialist,Civil Hospital Ludhiana,Government,Ludhiana,Ludhiana
+Dr. Gurpreet Kaur,Female,MBBS DM,Nephrology,Nephrologist,DMC & Hospital Ludhiana,Government,Ludhiana,Ludhiana
+Dr. Sandeep Verma,Male,MBBS MD,Oncology,Oncologist,Dayanand Medical College,Government,Ludhiana,Ludhiana
+Dr. Amrita Bawa,Female,MBBS MD,Endocrinology,Endocrinologist,Medanta Hospital Ludhiana,Private,Ludhiana,Ludhiana
+Dr. Kulwinder Singh,Male,MBBS MS,Ophthalmology,Eye Specialist,Christian Medical Hospital,Private,Ludhiana,Ludhiana
+Dr. Priya Malhotra,Female,MBBS DM,Gastroenterology,Gastroenterologist,Apollo Clinic Ludhiana,Private,Ludhiana,Ludhiana
+Dr. Balwinder Kaur,Female,MBBS MD,Gynecology,Obstetrician,Civil Hospital Jalandhar,Government,Jalandhar,Jalandhar
+Dr. Tejinder Singh,Male,MBBS MS,Orthopedics,Orthopedic Surgeon,Civil Hospital Jalandhar,Government,Jalandhar,Jalandhar
+Dr. Maninder Pal,Male,MBBS MD,General Medicine,Medical Officer,Gandhi Nagar Civil Hospital,Government,Jalandhar,Jalandhar
+Dr. Sunita Rani,Female,MBBS MS,General Surgery,Surgeon,Bhagwan Mahavir Hospital,Private,Jalandhar,Jalandhar
+Dr. Arjun Kapoor,Male,MBBS DM,Cardiology,Cardiologist,RG Stone Hospital,Private,Jalandhar,Jalandhar
+Dr. Gurleen Kaur,Female,MBBS MD,Pediatrics,Pediatrician,Mission Hospital Jalandhar,Private,Jalandhar,Jalandhar
+Dr. Harnam Singh,Male,MBBS MD,Pulmonology,Pulmonologist,Civil Hospital Patiala,Government,Patiala,Patiala
+Dr. Manjit Kaur,Female,MBBS MD,Radiology,Radiologist,Rajindra Hospital Patiala,Government,Patiala,Patiala
+Dr. Sukhpal Singh,Male,MBBS MS,Neurosurgery,Neurosurgeon,Rajindra Hospital Patiala,Government,Patiala,Patiala
+Dr. Kamalpreet Brar,Female,MBBS DM,Rheumatology,Rheumatologist,Amar Hospital Patiala,Private,Patiala,Patiala
+Dr. Vikram Sood,Male,MBBS MS,Plastic Surgery,Plastic Surgeon,Ivy Hospital Patiala,Private,Patiala,Patiala
+Dr. Navdeep Kaur,Female,MBBS MD,Dermatology,Dermatologist,Shivalik Hospital Patiala,Private,Patiala,Patiala
+Dr. Jatinder Singh,Male,MBBS MD,Emergency Medicine,Emergency Physician,Civil Hospital Bathinda,Government,Bathinda,Bathinda
+Dr. Rupinder Kaur,Female,MBBS MD,Obstetrics,Gynecologist,Civil Hospital Bathinda,Government,Bathinda,Bathinda
+Dr. Amarjit Sidhu,Male,MBBS DM,Cardiology,Cardiologist,Max Hospital Bathinda,Private,Bathinda,Bathinda
+Dr. Seema Goyal,Female,MBBS MD,Oncology,Oncologist,Adesh Hospital Bathinda,Private,Bathinda,Bathinda
+Dr. Gurdev Singh,Male,MBBS MS,Urology,Urologist,Adesh Hospital Bathinda,Private,Bathinda,Bathinda
+Dr. Palvinder Kaur,Female,MBBS MD,Psychiatry,Psychiatrist,District Psychiatric Centre Bathinda,Government,Bathinda,Bathinda
+Dr. Satnam Singh,Male,MBBS MD,General Medicine,Medical Officer,Civil Hospital Hoshiarpur,Government,Hoshiarpur,Hoshiarpur
+Dr. Baljinder Kaur,Female,MBBS MS,Gynecology,Gynecologist,Civil Hospital Hoshiarpur,Government,Hoshiarpur,Hoshiarpur
+Dr. Rajesh Kumar,Male,MBBS MD,Pediatrics,Pediatrician,Shri Sukhmani Hospital,Private,Hoshiarpur,Hoshiarpur
+Dr. Harmeet Bains,Female,MBBS MS,Ophthalmology,Eye Specialist,Vision Eye Centre,Private,Hoshiarpur,Hoshiarpur
+Dr. Daljit Singh,Male,MBBS MD,General Medicine,Senior Medical Officer,Civil Hospital Gurdaspur,Government,Gurdaspur,Gurdaspur
+Dr. Parveen Rani,Female,MBBS MD,Obstetrics,Obstetrician,Civil Hospital Gurdaspur,Government,Gurdaspur,Gurdaspur
+Dr. Amardeep Singh,Male,MBBS MS,ENT,ENT Surgeon,District Hospital Gurdaspur,Government,Gurdaspur,Gurdaspur
+Dr. Jaswant Kaur,Female,MBBS MD,Pediatrics,Pediatrician,Care & Cure Hospital,Private,Gurdaspur,Gurdaspur
+Dr. Kulbir Singh,Male,MBBS DM,Neurology,Neurologist,Shivalik Neuro Centre,Private,Gurdaspur,Pathankot
+Dr. Poonam Sharma,Female,MBBS MD,Radiology,Radiologist,Civil Hospital Pathankot,Government,Gurdaspur,Pathankot
+Dr. Manpreet Singh,Male,MBBS MS,Orthopedics,Orthopedic Surgeon,Civil Hospital Ferozepur,Government,Ferozepur,Ferozepur
+Dr. Sukhjit Kaur,Female,MBBS MD,Gynecology,Gynecologist,Civil Hospital Ferozepur,Government,Ferozepur,Ferozepur
+Dr. Ranjit Singh,Male,MBBS MD,General Surgery,Surgeon,Guru Nanak Mission Hospital,Private,Ferozepur,Ferozepur
+Dr. Harbans Kaur,Female,MBBS MD,Dermatology,Dermatologist,Skin Care Clinic,Private,Ferozepur,Ferozepur
+Dr. Avtar Singh,Male,MBBS MS,General Surgery,Surgeon,Civil Hospital Kapurthala,Government,Kapurthala,Kapurthala
+Dr. Gurjit Kaur,Female,MBBS MD,Obstetrics,Gynecologist,Civil Hospital Kapurthala,Government,Kapurthala,Kapurthala
+Dr. Naveen Sharma,Male,MBBS MD,Pediatrics,Pediatrician,Sai Hospital Kapurthala,Private,Kapurthala,Kapurthala
+Dr. Harminder Singh,Male,MBBS DM,Cardiology,Cardiologist,Heart Care Centre,Private,Kapurthala,Phagwara
+Dr. Suninder Kaur,Female,MBBS MD,General Medicine,Medical Officer,Civil Hospital Moga,Government,Moga,Moga
+Dr. Jagjit Singh,Male,MBBS MS,Orthopedics,Orthopedic Surgeon,Civil Hospital Moga,Government,Moga,Moga
+Dr. Ramandeep Kaur,Female,MBBS MD,Gynecology,Gynecologist,Sehgal Neo Hospital,Private,Moga,Moga
+Dr. Bhupinder Singh,Male,MBBS MD,Pulmonology,Chest Specialist,Chest & Allergy Clinic,Private,Moga,Moga
+Dr. Surinderpal Singh,Male,MBBS MD,General Medicine,Medical Officer,Civil Hospital Sangrur,Government,Sangrur,Sangrur
+Dr. Kirandeep Kaur,Female,MBBS MS,Gynecology,Gynecologist,Civil Hospital Sangrur,Government,Sangrur,Sangrur
+Dr. Amrik Singh,Male,MBBS MS,ENT,ENT Specialist,District Hospital Sangrur,Government,Sangrur,Sangrur
+Dr. Rupali Rani,Female,MBBS MD,Dermatology,Dermatologist,Garg Hospital,Private,Sangrur,Sangrur
+Dr. Gurmeet Singh,Male,MBBS DM,Gastroenterology,Gastroenterologist,Guru Gobind Singh Hospital,Private,Sangrur,Sunam
+Dr. Charanjit Kaur,Female,MBBS MD,Pediatrics,Pediatrician,Civil Hospital Fatehgarh Sahib,Government,Fatehgarh Sahib,Fatehgarh Sahib
+Dr. Balraj Singh,Male,MBBS MD,General Medicine,Senior Medical Officer,Civil Hospital Fatehgarh Sahib,Government,Fatehgarh Sahib,Fatehgarh Sahib
+Dr. Mandeep Kaur,Female,MBBS MD,Obstetrics,Obstetrician,Shree Hospital,Private,Fatehgarh Sahib,Fatehgarh Sahib
+Dr. Pritpal Singh,Male,MBBS MS,Orthopedics,Bone Specialist,Bawa Hospital,Private,Fatehgarh Sahib,Morinda
+Dr. Lakhwinder Kaur,Female,MBBS MD,General Medicine,Medical Officer,Civil Hospital Nawanshahr,Government,Nawanshahr (SBS Nagar),Nawanshahr
+Dr. Gurpreet Singh,Male,MBBS MS,General Surgery,Surgeon,Civil Hospital Nawanshahr,Government,Nawanshahr (SBS Nagar),Nawanshahr
+Dr. Parmjit Kaur,Female,MBBS MD,Gynecology,Gynecologist,Saini Hospital,Private,Nawanshahr (SBS Nagar),Nawanshahr
+Dr. Sukhchain Singh,Male,MBBS MD,Pediatrics,Pediatrician,Child Care Centre,Private,Nawanshahr (SBS Nagar),Banga
+Dr. Kuldeep Kaur,Female,MBBS MD,General Medicine,Medical Officer,Civil Hospital Barnala,Government,Barnala,Barnala
+Dr. Harbhajan Singh,Male,MBBS MS,Orthopedics,Orthopedic Surgeon,Civil Hospital Barnala,Government,Barnala,Barnala
+Dr. Rajwinder Kaur,Female,MBBS MD,Obstetrics,Gynecologist,Singh Hospital,Private,Barnala,Barnala
+Dr. Jagjinder Singh,Male,MBBS MD,General Medicine,Medical Officer,Civil Hospital Tarn Taran,Government,Tarn Taran,Tarn Taran
+Dr. Paramjit Kaur,Female,MBBS MS,Gynecology,Gynecologist,Civil Hospital Tarn Taran,Government,Tarn Taran,Tarn Taran
+Dr. Maninder Singh,Male,MBBS MD,Pediatrics,Pediatrician,Khalsa Hospital,Private,Tarn Taran,Tarn Taran
+Dr. Gurnam Kaur,Female,MBBS MD,General Medicine,Medical Officer,Civil Hospital Muktsar,Government,Sri Muktsar Sahib,Muktsar
+Dr. Harjinder Singh,Male,MBBS MS,Surgery,Surgeon,Civil Hospital Muktsar,Government,Sri Muktsar Sahib,Muktsar
+Dr. Amanpreet Kaur,Female,MBBS MD,Gynecology,Gynecologist,Guru Nanak Hospital,Private,Sri Muktsar Sahib,Muktsar
+Dr. Satpal Singh,Male,MBBS MD,General Medicine,Senior Medical Officer,Civil Hospital Mansa,Government,Mansa,Mansa
+Dr. Gurdeep Kaur,Female,MBBS MD,Obstetrics,Obstetrician,Civil Hospital Mansa,Government,Mansa,Mansa
+Dr. Balwant Singh,Male,MBBS MS,Orthopedics,Bone Specialist,Kailash Hospital,Private,Mansa,Mansa
+Dr. Harjot Singh,Male,MBBS MD,General Medicine,Medical Officer,Civil Hospital Fazilka,Government,Fazilka,Fazilka
+Dr. Komalpreet Kaur,Female,MBBS MD,Gynecology,Gynecologist,Civil Hospital Fazilka,Government,Fazilka,Fazilka
+Dr. Jagdish Kumar,Male,MBBS MS,ENT,ENT Specialist,Sood Hospital,Private,Fazilka,Fazilka
+Dr. Rupinder Singh,Male,MBBS DM,Cardiology,Cardiologist,Dera Baba Nanak Hospital,Government,Gurdaspur,Dera Baba Nanak
+Dr. Neelam Rani,Female,MBBS MD,Dermatology,Dermatologist,Skin & Beauty Clinic,Private,Ludhiana,Khanna
+Dr. Gurmukh Singh,Male,MBBS MS,Urology,Urologist,Patiala Heart Institute,Private,Patiala,Patiala
+Dr. Daljinder Kaur,Female,MBBS MD,Anesthesiology,Anesthesiologist,Government Medical College Amritsar,Government,Amritsar,Amritsar
+Dr. Sarabjit Singh,Male,MBBS DM,Neurology,Neurologist,DMC & Hospital Ludhiana,Government,Ludhiana,Ludhiana
+Dr. Harsimran Kaur,Female,MBBS MD,Psychiatry,Psychiatrist,Amritsar Mental Health Institute,Government,Amritsar,Amritsar
+Dr. Varinder Singh,Male,MBBS MS,Plastic Surgery,Plastic Surgeon,Fortis Hospital Mohali,Private,Mohali,Mohali
+Dr. Gursharan Kaur,Female,MBBS MD,Oncology,Oncologist,Aastha Cancer Care,Private,Amritsar,Amritsar
+Dr. Pavittar Singh,Male,MBBS MS,Spine Surgery,Spine Surgeon,Ivy Hospital Mohali,Private,Mohali,Mohali
+Dr. Kanwaljit Kaur,Female,MBBS DM,Endocrinology,Diabetes Specialist,Endocrine Care Centre,Private,Jalandhar,Jalandhar
