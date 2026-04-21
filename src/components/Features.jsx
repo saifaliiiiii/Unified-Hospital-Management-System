@@ -1,29 +1,23 @@
-import { Ambulance, CalendarClock, FileHeart, Hospital } from 'lucide-react'
+import { CalendarCheck2, CreditCard, FileText, UserRoundPlus } from 'lucide-react'
 
 const features = [
   {
-    icon: Hospital,
-    title: 'Find Hospitals',
+    icon: UserRoundPlus,
+    title: 'Find Hospital Details',
     description:
-      'Search and locate hospitals across Punjab with detailed information about facilities and services.',
+      'Easily search and view detailed information about hospitals, including facilities, location, and available services.',
   },
   {
-    icon: CalendarClock,
-    title: 'Book Appointments',
+    icon: CalendarCheck2,
+    title: 'Find Doctor Details',
     description:
-      'Schedule appointments with top doctors and specialists at your convenience.',
+      'Browse and explore doctor profiles, including specialization, experience, and availability.',
   },
   {
-    icon: Ambulance,
-    title: 'Emergency Services',
+    icon: FileText,
+    title: '24/7 Customer Support',
     description:
-      '24/7 emergency support and ambulance services for critical medical situations.',
-  },
-  {
-    icon: FileHeart,
-    title: 'Health Records',
-    description:
-      'Access and manage your medical records securely from anywhere, anytime.',
+      'Get round-the-clock assistance for any queries, appointments, or emergency support.',
   },
 ]
 
@@ -39,7 +33,7 @@ export default function Features() {
         </p>
 
         <div className="mt-10 grid gap-5 sm:grid-cols-2 lg:grid-cols-4">
-          {features.map((feature, index) => (
+          {features.map((feature) => (
             <article
               key={feature.title}
               className="group relative overflow-hidden rounded-2xl border border-white/10 bg-gradient-to-b from-slate-900/80 to-slate-950/90 p-5"
