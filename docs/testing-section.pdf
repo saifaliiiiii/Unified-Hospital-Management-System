@@ -1,0 +1,1047 @@
+%PDF-1.4
+%‚„œ”
+1 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+2 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>
+endobj
+3 0 obj
+<< /Length 4002 >>
+stream
+q
+BT
+/F2 20.00 Tf
+1 0 0 1 56.00 779.89 Tm
+(Testing) Tj
+ET
+BT
+/F2 16.00 Tf
+1 0 0 1 56.00 741.89 Tm
+(Testing) Tj
+ET
+BT
+/F2 13.50 Tf
+1 0 0 1 56.00 710.29 Tm
+(1. Introduction to Testing) Tj
+ET
+BT
+/F1 10.80 Tf
+1 0 0 1 56.00 688.06 Tm
+(Testing is a critical activity in web development because it verifies that the) Tj
+ET
+BT
+/F1 10.80 Tf
+1 0 0 1 56.00 673.48 Tm
+(application behaves as intended under real usage conditions. A unified health portal) Tj
+ET
+BT
+/F1 10.80 Tf
+1 0 0 1 56.00 658.90 Tm
+(must remain reliable and safe because users depend on it for healthcare discovery,) Tj
+ET
+BT
+/F1 10.80 Tf
+1 0 0 1 56.00 644.32 Tm
+(authentication, and personal actions \(such as saving favorites and submitting support) Tj
+ET
+BT
+/F1 10.80 Tf
+1 0 0 1 56.00 629.74 Tm
+(requests\). Testing helps identify functional defects early, improves usability, reduces) Tj
+ET
+BT
+/F1 10.80 Tf
+1 0 0 1 56.00 615.16 Tm
+(runtime failures, and increases confidence before deployment.) Tj
+ET
+BT
+/F1 10.80 Tf
+1 0 0 1 56.00 594.58 Tm
+(**Objective of testing this website**) Tj
+ET
+BT
+/F1 10.80 Tf
+1 0 0 1 66.00 574.00 Tm
+(? Ensure all major user flows \(navigation, search, authentication, dashboard access,) Tj
+ET
+BT
+/F1 10.80 Tf
+1 0 0 1 66.00 559.42 Tm
+(favorites, support requests\) work correctly end-to-end.) Tj
+ET
+BT
+/F1 10.80 Tf
+1 0 0 1 66.00 542.84 Tm
+(? Validate form inputs and error messages so users receive clear guidance.) Tj
+ET
+BT
+/F1 10.80 Tf
+1 0 0 1 66.00 526.26 Tm
+(? Confirm the UI is responsive, readable, and consistent across devices and browsers.) Tj
+ET
+BT
+/F1 10.80 Tf
+1 0 0 1 66.00 509.68 Tm
+(? Measure performance for page load, responsiveness, and overall user experience.) Tj
+ET
+BT
+/F1 10.80 Tf
+1 0 0 1 66.00 493.10 Tm
+(? Verify baseline security practices \(authentication, authorization rules, input) Tj
+ET
+BT
+/F1 10.80 Tf
+1 0 0 1 66.00 478.52 Tm
+(validation, and safe error handling\).) Tj
+ET
+BT
+/F2 13.50 Tf
+1 0 0 1 56.00 455.94 Tm
+(2. Types of Testing Performed) Tj
+ET
+BT
+/F2 11.50 Tf
+1 0 0 1 56.00 427.72 Tm
+(2.1 Functional Testing) Tj
+ET
+BT
+/F1 10.80 Tf
+1 0 0 1 56.00 408.19 Tm
+(Functional testing was performed to confirm that each module performs its intended) Tj
+ET
+BT
+/F1 10.80 Tf
+1 0 0 1 56.00 393.61 Tm
+(function. This included verifying routing, page navigation, authentication flows,) Tj
+ET
+BT
+/F1 10.80 Tf
+1 0 0 1 56.00 379.03 Tm
+(search/filter actions, saving favorites, submitting support forms, and dashboard access) Tj
+ET
+BT
+/F1 10.80 Tf
+1 0 0 1 56.00 364.45 Tm
+(control for authenticated users.) Tj
+ET
+BT
+/F2 11.50 Tf
+1 0 0 1 56.00 337.87 Tm
+(2.2 UI/UX Testing) Tj
+ET
+BT
+/F1 10.80 Tf
+1 0 0 1 56.00 318.35 Tm
+(UI/UX testing focused on layout consistency, readability, responsiveness,) Tj
+ET
+BT
+/F1 10.80 Tf
+1 0 0 1 56.00 303.77 Tm
+(accessibility-aware design \(labels, feedback messages, and button states\), and user) Tj
+ET
+BT
+/F1 10.80 Tf
+1 0 0 1 56.00 289.19 Tm
+(experience flow. Special attention was given to mobile and tablet viewports for) Tj
+ET
+BT
+/F1 10.80 Tf
+1 0 0 1 56.00 274.61 Tm
+(navigation menus, cards, and form usability.) Tj
+ET
+BT
+/F2 11.50 Tf
+1 0 0 1 56.00 248.03 Tm
+(2.3 Performance Testing) Tj
+ET
+BT
+/F1 10.80 Tf
+1 0 0 1 56.00 228.50 Tm
+(Performance testing was performed to identify slow-loading pages and heavy assets.) Tj
+ET
+BT
+/F1 10.80 Tf
+1 0 0 1 56.00 213.92 Tm
+(Metrics such as initial load, rendering responsiveness, and Lighthouse scores were) Tj
+ET
+BT
+/F1 10.80 Tf
+1 0 0 1 56.00 199.34 Tm
+(reviewed to ensure smooth interaction and acceptable loading times.) Tj
+ET
+BT
+/F2 11.50 Tf
+1 0 0 1 56.00 172.76 Tm
+(2.4 Compatibility Testing) Tj
+ET
+BT
+/F1 10.80 Tf
+1 0 0 1 56.00 153.24 Tm
+(Compatibility testing ensured the portal works across multiple browsers and screen) Tj
+ET
+BT
+/F1 10.80 Tf
+1 0 0 1 56.00 138.66 Tm
+(sizes. The portal was tested on common browsers and responsive breakpoints to confirm) Tj
+ET
+BT
+/F1 10.80 Tf
+1 0 0 1 56.00 124.08 Tm
+(consistent rendering and behavior.) Tj
+ET
+BT
+/F2 11.50 Tf
+1 0 0 1 56.00 97.50 Tm
+(2.5 Security Testing) Tj
+ET
+Q
+endstream
+endobj
+4 0 obj
+<< /Type /Page /Parent 11 0 R /MediaBox [0 0 595.28 841.89] /Resources << /Font << /F1 1 0 R /F2 2 0 R >> >> /Contents 3 0 R >>
+endobj
+5 0 obj
+<< /Length 8166 >>
+stream
+q
+0.70 w
+56.00 685.34 m 539.28 685.34 l S
+0.60 w
+56.00 685.34 m 56.00 666.79 l S
+0.60 w
+123.66 685.34 m 123.66 666.79 l S
+0.60 w
+258.98 685.34 m 258.98 666.79 l S
+0.60 w
+370.13 685.34 m 370.13 666.79 l S
+0.60 w
+481.29 685.34 m 481.29 666.79 l S
+0.60 w
+539.28 685.34 m 539.28 666.79 l S
+0.70 w
+56.00 666.79 m 539.28 666.79 l S
+0.70 w
+56.00 656.79 m 539.28 656.79 l S
+0.60 w
+56.00 656.79 m 56.00 600.57 l S
+0.60 w
+123.66 656.79 m 123.66 600.57 l S
+0.60 w
+258.98 656.79 m 258.98 600.57 l S
+0.60 w
+370.13 656.79 m 370.13 600.57 l S
+0.60 w
+481.29 656.79 m 481.29 600.57 l S
+0.60 w
+539.28 656.79 m 539.28 600.57 l S
+0.70 w
+56.00 600.57 m 539.28 600.57 l S
+0.70 w
+56.00 590.57 m 539.28 590.57 l S
+0.60 w
+56.00 590.57 m 56.00 534.35 l S
+0.60 w
+123.66 590.57 m 123.66 534.35 l S
+0.60 w
+258.98 590.57 m 258.98 534.35 l S
+0.60 w
+370.13 590.57 m 370.13 534.35 l S
+0.60 w
+481.29 590.57 m 481.29 534.35 l S
+0.60 w
+539.28 590.57 m 539.28 534.35 l S
+0.70 w
+56.00 534.35 m 539.28 534.35 l S
+0.70 w
+56.00 524.35 m 539.28 524.35 l S
+0.60 w
+56.00 524.35 m 56.00 480.68 l S
+0.60 w
+123.66 524.35 m 123.66 480.68 l S
+0.60 w
+258.98 524.35 m 258.98 480.68 l S
+0.60 w
+370.13 524.35 m 370.13 480.68 l S
+0.60 w
+481.29 524.35 m 481.29 480.68 l S
+0.60 w
+539.28 524.35 m 539.28 480.68 l S
+0.70 w
+56.00 480.68 m 539.28 480.68 l S
+0.70 w
+56.00 470.68 m 539.28 470.68 l S
+0.60 w
+56.00 470.68 m 56.00 427.02 l S
+0.60 w
+123.66 470.68 m 123.66 427.02 l S
+0.60 w
+258.98 470.68 m 258.98 427.02 l S
+0.60 w
+370.13 470.68 m 370.13 427.02 l S
+0.60 w
+481.29 470.68 m 481.29 427.02 l S
+0.60 w
+539.28 470.68 m 539.28 427.02 l S
+0.70 w
+56.00 427.02 m 539.28 427.02 l S
+0.70 w
+56.00 417.02 m 539.28 417.02 l S
+0.60 w
+56.00 417.02 m 56.00 373.35 l S
+0.60 w
+123.66 417.02 m 123.66 373.35 l S
+0.60 w
+258.98 417.02 m 258.98 373.35 l S
+0.60 w
+370.13 417.02 m 370.13 373.35 l S
+0.60 w
+481.29 417.02 m 481.29 373.35 l S
+0.60 w
+539.28 417.02 m 539.28 373.35 l S
+0.70 w
+56.00 373.35 m 539.28 373.35 l S
+0.70 w
+56.00 363.35 m 539.28 363.35 l S
+0.60 w
+56.00 363.35 m 56.00 307.13 l S
+0.60 w
+123.66 363.35 m 123.66 307.13 l S
+0.60 w
+258.98 363.35 m 258.98 307.13 l S
+0.60 w
+370.13 363.35 m 370.13 307.13 l S
+0.60 w
+481.29 363.35 m 481.29 307.13 l S
+0.60 w
+539.28 363.35 m 539.28 307.13 l S
+0.70 w
+56.00 307.13 m 539.28 307.13 l S
+0.70 w
+56.00 297.13 m 539.28 297.13 l S
+0.60 w
+56.00 297.13 m 56.00 240.91 l S
+0.60 w
+123.66 297.13 m 123.66 240.91 l S
+0.60 w
+258.98 297.13 m 258.98 240.91 l S
+0.60 w
+370.13 297.13 m 370.13 240.91 l S
+0.60 w
+481.29 297.13 m 481.29 240.91 l S
+0.60 w
+539.28 297.13 m 539.28 240.91 l S
+0.70 w
+56.00 240.91 m 539.28 240.91 l S
+BT
+/F1 10.80 Tf
+1 0 0 1 56.00 779.89 Tm
+(Security testing focused on the authentication and authorization workflow, safe handling) Tj
+ET
+BT
+/F1 10.80 Tf
+1 0 0 1 56.00 765.31 Tm
+(of user inputs, and preventing unauthorized access to protected sections. Firestore) Tj
+ET
+BT
+/F1 10.80 Tf
+1 0 0 1 56.00 750.73 Tm
+(access rules and client-side validation were checked to reduce risk of data exposure) Tj
+ET
+BT
+/F1 10.80 Tf
+1 0 0 1 56.00 736.15 Tm
+(and misuse.) Tj
+ET
+BT
+/F2 13.50 Tf
+1 0 0 1 56.00 709.57 Tm
+(3. Test Cases Table) Tj
+ET
+BT
+/F2 9.30 Tf
+1 0 0 1 60.00 673.04 Tm
+(Test Case ID) Tj
+ET
+BT
+/F2 9.30 Tf
+1 0 0 1 127.66 673.04 Tm
+(Description) Tj
+ET
+BT
+/F2 9.30 Tf
+1 0 0 1 262.98 673.04 Tm
+(Expected Result) Tj
+ET
+BT
+/F2 9.30 Tf
+1 0 0 1 374.13 673.04 Tm
+(Actual Result) Tj
+ET
+BT
+/F2 9.30 Tf
+1 0 0 1 485.29 673.04 Tm
+(Status) Tj
+ET
+BT
+/F1 9.30 Tf
+1 0 0 1 60.00 644.49 Tm
+(TC-FT-01) Tj
+ET
+BT
+/F1 9.30 Tf
+1 0 0 1 127.66 644.49 Tm
+(Load Home Page and verify) Tj
+ET
+BT
+/F1 9.30 Tf
+1 0 0 1 127.66 631.93 Tm
+(navigation links) Tj
+ET
+BT
+/F1 9.30 Tf
+1 0 0 1 262.98 644.49 Tm
+(Home page renders) Tj
+ET
+BT
+/F1 9.30 Tf
+1 0 0 1 262.98 631.93 Tm
+(without errors;) Tj
+ET
+BT
+/F1 9.30 Tf
+1 0 0 1 262.98 619.38 Tm
+(navbar links route) Tj
+ET
+BT
+/F1 9.30 Tf
+1 0 0 1 262.98 606.83 Tm
+(correctly) Tj
+ET
+BT
+/F1 9.30 Tf
+1 0 0 1 374.13 644.49 Tm
+(As expected) Tj
+ET
+BT
+/F1 9.30 Tf
+1 0 0 1 485.29 644.49 Tm
+(Pass) Tj
+ET
+BT
+/F1 9.30 Tf
+1 0 0 1 60.00 578.27 Tm
+(TC-FT-02) Tj
+ET
+BT
+/F1 9.30 Tf
+1 0 0 1 127.66 578.27 Tm
+(Register user with valid) Tj
+ET
+BT
+/F1 9.30 Tf
+1 0 0 1 127.66 565.71 Tm
+(details) Tj
+ET
+BT
+/F1 9.30 Tf
+1 0 0 1 262.98 578.27 Tm
+(New user account is) Tj
+ET
+BT
+/F1 9.30 Tf
+1 0 0 1 262.98 565.71 Tm
+(created and) Tj
+ET
+BT
+/F1 9.30 Tf
+1 0 0 1 262.98 553.16 Tm
+(redirected to) Tj
+ET
+BT
+/F1 9.30 Tf
+1 0 0 1 262.98 540.61 Tm
+(appropriate page) Tj
+ET
+BT
+/F1 9.30 Tf
+1 0 0 1 374.13 578.27 Tm
+(As expected) Tj
+ET
+BT
+/F1 9.30 Tf
+1 0 0 1 485.29 578.27 Tm
+(Pass) Tj
+ET
+BT
+/F1 9.30 Tf
+1 0 0 1 60.00 512.05 Tm
+(TC-FT-03) Tj
+ET
+BT
+/F1 9.30 Tf
+1 0 0 1 127.66 512.05 Tm
+(Login with valid) Tj
+ET
+BT
+/F1 9.30 Tf
+1 0 0 1 127.66 499.49 Tm
+(credentials) Tj
+ET
+BT
+/F1 9.30 Tf
+1 0 0 1 262.98 512.05 Tm
+(User is authenticated) Tj
+ET
+BT
+/F1 9.30 Tf
+1 0 0 1 262.98 499.49 Tm
+(and can access) Tj
+ET
+BT
+/F1 9.30 Tf
+1 0 0 1 262.98 486.94 Tm
+(protected dashboard) Tj
+ET
+BT
+/F1 9.30 Tf
+1 0 0 1 374.13 512.05 Tm
+(As expected) Tj
+ET
+BT
+/F1 9.30 Tf
+1 0 0 1 485.29 512.05 Tm
+(Pass) Tj
+ET
+BT
+/F1 9.30 Tf
+1 0 0 1 60.00 458.38 Tm
+(TC-FT-04) Tj
+ET
+BT
+/F1 9.30 Tf
+1 0 0 1 127.66 458.38 Tm
+(Attempt login with invalid) Tj
+ET
+BT
+/F1 9.30 Tf
+1 0 0 1 127.66 445.83 Tm
+(credentials) Tj
+ET
+BT
+/F1 9.30 Tf
+1 0 0 1 262.98 458.38 Tm
+(Proper error message) Tj
+ET
+BT
+/F1 9.30 Tf
+1 0 0 1 262.98 445.83 Tm
+(is shown; user) Tj
+ET
+BT
+/F1 9.30 Tf
+1 0 0 1 262.98 433.27 Tm
+(remains on login page) Tj
+ET
+BT
+/F1 9.30 Tf
+1 0 0 1 374.13 458.38 Tm
+(As expected) Tj
+ET
+BT
+/F1 9.30 Tf
+1 0 0 1 485.29 458.38 Tm
+(Pass) Tj
+ET
+BT
+/F1 9.30 Tf
+1 0 0 1 60.00 404.72 Tm
+(TC-FT-05) Tj
+ET
+BT
+/F1 9.30 Tf
+1 0 0 1 127.66 404.72 Tm
+(Search and filter) Tj
+ET
+BT
+/F1 9.30 Tf
+1 0 0 1 127.66 392.16 Tm
+(doctors/hospitals) Tj
+ET
+BT
+/F1 9.30 Tf
+1 0 0 1 262.98 404.72 Tm
+(Filtered list updates) Tj
+ET
+BT
+/F1 9.30 Tf
+1 0 0 1 262.98 392.16 Tm
+(correctly based on) Tj
+ET
+BT
+/F1 9.30 Tf
+1 0 0 1 262.98 379.61 Tm
+(selected criteria) Tj
+ET
+BT
+/F1 9.30 Tf
+1 0 0 1 374.13 404.72 Tm
+(As expected) Tj
+ET
+BT
+/F1 9.30 Tf
+1 0 0 1 485.29 404.72 Tm
+(Pass) Tj
+ET
+BT
+/F1 9.30 Tf
+1 0 0 1 60.00 351.05 Tm
+(TC-FT-06) Tj
+ET
+BT
+/F1 9.30 Tf
+1 0 0 1 127.66 351.05 Tm
+(Add/remove favorites from) Tj
+ET
+BT
+/F1 9.30 Tf
+1 0 0 1 127.66 338.50 Tm
+(listing and verify on) Tj
+ET
+BT
+/F1 9.30 Tf
+1 0 0 1 127.66 325.94 Tm
+(Dashboard) Tj
+ET
+BT
+/F1 9.30 Tf
+1 0 0 1 262.98 351.05 Tm
+(Favorite state) Tj
+ET
+BT
+/F1 9.30 Tf
+1 0 0 1 262.98 338.50 Tm
+(updates and persists;) Tj
+ET
+BT
+/F1 9.30 Tf
+1 0 0 1 262.98 325.94 Tm
+(Dashboard reflects) Tj
+ET
+BT
+/F1 9.30 Tf
+1 0 0 1 262.98 313.39 Tm
+(saved items) Tj
+ET
+BT
+/F1 9.30 Tf
+1 0 0 1 374.13 351.05 Tm
+(As expected) Tj
+ET
+BT
+/F1 9.30 Tf
+1 0 0 1 485.29 351.05 Tm
+(Pass) Tj
+ET
+BT
+/F1 9.30 Tf
+1 0 0 1 60.00 284.83 Tm
+(TC-FT-07) Tj
+ET
+BT
+/F1 9.30 Tf
+1 0 0 1 127.66 284.83 Tm
+(Submit Support Request) Tj
+ET
+BT
+/F1 9.30 Tf
+1 0 0 1 127.66 272.28 Tm
+(form with required fields) Tj
+ET
+BT
+/F1 9.30 Tf
+1 0 0 1 262.98 284.83 Tm
+(Ticket is created;) Tj
+ET
+BT
+/F1 9.30 Tf
+1 0 0 1 262.98 272.28 Tm
+(success confirmation) Tj
+ET
+BT
+/F1 9.30 Tf
+1 0 0 1 262.98 259.72 Tm
+(and/or ticket ID is) Tj
+ET
+BT
+/F1 9.30 Tf
+1 0 0 1 262.98 247.17 Tm
+(shown) Tj
+ET
+BT
+/F1 9.30 Tf
+1 0 0 1 374.13 284.83 Tm
+(As expected) Tj
+ET
+BT
+/F1 9.30 Tf
+1 0 0 1 485.29 284.83 Tm
+(Pass) Tj
+ET
+BT
+/F2 13.50 Tf
+1 0 0 1 56.00 224.91 Tm
+(4. Tools Used) Tj
+ET
+BT
+/F1 10.80 Tf
+1 0 0 1 66.00 202.69 Tm
+(? **Browser Developer Tools \(Chrome/Edge\)**: inspected console errors, network calls,) Tj
+ET
+BT
+/F1 10.80 Tf
+1 0 0 1 66.00 188.11 Tm
+(storage, and layout issues.) Tj
+ET
+BT
+/F1 10.80 Tf
+1 0 0 1 66.00 171.53 Tm
+(? **Lighthouse \(DevTools\)**: evaluated performance, best practices, and accessibility) Tj
+ET
+BT
+/F1 10.80 Tf
+1 0 0 1 66.00 156.95 Tm
+(indicators.) Tj
+ET
+BT
+/F1 10.80 Tf
+1 0 0 1 66.00 140.37 Tm
+(? **Manual Testing**: verified real user flows such as sign-up, login, search, form) Tj
+ET
+BT
+/F1 10.80 Tf
+1 0 0 1 66.00 125.79 Tm
+(submissions, and protected routes.) Tj
+ET
+BT
+/F1 10.80 Tf
+1 0 0 1 66.00 109.21 Tm
+(? **Firebase Console \(Auth/Firestore\)**: verified authentication status, created) Tj
+ET
+BT
+/F1 10.80 Tf
+1 0 0 1 66.00 94.63 Tm
+(users, and database documents written by the portal.) Tj
+ET
+Q
+endstream
+endobj
+6 0 obj
+<< /Type /Page /Parent 11 0 R /MediaBox [0 0 595.28 841.89] /Resources << /Font << /F1 1 0 R /F2 2 0 R >> >> /Contents 5 0 R >>
+endobj
+7 0 obj
+<< /Length 4430 >>
+stream
+q
+BT
+/F2 13.50 Tf
+1 0 0 1 56.00 779.89 Tm
+(5. Bug Fixing / Issues Faced) Tj
+ET
+BT
+/F1 10.80 Tf
+1 0 0 1 56.00 757.66 Tm
+(Common issues observed during development and testing, along with resolutions:) Tj
+ET
+BT
+/F1 10.80 Tf
+1 0 0 1 66.00 737.08 Tm
+(- **Authentication state not persisting after refresh**) Tj
+ET
+BT
+/F1 10.80 Tf
+1 0 0 1 66.00 720.50 Tm
+(? **Issue:** Users were redirected to login after page reload due to delayed auth) Tj
+ET
+BT
+/F1 10.80 Tf
+1 0 0 1 66.00 705.92 Tm
+(state initialization.) Tj
+ET
+BT
+/F1 10.80 Tf
+1 0 0 1 66.00 689.34 Tm
+(? **Resolution:** Ensured the app waits for auth initialization before rendering) Tj
+ET
+BT
+/F1 10.80 Tf
+1 0 0 1 66.00 674.76 Tm
+(protected routes and improved session persistence handling.) Tj
+ET
+BT
+/F1 10.80 Tf
+1 0 0 1 66.00 658.18 Tm
+(- **Form validation messages not clear or inconsistent**) Tj
+ET
+BT
+/F1 10.80 Tf
+1 0 0 1 66.00 641.60 Tm
+(? **Issue:** Some invalid inputs did not show user-friendly messages.) Tj
+ET
+BT
+/F1 10.80 Tf
+1 0 0 1 66.00 625.02 Tm
+(? **Resolution:** Standardized validation rules \(required fields, email format,) Tj
+ET
+BT
+/F1 10.80 Tf
+1 0 0 1 66.00 610.44 Tm
+(password constraints\) and displayed inline error text near the relevant input.) Tj
+ET
+BT
+/F1 10.80 Tf
+1 0 0 1 66.00 593.86 Tm
+(- **Firestore permission / rule-related errors**) Tj
+ET
+BT
+/F1 10.80 Tf
+1 0 0 1 66.00 577.28 Tm
+(? **Issue:** Writes to favorites/support collections failed under restrictive rules or) Tj
+ET
+BT
+/F1 10.80 Tf
+1 0 0 1 66.00 562.70 Tm
+(missing user context.) Tj
+ET
+BT
+/F1 10.80 Tf
+1 0 0 1 66.00 546.12 Tm
+(? **Resolution:** Updated Firestore rules and ensured authenticated user context is) Tj
+ET
+BT
+/F1 10.80 Tf
+1 0 0 1 66.00 531.54 Tm
+(passed before performing write operations.) Tj
+ET
+BT
+/F1 10.80 Tf
+1 0 0 1 66.00 514.96 Tm
+(- **Responsive layout issues on smaller screens**) Tj
+ET
+BT
+/F1 10.80 Tf
+1 0 0 1 66.00 498.38 Tm
+(? **Issue:** Cards and buttons overlapped or overflowed on mobile viewports.) Tj
+ET
+BT
+/F1 10.80 Tf
+1 0 0 1 66.00 481.80 Tm
+(? **Resolution:** Improved responsive styling with flexible layouts, spacing) Tj
+ET
+BT
+/F1 10.80 Tf
+1 0 0 1 66.00 467.22 Tm
+(adjustments, and tested common breakpoints.) Tj
+ET
+BT
+/F1 10.80 Tf
+1 0 0 1 66.00 450.64 Tm
+(- **Performance impact due to heavy assets and re-renders**) Tj
+ET
+BT
+/F1 10.80 Tf
+1 0 0 1 66.00 434.06 Tm
+(? **Issue:** Some pages felt slower during navigation and filtering.) Tj
+ET
+BT
+/F1 10.80 Tf
+1 0 0 1 66.00 417.48 Tm
+(? **Resolution:** Reduced unnecessary renders, improved component structure, and) Tj
+ET
+BT
+/F1 10.80 Tf
+1 0 0 1 66.00 402.90 Tm
+(validated improvements using Lighthouse and DevTools.) Tj
+ET
+BT
+/F2 13.50 Tf
+1 0 0 1 56.00 380.32 Tm
+(6. Conclusion of Testing) Tj
+ET
+BT
+/F1 10.80 Tf
+1 0 0 1 56.00 358.10 Tm
+(Testing confirmed that the unified health portal is functionally stable and usable) Tj
+ET
+BT
+/F1 10.80 Tf
+1 0 0 1 56.00 343.52 Tm
+(across typical devices and browsers. The primary user flows \(authentication,) Tj
+ET
+BT
+/F1 10.80 Tf
+1 0 0 1 56.00 328.94 Tm
+(search/filter, favorites, dashboard access, and support requests\) were validated, key) Tj
+ET
+BT
+/F1 10.80 Tf
+1 0 0 1 56.00 314.36 Tm
+(UI issues were resolved, and performance and compatibility checks improved confidence) Tj
+ET
+BT
+/F1 10.80 Tf
+1 0 0 1 56.00 299.78 Tm
+(for deployment. Overall, the testing process reduced defects and ensured the portal) Tj
+ET
+BT
+/F1 10.80 Tf
+1 0 0 1 56.00 285.20 Tm
+(provides a consistent and reliable experience for users.) Tj
+ET
+BT
+/F2 13.50 Tf
+1 0 0 1 56.00 258.62 Tm
+(Snapshot Descriptions \(Captions\)) Tj
+ET
+BT
+/F2 11.50 Tf
+1 0 0 1 56.00 230.39 Tm
+(Home Page) Tj
+ET
+BT
+/F1 10.80 Tf
+1 0 0 1 56.00 210.87 Tm
+(The screenshot shows the portal landing page with the main navigation and key entry) Tj
+ET
+BT
+/F1 10.80 Tf
+1 0 0 1 56.00 196.29 Tm
+(points to explore healthcare services. It highlights the primary modules such as) Tj
+ET
+BT
+/F1 10.80 Tf
+1 0 0 1 56.00 181.71 Tm
+(hospital/doctor discovery and health content, designed for quick access.) Tj
+ET
+BT
+/F2 11.50 Tf
+1 0 0 1 56.00 155.13 Tm
+(Login/Register Page) Tj
+ET
+BT
+/F1 10.80 Tf
+1 0 0 1 56.00 135.60 Tm
+(The screenshot shows the authentication interface used to create a new account or log) Tj
+ET
+BT
+/F1 10.80 Tf
+1 0 0 1 56.00 121.02 Tm
+(in to an existing account. It includes validated input fields and clear feedback) Tj
+ET
+BT
+/F1 10.80 Tf
+1 0 0 1 56.00 106.44 Tm
+(messages for incorrect or missing details.) Tj
+ET
+Q
+endstream
+endobj
+8 0 obj
+<< /Type /Page /Parent 11 0 R /MediaBox [0 0 595.28 841.89] /Resources << /Font << /F1 1 0 R /F2 2 0 R >> >> /Contents 7 0 R >>
+endobj
+9 0 obj
+<< /Length 1327 >>
+stream
+q
+BT
+/F2 11.50 Tf
+1 0 0 1 56.00 779.89 Tm
+(Dashboard) Tj
+ET
+BT
+/F1 10.80 Tf
+1 0 0 1 56.00 760.37 Tm
+(The screenshot shows the protected dashboard visible after successful login. It) Tj
+ET
+BT
+/F1 10.80 Tf
+1 0 0 1 56.00 745.78 Tm
+(summarizes the user?s activity such as saved favorites and provides quick access to) Tj
+ET
+BT
+/F1 10.80 Tf
+1 0 0 1 56.00 731.20 Tm
+(authenticated features.) Tj
+ET
+BT
+/F2 11.50 Tf
+1 0 0 1 56.00 704.62 Tm
+(Feature Page \(Main Functionality\)) Tj
+ET
+BT
+/F1 10.80 Tf
+1 0 0 1 56.00 685.10 Tm
+(The screenshot shows a core feature page \(e.g., doctor/hospital search\) where users can) Tj
+ET
+BT
+/F1 10.80 Tf
+1 0 0 1 56.00 670.52 Tm
+(search, apply filters, and view result cards. It demonstrates how the portal supports) Tj
+ET
+BT
+/F1 10.80 Tf
+1 0 0 1 56.00 655.94 Tm
+(healthcare discovery with structured listings and actionable controls.) Tj
+ET
+BT
+/F2 11.50 Tf
+1 0 0 1 56.00 629.36 Tm
+(Error / Validation Messages) Tj
+ET
+BT
+/F1 10.80 Tf
+1 0 0 1 56.00 609.83 Tm
+(The screenshot shows validation feedback and error messages displayed during form) Tj
+ET
+BT
+/F1 10.80 Tf
+1 0 0 1 56.00 595.25 Tm
+(interactions \(such as login, signup, or support requests\). It demonstrates how the) Tj
+ET
+BT
+/F1 10.80 Tf
+1 0 0 1 56.00 580.67 Tm
+(system guides users to correct inputs and prevents invalid submissions.) Tj
+ET
+Q
+endstream
+endobj
+10 0 obj
+<< /Type /Page /Parent 11 0 R /MediaBox [0 0 595.28 841.89] /Resources << /Font << /F1 1 0 R /F2 2 0 R >> >> /Contents 9 0 R >>
+endobj
+11 0 obj
+<< /Type /Pages /Kids [ 4 0 R 6 0 R 8 0 R 10 0 R ] /Count 4 >>
+endobj
+12 0 obj
+<< /Type /Catalog /Pages 11 0 R >>
+endobj
+xref
+0 13
+0000000000 65535 f 
+0000000015 00000 n 
+0000000085 00000 n 
+0000000160 00000 n 
+0000004214 00000 n 
+0000004357 00000 n 
+0000012575 00000 n 
+0000012718 00000 n 
+0000017200 00000 n 
+0000017343 00000 n 
+0000018722 00000 n 
+0000018866 00000 n 
+0000018945 00000 n 
+trailer
+<< /Size 13 /Root 12 0 R >>
+startxref
+18996
+%%EOF

@@ -1,0 +1,1608 @@
+%PDF-1.4
+%‚„œ”
+1 0 obj
+<< /Length 4051 >>
+stream
+BT
+/F2 20 Tf
+0.04 0.08 0.15 rg
+1 0 0 1 42 790 Tm
+(Current Project Data Flow Diagram) Tj
+ET
+BT
+/F1 10 Tf
+0.29 0.35 0.45 rg
+1 0 0 1 42 770 Tm
+(Based strictly on the active Vite/React codebase in src/) Tj
+ET
+0.72 0.8 0.92 RG
+1.0 w
+42 760 m 553 760 l S
+BT
+/F2 13 Tf
+0.06 0.09 0.16 rg
+1 0 0 1 42 724 Tm
+(System Flow Summary) Tj
+ET
+BT
+/F1 10 Tf
+0.16 0.2 0.28 rg
+1 0 0 1 42 704 Tm
+(The portal routes users through authentication, healthcare discovery, support,) Tj
+ET
+BT
+/F1 10 Tf
+0.16 0.2 0.28 rg
+1 0 0 1 42 690 Tm
+(dashboard, notifications, and content pages. Hospitals and doctors are served from local) Tj
+ET
+BT
+/F1 10 Tf
+0.16 0.2 0.28 rg
+1 0 0 1 42 676 Tm
+(datasets inside the repository, while user profiles, favorites, support tickets, and) Tj
+ET
+BT
+/F1 10 Tf
+0.16 0.2 0.28 rg
+1 0 0 1 42 662 Tm
+(notifications are persisted in Firebase. CuraNex is stored only in browser localStorage) Tj
+ET
+BT
+/F1 10 Tf
+0.16 0.2 0.28 rg
+1 0 0 1 42 648 Tm
+(and does not currently sync to Firestore.) Tj
+ET
+BT
+/F2 12 Tf
+0.06 0.09 0.16 rg
+1 0 0 1 42 626 Tm
+(Entities) Tj
+ET
+BT
+/F2 12 Tf
+0.06 0.09 0.16 rg
+1 0 0 1 220 626 Tm
+(Processes) Tj
+ET
+BT
+/F2 12 Tf
+0.06 0.09 0.16 rg
+1 0 0 1 410 626 Tm
+(Data Stores) Tj
+ET
+BT
+/F1 9 Tf
+0.06 0.09 0.16 rg
+1 0 0 1 42 608 Tm
+(- User / Visitor) Tj
+ET
+BT
+/F1 9 Tf
+0.06 0.09 0.16 rg
+1 0 0 1 42 594 Tm
+(- Authenticated User) Tj
+ET
+BT
+/F1 9 Tf
+0.06 0.09 0.16 rg
+1 0 0 1 42 580 Tm
+(- Firebase Authentication) Tj
+ET
+BT
+/F1 9 Tf
+0.06 0.09 0.16 rg
+1 0 0 1 42 566 Tm
+(- Identity Providers) Tj
+ET
+BT
+/F1 9 Tf
+0.06 0.09 0.16 rg
+1 0 0 1 42 552 Tm
+(- Phone Verification / reCAPTCHA) Tj
+ET
+BT
+/F1 9 Tf
+0.06 0.09 0.16 rg
+1 0 0 1 42 538 Tm
+(- Firestore Database) Tj
+ET
+BT
+/F1 9 Tf
+0.06 0.09 0.16 rg
+1 0 0 1 42 524 Tm
+(- Support Team) Tj
+ET
+BT
+/F1 9 Tf
+0.06 0.09 0.16 rg
+1 0 0 1 220 608 Tm
+(- P1 Session Initialization) Tj
+ET
+BT
+/F1 9 Tf
+0.06 0.09 0.16 rg
+1 0 0 1 220 594 Tm
+(- P2 Authentication) Tj
+ET
+BT
+/F1 9 Tf
+0.06 0.09 0.16 rg
+1 0 0 1 220 580 Tm
+(- P3 Hospital Search) Tj
+ET
+BT
+/F1 9 Tf
+0.06 0.09 0.16 rg
+1 0 0 1 220 566 Tm
+(- P4 Doctor Search) Tj
+ET
+BT
+/F1 9 Tf
+0.06 0.09 0.16 rg
+1 0 0 1 220 552 Tm
+(- P5 Favorites) Tj
+ET
+BT
+/F1 9 Tf
+0.06 0.09 0.16 rg
+1 0 0 1 220 538 Tm
+(- P6 Support Requests) Tj
+ET
+BT
+/F1 9 Tf
+0.06 0.09 0.16 rg
+1 0 0 1 220 524 Tm
+(- P7 Notifications) Tj
+ET
+BT
+/F1 9 Tf
+0.06 0.09 0.16 rg
+1 0 0 1 220 510 Tm
+(- P8 Dashboard) Tj
+ET
+BT
+/F1 9 Tf
+0.06 0.09 0.16 rg
+1 0 0 1 220 496 Tm
+(- P9 CuraNex Feed) Tj
+ET
+BT
+/F1 9 Tf
+0.06 0.09 0.16 rg
+1 0 0 1 220 482 Tm
+(- P10 Static Content) Tj
+ET
+BT
+/F1 9 Tf
+0.06 0.09 0.16 rg
+1 0 0 1 220 468 Tm
+(- P11 Dataset Enrichment) Tj
+ET
+BT
+/F1 9 Tf
+0.06 0.09 0.16 rg
+1 0 0 1 410 608 Tm
+(- D1 Auth Session Persistence) Tj
+ET
+BT
+/F1 9 Tf
+0.06 0.09 0.16 rg
+1 0 0 1 410 594 Tm
+(- D2 users) Tj
+ET
+BT
+/F1 9 Tf
+0.06 0.09 0.16 rg
+1 0 0 1 410 580 Tm
+(- D3 userFavorites) Tj
+ET
+BT
+/F1 9 Tf
+0.06 0.09 0.16 rg
+1 0 0 1 410 566 Tm
+(- D4 support_requests) Tj
+ET
+BT
+/F1 9 Tf
+0.06 0.09 0.16 rg
+1 0 0 1 410 552 Tm
+(- D5 notifications) Tj
+ET
+BT
+/F1 9 Tf
+0.06 0.09 0.16 rg
+1 0 0 1 410 538 Tm
+(- D6 Local Datasets) Tj
+ET
+BT
+/F1 9 Tf
+0.06 0.09 0.16 rg
+1 0 0 1 410 524 Tm
+(- D7 localStorage) Tj
+ET
+BT
+/F2 12 Tf
+0.06 0.09 0.16 rg
+1 0 0 1 42 278 Tm
+(Mermaid Source Included In docs/dfd-report.md) Tj
+ET
+BT
+/F1 9 Tf
+0.06 0.09 0.16 rg
+1 0 0 1 42 260 Tm
+(- User Input -> Auth, Search, Filters, Support Form, Feed Actions) Tj
+ET
+BT
+/F1 9 Tf
+0.06 0.09 0.16 rg
+1 0 0 1 42 246 Tm
+(- Processed Data -> Filtered doctor and hospital results) Tj
+ET
+BT
+/F1 9 Tf
+0.06 0.09 0.16 rg
+1 0 0 1 42 232 Tm
+(- Favorite Toggle -> Firestore userFavorites collection) Tj
+ET
+BT
+/F1 9 Tf
+0.06 0.09 0.16 rg
+1 0 0 1 42 218 Tm
+(- Support Ticket -> support_requests with notification side-write) Tj
+ET
+BT
+/F1 9 Tf
+0.06 0.09 0.16 rg
+1 0 0 1 42 204 Tm
+(- Alert -> Navbar notifications snapshot and toast updates) Tj
+ET
+BT
+/F1 9 Tf
+0.06 0.09 0.16 rg
+1 0 0 1 42 190 Tm
+(- Local Social State -> CuraNex posts and theme in localStorage) Tj
+ET
+BT
+/F1 9 Tf
+0.35 0.4 0.49 rg
+1 0 0 1 42 56 Tm
+(Pages 2 and 3 contain the labeled Level 0 and Level 1 diagrams.) Tj
+ET
+endstream
+endobj
+2 0 obj
+<< /Type /Page /Parent 9 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 7 0 R /F2 8 0 R >> >> /Contents 1 0 R >>
+endobj
+3 0 obj
+<< /Length 4990 >>
+stream
+BT
+/F2 20 Tf
+0.04 0.08 0.15 rg
+1 0 0 1 42 790 Tm
+(Level 0 DFD) Tj
+ET
+BT
+/F1 10 Tf
+0.29 0.35 0.45 rg
+1 0 0 1 42 770 Tm
+(Context diagram for the Punjab Unified Health Portal) Tj
+ET
+0.72 0.8 0.92 RG
+1.0 w
+42 760 m 553 760 l S
+0.96 0.98 1.0 rg
+0.24 0.3 0.42 RG
+0.6 w
+40 560 120 78 re B
+0.85 0.91 1.0 rg
+0.24 0.3 0.42 RG
+0.6 w
+40 616 120 22 re B
+BT
+/F2 10 Tf
+0.08 0.12 0.19 rg
+1 0 0 1 48 623 Tm
+(External Entity) Tj
+ET
+BT
+/F1 8.5 Tf
+0.18 0.23 0.33 rg
+1 0 0 1 48 600 Tm
+(User / Visitor) Tj
+ET
+BT
+/F1 8.5 Tf
+0.18 0.23 0.33 rg
+1 0 0 1 48 589 Tm
+(Search, auth,) Tj
+ET
+BT
+/F1 8.5 Tf
+0.18 0.23 0.33 rg
+1 0 0 1 48 578 Tm
+(support, feed input) Tj
+ET
+0.93 0.98 0.95 rg
+0.24 0.3 0.42 RG
+0.6 w
+220 525 160 130 re B
+0.79 0.93 0.84 rg
+0.24 0.3 0.42 RG
+0.6 w
+220 633 160 22 re B
+BT
+/F2 10 Tf
+0.08 0.12 0.19 rg
+1 0 0 1 228 640 Tm
+(System) Tj
+ET
+BT
+/F1 8.5 Tf
+0.18 0.23 0.33 rg
+1 0 0 1 228 617 Tm
+(Punjab Unified) Tj
+ET
+BT
+/F1 8.5 Tf
+0.18 0.23 0.33 rg
+1 0 0 1 228 606 Tm
+(Health Portal) Tj
+ET
+0.98 0.97 1.0 rg
+0.24 0.3 0.42 RG
+0.6 w
+430 600 120 62 re B
+0.9 0.87 0.98 rg
+0.24 0.3 0.42 RG
+0.6 w
+430 640 120 22 re B
+BT
+/F2 10 Tf
+0.08 0.12 0.19 rg
+1 0 0 1 438 647 Tm
+(External System) Tj
+ET
+BT
+/F1 8.5 Tf
+0.18 0.23 0.33 rg
+1 0 0 1 438 624 Tm
+(Firebase Auth) Tj
+ET
+0.98 0.97 1.0 rg
+0.24 0.3 0.42 RG
+0.6 w
+430 520 120 62 re B
+0.9 0.87 0.98 rg
+0.24 0.3 0.42 RG
+0.6 w
+430 560 120 22 re B
+BT
+/F2 10 Tf
+0.08 0.12 0.19 rg
+1 0 0 1 438 567 Tm
+(External System) Tj
+ET
+BT
+/F1 8.5 Tf
+0.18 0.23 0.33 rg
+1 0 0 1 438 544 Tm
+(Firestore) Tj
+ET
+1.0 0.98 0.95 rg
+0.24 0.3 0.42 RG
+0.6 w
+430 440 120 62 re B
+0.99 0.9 0.78 rg
+0.24 0.3 0.42 RG
+0.6 w
+430 480 120 22 re B
+BT
+/F2 10 Tf
+0.08 0.12 0.19 rg
+1 0 0 1 438 487 Tm
+(External Entity) Tj
+ET
+BT
+/F1 8.5 Tf
+0.18 0.23 0.33 rg
+1 0 0 1 438 464 Tm
+(Support Team) Tj
+ET
+0.98 0.97 1.0 rg
+0.24 0.3 0.42 RG
+0.6 w
+40 430 120 62 re B
+0.9 0.87 0.98 rg
+0.24 0.3 0.42 RG
+0.6 w
+40 470 120 22 re B
+BT
+/F2 10 Tf
+0.08 0.12 0.19 rg
+1 0 0 1 48 477 Tm
+(External System) Tj
+ET
+BT
+/F1 8.5 Tf
+0.18 0.23 0.33 rg
+1 0 0 1 48 454 Tm
+(Identity Providers) Tj
+ET
+BT
+/F1 8.5 Tf
+0.18 0.23 0.33 rg
+1 0 0 1 48 443 Tm
+(and OTP Services) Tj
+ET
+0.32 0.44 0.69 RG
+0.8 w
+160 599 m 220 599 l S
+0.32 0.44 0.69 RG
+0.8 w
+220 599 m 213.0 602.0 l S
+0.32 0.44 0.69 RG
+0.8 w
+220 599 m 213.0 596.0 l S
+BT
+/F1 8 Tf
+0.17 0.23 0.35 rg
+1 0 0 1 170.8 603.0 Tm
+(User Input) Tj
+ET
+0.32 0.44 0.69 RG
+0.8 w
+220 575 m 160 575 l S
+0.32 0.44 0.69 RG
+0.8 w
+160 575 m 167.0 572.0 l S
+0.32 0.44 0.69 RG
+0.8 w
+160 575 m 167.0 578.0 l S
+BT
+/F1 8 Tf
+0.17 0.23 0.35 rg
+1 0 0 1 147.76 584 Tm
+(Pages, Results, Alerts) Tj
+ET
+0.32 0.44 0.69 RG
+0.8 w
+380 625 m 430 625 l S
+0.32 0.44 0.69 RG
+0.8 w
+430 625 m 423.0 628.0 l S
+0.32 0.44 0.69 RG
+0.8 w
+430 625 m 423.0 622.0 l S
+BT
+/F1 8 Tf
+0.17 0.23 0.35 rg
+1 0 0 1 381.96 629.0 Tm
+(Auth Request) Tj
+ET
+0.32 0.44 0.69 RG
+0.8 w
+430 610 m 380 610 l S
+0.32 0.44 0.69 RG
+0.8 w
+380 610 m 387.0 607.0 l S
+0.32 0.44 0.69 RG
+0.8 w
+380 610 m 387.0 613.0 l S
+BT
+/F1 8 Tf
+0.17 0.23 0.35 rg
+1 0 0 1 385.8 614.0 Tm
+(Auth State) Tj
+ET
+0.32 0.44 0.69 RG
+0.8 w
+380 551 m 430 551 l S
+0.32 0.44 0.69 RG
+0.8 w
+430 551 m 423.0 554.0 l S
+0.32 0.44 0.69 RG
+0.8 w
+430 551 m 423.0 548.0 l S
+BT
+/F1 8 Tf
+0.17 0.23 0.35 rg
+1 0 0 1 322.44 560 Tm
+(Profiles, Favorites, Tickets, Notifications) Tj
+ET
+0.32 0.44 0.69 RG
+0.8 w
+430 536 m 380 536 l S
+0.32 0.44 0.69 RG
+0.8 w
+380 536 m 387.0 533.0 l S
+0.32 0.44 0.69 RG
+0.8 w
+380 536 m 387.0 539.0 l S
+BT
+/F1 8 Tf
+0.17 0.23 0.35 rg
+1 0 0 1 383.88 545 Tm
+(Stored Data) Tj
+ET
+0.32 0.44 0.69 RG
+0.8 w
+380 466 m 430 466 l S
+0.32 0.44 0.69 RG
+0.8 w
+430 466 m 423.0 469.0 l S
+0.32 0.44 0.69 RG
+0.8 w
+430 466 m 423.0 463.0 l S
+BT
+/F1 8 Tf
+0.17 0.23 0.35 rg
+1 0 0 1 366.6 470.0 Tm
+(Support Issue Record) Tj
+ET
+0.32 0.44 0.69 RG
+0.8 w
+160 462 m 220 540 l S
+0.32 0.44 0.69 RG
+0.8 w
+220 540 m 213.35415270673835 536.2807643588168 l S
+0.32 0.44 0.69 RG
+0.8 w
+220 540 m 218.10989664136596 532.6224997937187 l S
+BT
+/F1 8 Tf
+0.17 0.23 0.35 rg
+1 0 0 1 168.88 505.0 Tm
+(OAuth / OTP) Tj
+ET
+0.32 0.44 0.69 RG
+0.8 w
+430 625 m 160 462 l S
+0.32 0.44 0.69 RG
+0.8 w
+160 462 m 167.5431121729734 463.04950404760575 l S
+0.32 0.44 0.69 RG
+0.8 w
+160 462 m 164.44216063654295 468.1860495373985 l S
+BT
+/F1 8 Tf
+0.17 0.23 0.35 rg
+1 0 0 1 238.56 655 Tm
+(Provider / Verification Response) Tj
+ET
+BT
+/F2 12 Tf
+0.06 0.09 0.16 rg
+1 0 0 1 42 376 Tm
+(Flow Labels) Tj
+ET
+BT
+/F1 9 Tf
+0.06 0.09 0.16 rg
+1 0 0 1 42 356 Tm
+(- User Input: search queries, credentials, OTP, support form, post content) Tj
+ET
+BT
+/F1 9 Tf
+0.06 0.09 0.16 rg
+1 0 0 1 42 342 Tm
+(- Pages, Results, Alerts: rendered UI, ticket IDs, filtered data, favorites, notifications) Tj
+ET
+BT
+/F1 9 Tf
+0.06 0.09 0.16 rg
+1 0 0 1 42 328 Tm
+(- Auth Request / Auth State: Firebase session lifecycle and identity verification) Tj
+ET
+BT
+/F1 9 Tf
+0.06 0.09 0.16 rg
+1 0 0 1 42 314 Tm
+(- Profiles, Favorites, Tickets, Notifications: all Firestore read/write traffic) Tj
+ET
+BT
+/F1 9 Tf
+0.06 0.09 0.16 rg
+1 0 0 1 42 300 Tm
+(- Support Issue Record: operational ticket data for follow-up) Tj
+ET
+endstream
+endobj
+4 0 obj
+<< /Type /Page /Parent 9 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 7 0 R /F2 8 0 R >> >> /Contents 3 0 R >>
+endobj
+5 0 obj
+<< /Length 13819 >>
+stream
+BT
+/F2 20 Tf
+0.04 0.08 0.15 rg
+1 0 0 1 42 790 Tm
+(Level 1 DFD) Tj
+ET
+BT
+/F1 10 Tf
+0.29 0.35 0.45 rg
+1 0 0 1 42 770 Tm
+(Detailed processes, stores, and data movement in the current app) Tj
+ET
+0.72 0.8 0.92 RG
+1.0 w
+42 760 m 553 760 l S
+0.96 0.98 1.0 rg
+0.24 0.3 0.42 RG
+0.6 w
+20 706 92 54 re B
+0.85 0.91 1.0 rg
+0.24 0.3 0.42 RG
+0.6 w
+20 738 92 22 re B
+BT
+/F2 10 Tf
+0.08 0.12 0.19 rg
+1 0 0 1 28 745 Tm
+(Entity) Tj
+ET
+BT
+/F1 8.5 Tf
+0.18 0.23 0.33 rg
+1 0 0 1 28 722 Tm
+(User) Tj
+ET
+0.93 0.98 0.95 rg
+0.24 0.3 0.42 RG
+0.6 w
+130 706 110 54 re B
+0.79 0.93 0.84 rg
+0.24 0.3 0.42 RG
+0.6 w
+130 738 110 22 re B
+BT
+/F2 10 Tf
+0.08 0.12 0.19 rg
+1 0 0 1 138 745 Tm
+(P1) Tj
+ET
+BT
+/F1 8.5 Tf
+0.18 0.23 0.33 rg
+1 0 0 1 138 722 Tm
+(Route & Session) Tj
+ET
+BT
+/F1 8.5 Tf
+0.18 0.23 0.33 rg
+1 0 0 1 138 711 Tm
+(Initialization) Tj
+ET
+0.93 0.98 0.95 rg
+0.24 0.3 0.42 RG
+0.6 w
+260 706 110 54 re B
+0.79 0.93 0.84 rg
+0.24 0.3 0.42 RG
+0.6 w
+260 738 110 22 re B
+BT
+/F2 10 Tf
+0.08 0.12 0.19 rg
+1 0 0 1 268 745 Tm
+(P2) Tj
+ET
+BT
+/F1 8.5 Tf
+0.18 0.23 0.33 rg
+1 0 0 1 268 722 Tm
+(Authentication) Tj
+ET
+BT
+/F1 8.5 Tf
+0.18 0.23 0.33 rg
+1 0 0 1 268 711 Tm
+(& Provisioning) Tj
+ET
+1.0 0.99 0.93 rg
+0.24 0.3 0.42 RG
+0.6 w
+392 706 92 54 re B
+0.98 0.92 0.75 rg
+0.24 0.3 0.42 RG
+0.6 w
+392 738 92 22 re B
+BT
+/F2 10 Tf
+0.08 0.12 0.19 rg
+1 0 0 1 400 745 Tm
+(D1) Tj
+ET
+BT
+/F1 8.5 Tf
+0.18 0.23 0.33 rg
+1 0 0 1 400 722 Tm
+(Auth Session) Tj
+ET
+1.0 0.99 0.93 rg
+0.24 0.3 0.42 RG
+0.6 w
+500 706 74 54 re B
+0.98 0.92 0.75 rg
+0.24 0.3 0.42 RG
+0.6 w
+500 738 74 22 re B
+BT
+/F2 10 Tf
+0.08 0.12 0.19 rg
+1 0 0 1 508 745 Tm
+(D2) Tj
+ET
+BT
+/F1 8.5 Tf
+0.18 0.23 0.33 rg
+1 0 0 1 508 722 Tm
+(users) Tj
+ET
+0.93 0.98 0.95 rg
+0.24 0.3 0.42 RG
+0.6 w
+20 606 110 54 re B
+0.79 0.93 0.84 rg
+0.24 0.3 0.42 RG
+0.6 w
+20 638 110 22 re B
+BT
+/F2 10 Tf
+0.08 0.12 0.19 rg
+1 0 0 1 28 645 Tm
+(P3) Tj
+ET
+BT
+/F1 8.5 Tf
+0.18 0.23 0.33 rg
+1 0 0 1 28 622 Tm
+(Hospital Search) Tj
+ET
+BT
+/F1 8.5 Tf
+0.18 0.23 0.33 rg
+1 0 0 1 28 611 Tm
+(& Filtering) Tj
+ET
+0.93 0.98 0.95 rg
+0.24 0.3 0.42 RG
+0.6 w
+150 606 110 54 re B
+0.79 0.93 0.84 rg
+0.24 0.3 0.42 RG
+0.6 w
+150 638 110 22 re B
+BT
+/F2 10 Tf
+0.08 0.12 0.19 rg
+1 0 0 1 158 645 Tm
+(P4) Tj
+ET
+BT
+/F1 8.5 Tf
+0.18 0.23 0.33 rg
+1 0 0 1 158 622 Tm
+(Doctor Search) Tj
+ET
+BT
+/F1 8.5 Tf
+0.18 0.23 0.33 rg
+1 0 0 1 158 611 Tm
+(& Filtering) Tj
+ET
+0.93 0.98 0.95 rg
+0.24 0.3 0.42 RG
+0.6 w
+280 606 110 54 re B
+0.79 0.93 0.84 rg
+0.24 0.3 0.42 RG
+0.6 w
+280 638 110 22 re B
+BT
+/F2 10 Tf
+0.08 0.12 0.19 rg
+1 0 0 1 288 645 Tm
+(P5) Tj
+ET
+BT
+/F1 8.5 Tf
+0.18 0.23 0.33 rg
+1 0 0 1 288 622 Tm
+(Favorites) Tj
+ET
+BT
+/F1 8.5 Tf
+0.18 0.23 0.33 rg
+1 0 0 1 288 611 Tm
+(Management) Tj
+ET
+1.0 0.99 0.93 rg
+0.24 0.3 0.42 RG
+0.6 w
+410 606 74 54 re B
+0.98 0.92 0.75 rg
+0.24 0.3 0.42 RG
+0.6 w
+410 638 74 22 re B
+BT
+/F2 10 Tf
+0.08 0.12 0.19 rg
+1 0 0 1 418 645 Tm
+(D3) Tj
+ET
+BT
+/F1 8.5 Tf
+0.18 0.23 0.33 rg
+1 0 0 1 418 622 Tm
+(userFavorites) Tj
+ET
+1.0 0.99 0.93 rg
+0.24 0.3 0.42 RG
+0.6 w
+500 606 74 54 re B
+0.98 0.92 0.75 rg
+0.24 0.3 0.42 RG
+0.6 w
+500 638 74 22 re B
+BT
+/F2 10 Tf
+0.08 0.12 0.19 rg
+1 0 0 1 508 645 Tm
+(D6) Tj
+ET
+BT
+/F1 8.5 Tf
+0.18 0.23 0.33 rg
+1 0 0 1 508 622 Tm
+(Local) Tj
+ET
+BT
+/F1 8.5 Tf
+0.18 0.23 0.33 rg
+1 0 0 1 508 611 Tm
+(Datasets) Tj
+ET
+0.93 0.98 0.95 rg
+0.24 0.3 0.42 RG
+0.6 w
+20 506 110 54 re B
+0.79 0.93 0.84 rg
+0.24 0.3 0.42 RG
+0.6 w
+20 538 110 22 re B
+BT
+/F2 10 Tf
+0.08 0.12 0.19 rg
+1 0 0 1 28 545 Tm
+(P6) Tj
+ET
+BT
+/F1 8.5 Tf
+0.18 0.23 0.33 rg
+1 0 0 1 28 522 Tm
+(Support Request) Tj
+ET
+BT
+/F1 8.5 Tf
+0.18 0.23 0.33 rg
+1 0 0 1 28 511 Tm
+(Submission) Tj
+ET
+0.93 0.98 0.95 rg
+0.24 0.3 0.42 RG
+0.6 w
+150 506 110 54 re B
+0.79 0.93 0.84 rg
+0.24 0.3 0.42 RG
+0.6 w
+150 538 110 22 re B
+BT
+/F2 10 Tf
+0.08 0.12 0.19 rg
+1 0 0 1 158 545 Tm
+(P7) Tj
+ET
+BT
+/F1 8.5 Tf
+0.18 0.23 0.33 rg
+1 0 0 1 158 522 Tm
+(Notification) Tj
+ET
+BT
+/F1 8.5 Tf
+0.18 0.23 0.33 rg
+1 0 0 1 158 511 Tm
+(Sync) Tj
+ET
+0.93 0.98 0.95 rg
+0.24 0.3 0.42 RG
+0.6 w
+280 506 110 54 re B
+0.79 0.93 0.84 rg
+0.24 0.3 0.42 RG
+0.6 w
+280 538 110 22 re B
+BT
+/F2 10 Tf
+0.08 0.12 0.19 rg
+1 0 0 1 288 545 Tm
+(P8) Tj
+ET
+BT
+/F1 8.5 Tf
+0.18 0.23 0.33 rg
+1 0 0 1 288 522 Tm
+(Dashboard) Tj
+ET
+BT
+/F1 8.5 Tf
+0.18 0.23 0.33 rg
+1 0 0 1 288 511 Tm
+(Aggregation) Tj
+ET
+1.0 0.99 0.93 rg
+0.24 0.3 0.42 RG
+0.6 w
+410 506 74 54 re B
+0.98 0.92 0.75 rg
+0.24 0.3 0.42 RG
+0.6 w
+410 538 74 22 re B
+BT
+/F2 10 Tf
+0.08 0.12 0.19 rg
+1 0 0 1 418 545 Tm
+(D4) Tj
+ET
+BT
+/F1 8.5 Tf
+0.18 0.23 0.33 rg
+1 0 0 1 418 522 Tm
+(support_) Tj
+ET
+BT
+/F1 8.5 Tf
+0.18 0.23 0.33 rg
+1 0 0 1 418 511 Tm
+(requests) Tj
+ET
+1.0 0.99 0.93 rg
+0.24 0.3 0.42 RG
+0.6 w
+500 506 74 54 re B
+0.98 0.92 0.75 rg
+0.24 0.3 0.42 RG
+0.6 w
+500 538 74 22 re B
+BT
+/F2 10 Tf
+0.08 0.12 0.19 rg
+1 0 0 1 508 545 Tm
+(D5) Tj
+ET
+BT
+/F1 8.5 Tf
+0.18 0.23 0.33 rg
+1 0 0 1 508 522 Tm
+(notifications) Tj
+ET
+0.93 0.98 0.95 rg
+0.24 0.3 0.42 RG
+0.6 w
+20 406 110 54 re B
+0.79 0.93 0.84 rg
+0.24 0.3 0.42 RG
+0.6 w
+20 438 110 22 re B
+BT
+/F2 10 Tf
+0.08 0.12 0.19 rg
+1 0 0 1 28 445 Tm
+(P9) Tj
+ET
+BT
+/F1 8.5 Tf
+0.18 0.23 0.33 rg
+1 0 0 1 28 422 Tm
+(CuraNex Feed) Tj
+ET
+BT
+/F1 8.5 Tf
+0.18 0.23 0.33 rg
+1 0 0 1 28 411 Tm
+(Management) Tj
+ET
+0.93 0.98 0.95 rg
+0.24 0.3 0.42 RG
+0.6 w
+150 406 110 54 re B
+0.79 0.93 0.84 rg
+0.24 0.3 0.42 RG
+0.6 w
+150 438 110 22 re B
+BT
+/F2 10 Tf
+0.08 0.12 0.19 rg
+1 0 0 1 158 445 Tm
+(P10) Tj
+ET
+BT
+/F1 8.5 Tf
+0.18 0.23 0.33 rg
+1 0 0 1 158 422 Tm
+(Static Content) Tj
+ET
+BT
+/F1 8.5 Tf
+0.18 0.23 0.33 rg
+1 0 0 1 158 411 Tm
+(Delivery) Tj
+ET
+0.93 0.98 0.95 rg
+0.24 0.3 0.42 RG
+0.6 w
+280 406 110 54 re B
+0.79 0.93 0.84 rg
+0.24 0.3 0.42 RG
+0.6 w
+280 438 110 22 re B
+BT
+/F2 10 Tf
+0.08 0.12 0.19 rg
+1 0 0 1 288 445 Tm
+(P11) Tj
+ET
+BT
+/F1 8.5 Tf
+0.18 0.23 0.33 rg
+1 0 0 1 288 422 Tm
+(Dataset Parsing) Tj
+ET
+BT
+/F1 8.5 Tf
+0.18 0.23 0.33 rg
+1 0 0 1 288 411 Tm
+(& Enrichment) Tj
+ET
+1.0 0.99 0.93 rg
+0.24 0.3 0.42 RG
+0.6 w
+410 406 74 54 re B
+0.98 0.92 0.75 rg
+0.24 0.3 0.42 RG
+0.6 w
+410 438 74 22 re B
+BT
+/F2 10 Tf
+0.08 0.12 0.19 rg
+1 0 0 1 418 445 Tm
+(D7) Tj
+ET
+BT
+/F1 8.5 Tf
+0.18 0.23 0.33 rg
+1 0 0 1 418 422 Tm
+(localStorage) Tj
+ET
+1.0 0.98 0.95 rg
+0.24 0.3 0.42 RG
+0.6 w
+500 406 74 54 re B
+0.99 0.9 0.78 rg
+0.24 0.3 0.42 RG
+0.6 w
+500 438 74 22 re B
+BT
+/F2 10 Tf
+0.08 0.12 0.19 rg
+1 0 0 1 508 445 Tm
+(Entity) Tj
+ET
+BT
+/F1 8.5 Tf
+0.18 0.23 0.33 rg
+1 0 0 1 508 422 Tm
+(Support Team) Tj
+ET
+0.32 0.44 0.69 RG
+0.8 w
+112 733 m 130 733 l S
+0.32 0.44 0.69 RG
+0.8 w
+130 733 m 123.0 736.0 l S
+0.32 0.44 0.69 RG
+0.8 w
+130 733 m 123.0 730.0 l S
+BT
+/F1 8 Tf
+0.17 0.23 0.35 rg
+1 0 0 1 105.64 737.0 Tm
+(App Open) Tj
+ET
+0.32 0.44 0.69 RG
+0.8 w
+240 733 m 260 733 l S
+0.32 0.44 0.69 RG
+0.8 w
+260 733 m 253.0 736.0 l S
+0.32 0.44 0.69 RG
+0.8 w
+260 733 m 253.0 730.0 l S
+BT
+/F1 8 Tf
+0.17 0.23 0.35 rg
+1 0 0 1 226.96 737.0 Tm
+(Auth Request) Tj
+ET
+0.32 0.44 0.69 RG
+0.8 w
+370 733 m 392 733 l S
+0.32 0.44 0.69 RG
+0.8 w
+392 733 m 385.0 736.0 l S
+0.32 0.44 0.69 RG
+0.8 w
+392 733 m 385.0 730.0 l S
+BT
+/F1 8 Tf
+0.17 0.23 0.35 rg
+1 0 0 1 352.2 737.0 Tm
+(Persist Session) Tj
+ET
+0.32 0.44 0.69 RG
+0.8 w
+370 718 m 500 718 l S
+0.32 0.44 0.69 RG
+0.8 w
+500 718 m 493.0 721.0 l S
+0.32 0.44 0.69 RG
+0.8 w
+500 718 m 493.0 715.0 l S
+BT
+/F1 8 Tf
+0.17 0.23 0.35 rg
+1 0 0 1 402.36 722.0 Tm
+(User Profile Data) Tj
+ET
+0.32 0.44 0.69 RG
+0.8 w
+260 706 m 220 660 l S
+0.32 0.44 0.69 RG
+0.8 w
+220 660 m 226.857067570964 663.3137025103701 l S
+0.32 0.44 0.69 RG
+0.8 w
+220 660 m 222.329434437983 667.2507747999189 l S
+BT
+/F1 8 Tf
+0.17 0.23 0.35 rg
+1 0 0 1 216.96 685 Tm
+(Auth Session) Tj
+ET
+0.32 0.44 0.69 RG
+0.8 w
+70 706 m 70 660 l S
+0.32 0.44 0.69 RG
+0.8 w
+70 660 m 73.0 667.0 l S
+0.32 0.44 0.69 RG
+0.8 w
+70 660 m 67.0 667.0 l S
+BT
+/F1 8 Tf
+0.17 0.23 0.35 rg
+1 0 0 1 4.280000000000001 682 Tm
+(Search / Filters) Tj
+ET
+0.32 0.44 0.69 RG
+0.8 w
+70 660 m 75 606 l S
+0.32 0.44 0.69 RG
+0.8 w
+75 606 m 77.3418345482427 613.2467793500739 l S
+0.32 0.44 0.69 RG
+0.8 w
+75 606 m 71.36739050390699 612.6935900867095 l S
+BT
+/F1 8 Tf
+0.17 0.23 0.35 rg
+1 0 0 1 5.120000000000001 635 Tm
+(Hospital Query) Tj
+ET
+0.32 0.44 0.69 RG
+0.8 w
+70 660 m 205 606 l S
+0.32 0.44 0.69 RG
+0.8 w
+205 606 m 199.61483519286548 611.3851648071345 l S
+0.32 0.44 0.69 RG
+0.8 w
+205 606 m 197.38649113474088 605.8143046618229 l S
+BT
+/F1 8 Tf
+0.17 0.23 0.35 rg
+1 0 0 1 106.96000000000001 645 Tm
+(Doctor Query) Tj
+ET
+0.32 0.44 0.69 RG
+0.8 w
+500 633 m 390 633 l S
+0.32 0.44 0.69 RG
+0.8 w
+390 633 m 397.0 630.0 l S
+0.32 0.44 0.69 RG
+0.8 w
+390 633 m 397.0 636.0 l S
+BT
+/F1 8 Tf
+0.17 0.23 0.35 rg
+1 0 0 1 402.76 637.0 Tm
+(Prepared Hospital Data) Tj
+ET
+0.32 0.44 0.69 RG
+0.8 w
+500 620 m 260 620 l S
+0.32 0.44 0.69 RG
+0.8 w
+260 620 m 267.0 617.0 l S
+0.32 0.44 0.69 RG
+0.8 w
+260 620 m 267.0 623.0 l S
+BT
+/F1 8 Tf
+0.17 0.23 0.35 rg
+1 0 0 1 351.6 611 Tm
+(Prepared Doctor Data) Tj
+ET
+0.32 0.44 0.69 RG
+0.8 w
+130 633 m 280 633 l S
+0.32 0.44 0.69 RG
+0.8 w
+280 633 m 273.0 636.0 l S
+0.32 0.44 0.69 RG
+0.8 w
+280 633 m 273.0 630.0 l S
+BT
+/F1 8 Tf
+0.17 0.23 0.35 rg
+1 0 0 1 176.2 637.0 Tm
+(Favorite Toggle) Tj
+ET
+0.32 0.44 0.69 RG
+0.8 w
+260 620 m 280 620 l S
+0.32 0.44 0.69 RG
+0.8 w
+280 620 m 273.0 623.0 l S
+0.32 0.44 0.69 RG
+0.8 w
+280 620 m 273.0 617.0 l S
+BT
+/F1 8 Tf
+0.17 0.23 0.35 rg
+1 0 0 1 241.2 611 Tm
+(Favorite Toggle) Tj
+ET
+0.32 0.44 0.69 RG
+0.8 w
+390 633 m 410 633 l S
+0.32 0.44 0.69 RG
+0.8 w
+410 633 m 403.0 636.0 l S
+0.32 0.44 0.69 RG
+0.8 w
+410 633 m 403.0 630.0 l S
+BT
+/F1 8 Tf
+0.17 0.23 0.35 rg
+1 0 0 1 378.88 637.0 Tm
+(Load / Save) Tj
+ET
+0.32 0.44 0.69 RG
+0.8 w
+410 620 m 390 620 l S
+0.32 0.44 0.69 RG
+0.8 w
+390 620 m 397.0 617.0 l S
+0.32 0.44 0.69 RG
+0.8 w
+390 620 m 397.0 623.0 l S
+BT
+/F1 8 Tf
+0.17 0.23 0.35 rg
+1 0 0 1 417.36 624.0 Tm
+(Favorite Snapshot) Tj
+ET
+0.32 0.44 0.69 RG
+0.8 w
+390 593 m 335 560 l S
+0.32 0.44 0.69 RG
+0.8 w
+335 560 m 342.5459377462704 561.0289915108551 l S
+0.32 0.44 0.69 RG
+0.8 w
+335 560 m 339.45896321370526 566.1739490651303 l S
+BT
+/F1 8 Tf
+0.17 0.23 0.35 rg
+1 0 0 1 331.28 580 Tm
+(Favorite Summary) Tj
+ET
+0.32 0.44 0.69 RG
+0.8 w
+112 533 m 20 533 l S
+0.32 0.44 0.69 RG
+0.8 w
+20 533 m 27.0 530.0 l S
+0.32 0.44 0.69 RG
+0.8 w
+20 533 m 27.0 536.0 l S
+BT
+/F1 8 Tf
+0.17 0.23 0.35 rg
+1 0 0 1 28.520000000000003 542 Tm
+(Ticket Confirmation) Tj
+ET
+0.32 0.44 0.69 RG
+0.8 w
+70 706 m 70 560 l S
+0.32 0.44 0.69 RG
+0.8 w
+70 560 m 73.0 567.0 l S
+0.32 0.44 0.69 RG
+0.8 w
+70 560 m 67.0 567.0 l S
+BT
+/F1 8 Tf
+0.17 0.23 0.35 rg
+1 0 0 1 3.3599999999999994 595 Tm
+(Support Form Data) Tj
+ET
+0.32 0.44 0.69 RG
+0.8 w
+130 533 m 150 533 l S
+0.32 0.44 0.69 RG
+0.8 w
+150 533 m 143.0 536.0 l S
+0.32 0.44 0.69 RG
+0.8 w
+150 533 m 143.0 530.0 l S
+BT
+/F1 8 Tf
+0.17 0.23 0.35 rg
+1 0 0 1 103.52000000000001 537.0 Tm
+(Create Notification) Tj
+ET
+0.32 0.44 0.69 RG
+0.8 w
+130 520 m 410 533 l S
+0.32 0.44 0.69 RG
+0.8 w
+410 533 m 402.8683966336732 535.6721215214501 l S
+0.32 0.44 0.69 RG
+0.8 w
+410 533 m 403.1466683007935 529.6785779219359 l S
+BT
+/F1 8 Tf
+0.17 0.23 0.35 rg
+1 0 0 1 239.28 548 Tm
+(Validated Ticket) Tj
+ET
+0.32 0.44 0.69 RG
+0.8 w
+484 533 m 500 533 l S
+0.32 0.44 0.69 RG
+0.8 w
+500 533 m 493.0 536.0 l S
+0.32 0.44 0.69 RG
+0.8 w
+500 533 m 493.0 530.0 l S
+BT
+/F1 8 Tf
+0.17 0.23 0.35 rg
+1 0 0 1 455.44 537.0 Tm
+(Notification Write) Tj
+ET
+0.32 0.44 0.69 RG
+0.8 w
+500 520 m 260 533 l S
+0.32 0.44 0.69 RG
+0.8 w
+260 533 m 266.8274913114852 529.6257797357621 l S
+0.32 0.44 0.69 RG
+0.8 w
+260 533 m 267.1520155785759 535.6169969743596 l S
+BT
+/F1 8 Tf
+0.17 0.23 0.35 rg
+1 0 0 1 339.68 522 Tm
+(Notification Snapshot) Tj
+ET
+0.32 0.44 0.69 RG
+0.8 w
+260 520 m 112 520 l S
+0.32 0.44 0.69 RG
+0.8 w
+112 520 m 119.0 517.0 l S
+0.32 0.44 0.69 RG
+0.8 w
+112 520 m 119.0 523.0 l S
+BT
+/F1 8 Tf
+0.17 0.23 0.35 rg
+1 0 0 1 143.52 509 Tm
+(Alert / Read Status) Tj
+ET
+0.32 0.44 0.69 RG
+0.8 w
+390 433 m 410 433 l S
+0.32 0.44 0.69 RG
+0.8 w
+410 433 m 403.0 436.0 l S
+0.32 0.44 0.69 RG
+0.8 w
+410 433 m 403.0 430.0 l S
+BT
+/F1 8 Tf
+0.17 0.23 0.35 rg
+1 0 0 1 367.36 437.0 Tm
+(Read / Write Feed) Tj
+ET
+0.32 0.44 0.69 RG
+0.8 w
+484 433 m 500 433 l S
+0.32 0.44 0.69 RG
+0.8 w
+500 433 m 493.0 436.0 l S
+0.32 0.44 0.69 RG
+0.8 w
+500 433 m 493.0 430.0 l S
+BT
+/F1 8 Tf
+0.17 0.23 0.35 rg
+1 0 0 1 453.6 437.0 Tm
+(Support Issue Record) Tj
+ET
+0.32 0.44 0.69 RG
+0.8 w
+500 420 m 280 433 l S
+0.32 0.44 0.69 RG
+0.8 w
+280 433 m 286.81084679666094 429.59230783191714 l S
+0.32 0.44 0.69 RG
+0.8 w
+280 433 m 287.1647748780331 435.5818599782146 l S
+BT
+/F1 8 Tf
+0.17 0.23 0.35 rg
+1 0 0 1 349.76 419 Tm
+(Raw CSV / JSON / Leads) Tj
+ET
+0.32 0.44 0.69 RG
+0.8 w
+390 420 m 500 620 l S
+0.32 0.44 0.69 RG
+0.8 w
+500 620 m 493.99792102556495 615.3122448885799 l S
+0.32 0.44 0.69 RG
+0.8 w
+500 620 m 499.25521647762486 612.420732389947 l S
+BT
+/F1 8 Tf
+0.17 0.23 0.35 rg
+1 0 0 1 405.76 520 Tm
+(Normalized Directories) Tj
+ET
+0.32 0.44 0.69 RG
+0.8 w
+260 433 m 112 433 l S
+0.32 0.44 0.69 RG
+0.8 w
+112 433 m 119.0 430.0 l S
+0.32 0.44 0.69 RG
+0.8 w
+112 433 m 119.0 436.0 l S
+BT
+/F1 8 Tf
+0.17 0.23 0.35 rg
+1 0 0 1 150.04 422 Tm
+(Content Pages) Tj
+ET
+0.32 0.44 0.69 RG
+0.8 w
+130 433 m 112 433 l S
+0.32 0.44 0.69 RG
+0.8 w
+112 433 m 119.0 430.0 l S
+0.32 0.44 0.69 RG
+0.8 w
+112 433 m 119.0 436.0 l S
+BT
+/F1 8 Tf
+0.17 0.23 0.35 rg
+1 0 0 1 90.2 446 Tm
+(Updated Feed UI) Tj
+ET
+BT
+/F2 12 Tf
+0.06 0.09 0.16 rg
+1 0 0 1 42 328 Tm
+(Highlighted Flows) Tj
+ET
+BT
+/F1 9 Tf
+0.06 0.09 0.16 rg
+1 0 0 1 42 308 Tm
+(- User Input: credentials, OTP, search query, filters, support form, post actions) Tj
+ET
+BT
+/F1 9 Tf
+0.06 0.09 0.16 rg
+1 0 0 1 42 294 Tm
+(- Processed Data: filtered directory results, dashboard favorites, rendered content pages) Tj
+ET
+BT
+/F1 9 Tf
+0.06 0.09 0.16 rg
+1 0 0 1 42 280 Tm
+(- Alert: ticket confirmation, notification toast, dropdown items, auth errors) Tj
+ET
+BT
+/F1 9 Tf
+0.06 0.09 0.16 rg
+1 0 0 1 42 266 Tm
+(- Prepared Dataset: doctors and hospitals derived from CSV, leads, and raw JSON files) Tj
+ET
+BT
+/F1 9 Tf
+0.06 0.09 0.16 rg
+1 0 0 1 42 252 Tm
+(- Server-side Persistence: Firestore users, userFavorites, support_requests, notifications) Tj
+ET
+BT
+/F1 9 Tf
+0.06 0.09 0.16 rg
+1 0 0 1 42 238 Tm
+(- Browser-only Persistence: Firebase auth persistence and CuraNex localStorage) Tj
+ET
+endstream
+endobj
+6 0 obj
+<< /Type /Page /Parent 9 0 R /MediaBox [0 0 595 842] /Resources << /Font << /F1 7 0 R /F2 8 0 R >> >> /Contents 5 0 R >>
+endobj
+7 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica >>
+endobj
+8 0 obj
+<< /Type /Font /Subtype /Type1 /BaseFont /Helvetica-Bold >>
+endobj
+9 0 obj
+<< /Type /Pages /Kids [2 0 R 4 0 R 6 0 R] /Count 3 >>
+endobj
+10 0 obj
+<< /Type /Catalog /Pages 9 0 R >>
+endobj
+xref
+0 11
+0000000000 65535 f 
+0000000015 00000 n 
+0000004118 00000 n 
+0000004254 00000 n 
+0000009296 00000 n 
+0000009432 00000 n 
+0000023304 00000 n 
+0000023440 00000 n 
+0000023510 00000 n 
+0000023585 00000 n 
+0000023654 00000 n 
+trailer
+<< /Size 11 /Root 10 0 R >>
+startxref
+23704
+%%EOF

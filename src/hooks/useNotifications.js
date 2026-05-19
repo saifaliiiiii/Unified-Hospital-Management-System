@@ -1,5 +1,4 @@
 import { useCallback, useEffect, useRef, useState } from 'react'
-import { getAuth } from 'firebase/auth'
 import {
   collection,
   doc,
@@ -7,12 +6,9 @@ import {
   orderBy,
   query,
   updateDoc,
-  where,
 } from 'firebase/firestore'
 import { db } from '../firebase'
 import { useAuth } from '../context/AuthContext'
-
-const auth = getAuth()
 
 function toDateValue(timestamp) {
   if (!timestamp) {
@@ -72,6 +68,7 @@ function normalizeNotification(snapshot) {
 
 export function useNotifications() {
   const { user, isAuthenticated, authLoading } = useAuth()
+  const userId = user?.uid || ''
   const [notifications, setNotifications] = useState([])
   const [unreadCount, setUnreadCount] = useState(0)
   const [isLoading, setIsLoading] = useState(true)
@@ -92,27 +89,32 @@ export function useNotifications() {
       return undefined
     }
 
-    if (!isAuthenticated || !user?.uid) {
-      setNotifications([])
-      setUnreadCount(0)
-      setIsLoading(false)
-      setError('')
-      previousIdsRef.current = []
-      return undefined
+    if (!isAuthenticated || !userId) {
+      const timer = setTimeout(() => {
+        setNotifications([])
+        setUnreadCount(0)
+        setIsLoading(false)
+        setError('')
+        previousIdsRef.current = []
+      }, 0)
+
+      return () => clearTimeout(timer)
     }
 
-    setIsLoading(true)
-    setError('')
+    const timer = setTimeout(() => {
+      setIsLoading(true)
+      setError('')
+    }, 0)
 
     const notificationsQuery = query(
-      collection(db, 'notifications'),
-      where('userId', '==', user.uid),
+      collection(db, 'userNotifications', userId, 'notifications'),
       orderBy('createdAt', 'desc'),
     )
 
     const unsubscribe = onSnapshot(
       notificationsQuery,
       (snapshot) => {
+        clearTimeout(timer)
         const nextNotifications = snapshot.docs.map(normalizeNotification)
         const currentIds = nextNotifications.map((notification) => notification.id)
         const previousIds = previousIdsRef.current
@@ -138,23 +140,23 @@ export function useNotifications() {
         setIsLoading(false)
       },
       (snapshotError) => {
-        console.error('Unable to load notifications:', snapshotError)
+        clearTimeout(timer)
+        void snapshotError
         setError('Unable to load notifications right now.')
         setIsLoading(false)
       },
     )
 
     return () => {
+      clearTimeout(timer)
       unsubscribe()
       clearToast()
     }
-  }, [authLoading, clearToast, isAuthenticated, user?.uid])
+  }, [authLoading, clearToast, isAuthenticated, userId])
 
   const markAsRead = useCallback(async (notificationId) => {
-    const currentUser = auth.currentUser
-
-    if (!currentUser || !notificationId) {
-      return
+    if (!userId || !notificationId) {
+      return undefined
     }
 
     setNotifications((current) =>
@@ -167,11 +169,11 @@ export function useNotifications() {
     setUnreadCount((current) => Math.max(0, current - 1))
 
     try {
-      await updateDoc(doc(db, 'notifications', notificationId), {
+      await updateDoc(doc(db, 'userNotifications', userId, 'notifications', notificationId), {
         isRead: true,
       })
     } catch (markError) {
-      console.error('Unable to mark notification as read:', markError)
+      void markError
 
       setNotifications((current) =>
         current.map((notification) =>
@@ -182,7 +184,7 @@ export function useNotifications() {
       )
       setUnreadCount((current) => current + 1)
     }
-  }, [])
+  }, [userId])
 
   return {
     notifications,

@@ -12,6 +12,7 @@ import { motion } from 'framer-motion'
 function HospitalCard({
   hospital,
   isFavorite,
+  isFavoritePending = false,
   onToggleFavorite,
   onViewDetails,
 }) {
@@ -23,9 +24,10 @@ function HospitalCard({
     [hospital.directionsLabel, hospital.location, hospital.name],
   )
   const bookingHref = hospital.bookingLink || (hospital.phone ? `tel:${hospital.phone}` : '')
+  const MotionArticle = motion.article
 
   return (
-    <motion.article
+    <MotionArticle
       layout
       data-testid={`hospital-card-${hospital.id ?? hospital.name}`}
       className="group overflow-hidden rounded-[32px] border border-slate-200/70 bg-white shadow-[0_18px_50px_rgba(15,23,42,0.08)] transition-all duration-300 hover:shadow-[0_30px_70px_rgba(15,23,42,0.14)]"
@@ -54,9 +56,14 @@ function HospitalCard({
 
         <button
           type="button"
-          onClick={() => onToggleFavorite(hospital.id)}
-          className="absolute right-4 top-4 inline-flex h-11 w-11 items-center justify-center rounded-full bg-white/90 text-slate-600 shadow-md backdrop-blur transition hover:scale-105 hover:bg-white"
+          onClick={() => onToggleFavorite(hospital)}
+          disabled={isFavoritePending}
+          className={[
+            'absolute right-4 top-4 inline-flex h-11 w-11 items-center justify-center rounded-full bg-white/90 text-slate-600 shadow-md backdrop-blur transition hover:scale-105 hover:bg-white',
+            isFavoritePending ? 'cursor-not-allowed opacity-70 hover:scale-100' : '',
+          ].join(' ')}
           aria-label={isFavorite ? 'Remove favorite hospital' : 'Save hospital'}
+          aria-busy={isFavoritePending}
         >
           <Heart
             className={[
@@ -168,7 +175,7 @@ function HospitalCard({
           )}
         </div>
       </div>
-    </motion.article>
+    </MotionArticle>
   )
 }
 

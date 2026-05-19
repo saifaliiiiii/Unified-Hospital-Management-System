@@ -11,6 +11,7 @@ import { useNotifications } from '../hooks/useNotifications'
 import { logout } from '../auth'
 
 export default function Navbar() {
+  const MotionDiv = motion.div
   const [mobileOpen, setMobileOpen] = useState(false)
   const [mobileExploreOpen, setMobileExploreOpen] = useState(false)
   const [isNotificationsOpen, setIsNotificationsOpen] = useState(false)
@@ -72,7 +73,7 @@ export default function Navbar() {
       closeMobileMenu()
       navigate('/login')
     } catch (error) {
-      console.error(error.message)
+      void error
     } finally {
       setIsLoggingOut(false)
     }
@@ -85,7 +86,7 @@ export default function Navbar() {
       try {
         await markAsRead(notification.id)
       } catch (error) {
-        console.error('Unable to mark notification as read:', error)
+        void error
       }
     }
   }
@@ -359,7 +360,7 @@ export default function Navbar() {
 
       <AnimatePresence>
         {toastNotification ? (
-          <motion.div
+          <MotionDiv
             initial={{ opacity: 0, y: -10, scale: 0.98 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -10, scale: 0.98 }}
@@ -381,7 +382,7 @@ export default function Navbar() {
                 </p>
               </div>
             </div>
-          </motion.div>
+          </MotionDiv>
         ) : null}
       </AnimatePresence>
     </header>

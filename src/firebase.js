@@ -9,6 +9,7 @@ import {
   indexedDBLocalPersistence,
   initializeAuth,
   inMemoryPersistence,
+  setPersistence,
 } from 'firebase/auth'
 import { getFirestore } from 'firebase/firestore'
 
@@ -35,18 +36,11 @@ const app = initializeApp(firebaseConfig)
 function createAuthInstance() {
   try {
     return initializeAuth(app, {
-      persistence: [
-        indexedDBLocalPersistence,
-        browserLocalPersistence,
-        inMemoryPersistence,
-      ],
+      persistence: browserLocalPersistence,
       popupRedirectResolver: browserPopupRedirectResolver,
     })
   } catch (error) {
-    console.warn('[firebase] initializeAuth fallback triggered', {
-      code: error?.code,
-      message: error?.message,
-    })
+    void error
     return getAuth(app)
   }
 }
@@ -54,22 +48,44 @@ function createAuthInstance() {
 const auth = createAuthInstance()
 const db = getFirestore(app)
 
+let persistencePromise = null
+
+async function setBestEffortPersistence() {
+  const candidates = [
+    { persistence: browserLocalPersistence, label: 'browserLocalPersistence' },
+    { persistence: indexedDBLocalPersistence, label: 'indexedDBLocalPersistence' },
+    { persistence: inMemoryPersistence, label: 'inMemoryPersistence' },
+  ]
+
+  for (const candidate of candidates) {
+    try {
+      await setPersistence(auth, candidate.persistence)
+      return candidate.label
+    } catch (error) {
+      void error
+    }
+  }
+
+  return 'unknown'
+}
+
+export function ensureAuthPersistence() {
+  if (!persistencePromise) {
+    persistencePromise = Promise.race([
+      setBestEffortPersistence(),
+      new Promise((resolve) => {
+        setTimeout(() => resolve('timeout'), 2500)
+      }),
+    ])
+  }
+
+  return persistencePromise
+}
+
 const requiredConfigKeys = ['apiKey', 'authDomain', 'projectId', 'appId']
 const missingConfigKeys = requiredConfigKeys.filter((key) => !firebaseConfig[key])
 
-if (missingConfigKeys.length > 0) {
-  console.error('[firebase] Missing required Firebase config values:', missingConfigKeys)
-}
-
-if (import.meta.env.DEV) {
-  console.info('[firebase] Firebase initialized', {
-    projectId: firebaseConfig.projectId,
-    authDomain: firebaseConfig.authDomain,
-    appId: firebaseConfig.appId,
-    hostname: typeof window !== 'undefined' ? window.location.hostname : null,
-    origin: typeof window !== 'undefined' ? window.location.origin : null,
-  })
-}
+void missingConfigKeys
 
 auth.useDeviceLanguage()
 
@@ -93,4 +109,11 @@ function getFirebaseDiagnostics() {
   }
 }
 
-export { app, auth, db, getFirebaseDiagnostics, googleProvider, providerMap }
+export {
+  app,
+  auth,
+  db,
+  getFirebaseDiagnostics,
+  googleProvider,
+  providerMap,
+}

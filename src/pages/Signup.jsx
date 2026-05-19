@@ -1,10 +1,8 @@
 import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { Chrome, Eye, EyeOff, LockKeyhole, Mail, UserRound } from 'lucide-react'
 import { loginWithGoogle, signup } from '../auth'
 import AuthShell from '../components/auth/AuthShell'
-import FirebaseSetupChecklist from '../components/auth/FirebaseSetupChecklist'
-import PhoneAuthPanel from '../components/auth/PhoneAuthPanel'
 
 const initialForm = {
   fullName: '',
@@ -23,7 +21,6 @@ export default function Signup() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isGoogleLoading, setIsGoogleLoading] = useState(false)
   const [successMessage, setSuccessMessage] = useState('')
-  const navigate = useNavigate()
 
   const handleChange = (event) => {
     const { name, value } = event.target
@@ -77,12 +74,10 @@ export default function Signup() {
 
   const handleSubmit = async (event) => {
     event.preventDefault()
-    console.info('[ui] Signup form submitted', { email: formData.email.trim() })
 
     const nextErrors = validateForm()
 
     if (Object.keys(nextErrors).length > 0) {
-      console.warn('[ui] Signup validation failed', nextErrors)
       setErrors(nextErrors)
       return
     }
@@ -96,9 +91,8 @@ export default function Signup() {
       })
       setErrors({})
       setSuccessMessage(result.message)
-      navigate('/dashboard')
+      // Let the auth state listener resolve before ProtectedRoute evaluates.
     } catch (error) {
-      console.error('[ui] Signup request failed', error)
       setErrors({ form: error.message })
     } finally {
       setIsSubmitting(false)
@@ -106,7 +100,6 @@ export default function Signup() {
   }
 
   const handleGoogleSignup = async () => {
-    console.info('[ui] Google signup button clicked')
     setIsGoogleLoading(true)
     setErrors({})
     setSuccessMessage('')
@@ -114,9 +107,8 @@ export default function Signup() {
     try {
       const result = await loginWithGoogle()
       setSuccessMessage(result.message)
-      navigate('/dashboard')
+      // Let the auth state listener resolve before ProtectedRoute evaluates.
     } catch (error) {
-      console.error('[ui] Google signup request failed', error)
       setErrors({ form: error.message })
     } finally {
       setIsGoogleLoading(false)
@@ -127,14 +119,13 @@ export default function Signup() {
     <AuthShell
       badge="Create Account"
       title="Sign up for the Punjab hospital portal"
-      description="Create a new patient or staff account with email/password, continue with Google, or complete phone verification using Firebase OTP."
+      description="Create a new patient or staff account with email/password, or continue with Google."
       accent="sky"
       asideTitle="Unified onboarding"
       asideDescription="Signup stays connected to the existing portal routes and navbar actions, and successful auth immediately unlocks the protected dashboard."
       asidePoints={[
         'Full name is saved to Firebase Auth profile and Firestore user records.',
         'Google signup shares the same dashboard redirect and auth state listener.',
-        'Phone OTP verification can create a fresh Firebase Auth user on first use.',
       ]}
     >
       <div className="rounded-[2rem] border border-white/10 bg-slate-950/75 p-6 shadow-2xl shadow-sky-950/30 backdrop-blur sm:p-8">
@@ -300,15 +291,6 @@ export default function Signup() {
           </Link>
         </p>
       </div>
-
-      <PhoneAuthPanel
-        mode="signup"
-        accent="sky"
-        fullName={formData.fullName}
-        onSuccess={() => navigate('/dashboard')}
-      />
-
-      <FirebaseSetupChecklist />
     </AuthShell>
   )
 }

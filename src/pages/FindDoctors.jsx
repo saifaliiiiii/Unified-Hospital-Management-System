@@ -7,7 +7,7 @@ import {
 } from 'react'
 import { motion } from 'framer-motion'
 import { Search, Sparkles, Stethoscope } from 'lucide-react'
-import { useSearchParams } from 'react-router-dom'
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom'
 import DoctorCard from '../components/findDoctors/DoctorCard'
 import SearchBar from '../components/findDoctors/SearchBar'
 import { useAuth } from '../context/AuthContext'
@@ -21,7 +21,10 @@ const INITIAL_VISIBLE_COUNT = 12
 
 export default function FindDoctors() {
   const { isAuthenticated } = useAuth()
-  const { likedDoctors, favoritesLoading, toggleFavorite } = useFavorites()
+  const { likedDoctors, favoritesLoading, toggleFavorite, isFavoritePending } =
+    useFavorites()
+  const navigate = useNavigate()
+  const location = useLocation()
   const [searchParams, setSearchParams] = useSearchParams()
   const [searchQuery, setSearchQuery] = useState(searchParams.get('search') ?? '')
   const [selectedSpecialization, setSelectedSpecialization] = useState(
@@ -135,6 +138,16 @@ export default function FindDoctors() {
 
     syncSearchParams({ nextSearch: value })
   }
+
+  const handleToggleFavorite = async (doctor) => {
+    const result = await toggleFavorite(doctor, 'doctor')
+    if (result?.requiresAuth) {
+      navigate('/login', { state: { from: location.pathname + location.search } })
+    }
+    return result
+  }
+
+  const MotionDiv = motion.div
 
   return (
     <div className="min-h-screen bg-[radial-gradient(circle_at_top,_rgba(125,211,252,0.22),_transparent_28%),linear-gradient(180deg,#f8fbff_0%,#eef7ff_48%,#f8fafc_100%)] pb-14 pt-20 text-slate-900">
@@ -345,7 +358,7 @@ export default function FindDoctors() {
                 </div>
               </div>
 
-              <motion.div
+              <MotionDiv
                 layout
                 className="grid grid-cols-1 gap-6 md:grid-cols-2 xl:grid-cols-3"
               >
@@ -353,13 +366,12 @@ export default function FindDoctors() {
                   <DoctorCard
                     key={doctor.id}
                     doctor={doctor}
-                    isFavorite={likedDoctors.has(doctor.id)}
-                    onToggleFavorite={(doctorId) =>
-                      toggleFavorite(doctorId, 'doctor')
-                    }
+                    isFavorite={likedDoctors.has(String(doctor.id))}
+                    isFavoritePending={isFavoritePending(String(doctor.id), 'doctor')}
+                    onToggleFavorite={handleToggleFavorite}
                   />
                 ))}
-              </motion.div>
+              </MotionDiv>
 
               {visibleCount < filteredDoctors.length ? (
                 <div className="flex justify-center">

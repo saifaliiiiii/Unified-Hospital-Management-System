@@ -5,8 +5,7 @@ export default function Footer() {
         <p>
           <span className="font-medium text-slate-200">
             Unified Health Portal
-          </span>{' '}
-          - UI-only clone.
+          </span>
         </p>
         <p className="text-[11px] uppercase tracking-[0.18em]">
           (c) {new Date().getFullYear()} Punjab Health Department

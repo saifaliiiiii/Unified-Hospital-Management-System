@@ -1,19 +1,12 @@
-import { getAuth } from 'firebase/auth'
 import {
   addDoc,
   collection,
-  getFirestore,
   serverTimestamp,
 } from 'firebase/firestore'
-import { app } from '../firebase'
-
-const auth = getAuth(app)
-const db = getFirestore(app)
+import { auth, db } from '../firebase'
 
 export async function submitSupportRequest(payload) {
   const currentUser = auth.currentUser
-
-  console.log('User:', currentUser)
 
   if (!currentUser) {
     throw new Error('Please login to submit a support request.')
@@ -39,20 +32,21 @@ export async function submitSupportRequest(payload) {
     ...(trimmedPayload.priority ? { priority: trimmedPayload.priority } : {}),
   })
 
-  // Keep the existing notification experience, but don't fail the support request
-  // if the secondary notification write is blocked or temporarily unavailable.
-  try {
-    await addDoc(collection(db, 'notifications'), {
-      userId: currentUser.uid,
-      message: `Your support request (ID: #${requestRef.id}) has been submitted successfully. Our team will get back to you shortly.`,
-      ticketId: requestRef.id,
-      isRead: false,
-      type: 'support_request',
-      createdAt: serverTimestamp(),
-    })
-  } catch (notificationError) {
-    console.error('Unable to create support notification:', notificationError)
+  const notificationPayload = {
+    userId: currentUser.uid,
+    message: `Your support request (ID: #${requestRef.id}) has been submitted successfully. Our team will get back to you shortly.`,
+    ticketId: requestRef.id,
+    isRead: false,
+    type: 'support_request',
+    createdAt: serverTimestamp(),
   }
+
+  await addDoc(
+    collection(db, 'userNotifications', currentUser.uid, 'notifications'),
+    notificationPayload,
+  )
+
+  await addDoc(collection(db, 'notifications'), notificationPayload)
 
   return {
     ticketId: requestRef.id,

@@ -11,23 +11,26 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { Heart } from 'lucide-react'
 import { useAuth } from './AuthContext'
 import {
-  getUserFavorites,
-  toggleFavorite as persistFavoriteToggle,
+  addFavoriteDoctor,
+  addFavoriteHospital,
+  removeFavoriteDoctor,
+  removeFavoriteHospital,
+  subscribeFavoriteDoctors,
+  subscribeFavoriteHospitals,
 } from '../services/userFavorites'
 
 const FavoritesContext = createContext(null)
+
+function createFavoriteKey(itemId, type) {
+  return `${type}:${itemId}`
+}
 
 function createFavoriteSets() {
   return {
     likedDoctors: new Set(),
     likedHospitals: new Set(),
-  }
-}
-
-function toSets(favorites) {
-  return {
-    likedDoctors: new Set(favorites.likedDoctors),
-    likedHospitals: new Set(favorites.likedHospitals),
+    favoriteDoctors: [],
+    favoriteHospitals: [],
   }
 }
 
@@ -35,6 +38,12 @@ function cloneFavoriteSets(current) {
   return {
     likedDoctors: new Set(current.likedDoctors),
     likedHospitals: new Set(current.likedHospitals),
+    favoriteDoctors: Array.isArray(current.favoriteDoctors)
+      ? [...current.favoriteDoctors]
+      : [],
+    favoriteHospitals: Array.isArray(current.favoriteHospitals)
+      ? [...current.favoriteHospitals]
+      : [],
   }
 }
 
@@ -50,11 +59,29 @@ function getFavoriteBucket(type) {
   throw new Error(`Unsupported favorite type: ${type}`)
 }
 
+function mergeFavoritesToState(current, { doctors = null, hospitals = null } = {}) {
+  const next = cloneFavoriteSets(current)
+
+  if (doctors) {
+    next.favoriteDoctors = doctors
+    next.likedDoctors = new Set(doctors.map((favorite) => favorite.id))
+  }
+
+  if (hospitals) {
+    next.favoriteHospitals = hospitals
+    next.likedHospitals = new Set(hospitals.map((favorite) => favorite.id))
+  }
+
+  return next
+}
+
 function Toast({ toast }) {
+  const MotionDiv = motion.div
+
   return (
     <AnimatePresence>
       {toast ? (
-        <motion.div
+        <MotionDiv
           className="fixed right-4 top-20 z-[80] max-w-sm rounded-2xl border border-white/10 bg-slate-950/95 px-4 py-3 text-sm text-white shadow-2xl backdrop-blur"
           initial={{ opacity: 0, y: -12, scale: 0.96 }}
           animate={{ opacity: 1, y: 0, scale: 1 }}
@@ -67,7 +94,7 @@ function Toast({ toast }) {
             </div>
             <p>{toast.message}</p>
           </div>
-        </motion.div>
+        </MotionDiv>
       ) : null}
     </AnimatePresence>
   )
@@ -77,8 +104,10 @@ export function FavoritesProvider({ children }) {
   const { user, authLoading } = useAuth()
   const [favorites, setFavorites] = useState(createFavoriteSets)
   const [favoritesLoading, setFavoritesLoading] = useState(false)
+  const [pendingKeys, setPendingKeys] = useState(() => new Set())
   const [toast, setToast] = useState(null)
   const timeoutRef = useRef(null)
+  const pendingKeysRef = useRef(new Set())
 
   useEffect(() => {
     return () => {
@@ -100,58 +129,132 @@ export function FavoritesProvider({ children }) {
     }, 2400)
   }, [])
 
-  useEffect(() => {
-    let isActive = true
+  const addPendingKey = useCallback((pendingKey) => {
+    pendingKeysRef.current.add(pendingKey)
+    setPendingKeys((current) => {
+      const next = new Set(current)
+      next.add(pendingKey)
+      return next
+    })
+  }, [])
 
+  const removePendingKey = useCallback((pendingKey) => {
+    pendingKeysRef.current.delete(pendingKey)
+    setPendingKeys((current) => {
+      const next = new Set(current)
+      next.delete(pendingKey)
+      return next
+    })
+  }, [])
+
+  useEffect(() => {
     if (authLoading) {
       return undefined
     }
 
     if (!user?.uid) {
       setFavorites(createFavoriteSets())
+      pendingKeysRef.current.clear()
+      setPendingKeys(new Set())
       setFavoritesLoading(false)
       return undefined
     }
 
     setFavoritesLoading(true)
 
-    getUserFavorites(user.uid)
-      .then((nextFavorites) => {
-        if (!isActive) {
-          return
-        }
+    let doctorReady = false
+    let hospitalReady = false
 
-        setFavorites(toSets(nextFavorites))
-      })
-      .catch((error) => {
-        console.error('Unable to fetch user favorites:', error)
+    const completeIfReady = () => {
+      if (doctorReady && hospitalReady) {
+        setFavoritesLoading(false)
+      }
+    }
 
-        if (!isActive) {
-          return
-        }
+    let unsubscribeDoctors = () => {}
+    let unsubscribeHospitals = () => {}
 
-        setFavorites(createFavoriteSets())
-        showToast('Unable to load favorites right now.')
+    try {
+      unsubscribeDoctors = subscribeFavoriteDoctors(user.uid, {
+        onNext: (favoriteDoctors) => {
+          doctorReady = true
+          setFavorites((current) =>
+            mergeFavoritesToState(current, { doctors: favoriteDoctors }),
+          )
+          completeIfReady()
+        },
+        onError: (error) => {
+          doctorReady = true
+          void error
+          showToast('Unable to load favorites right now.')
+          setFavorites((current) => mergeFavoritesToState(current, { doctors: [] }))
+          completeIfReady()
+        },
       })
-      .finally(() => {
-        if (isActive) {
-          setFavoritesLoading(false)
-        }
+    } catch (error) {
+      doctorReady = true
+      void error
+      setFavorites((current) => mergeFavoritesToState(current, { doctors: [] }))
+      completeIfReady()
+    }
+
+    try {
+      unsubscribeHospitals = subscribeFavoriteHospitals(user.uid, {
+        onNext: (favoriteHospitals) => {
+          hospitalReady = true
+          setFavorites((current) =>
+            mergeFavoritesToState(current, { hospitals: favoriteHospitals }),
+          )
+          completeIfReady()
+        },
+        onError: (error) => {
+          hospitalReady = true
+          void error
+          showToast('Unable to load favorites right now.')
+          setFavorites((current) => mergeFavoritesToState(current, { hospitals: [] }))
+          completeIfReady()
+        },
       })
+    } catch (error) {
+      hospitalReady = true
+      void error
+      setFavorites((current) => mergeFavoritesToState(current, { hospitals: [] }))
+      completeIfReady()
+    }
 
     return () => {
-      isActive = false
+      unsubscribeDoctors()
+      unsubscribeHospitals()
     }
-  }, [authLoading, user?.uid])
+  }, [authLoading, showToast, user?.uid])
 
-  const toggleFavorite = useCallback(async (itemId, type) => {
+  const toggleFavorite = useCallback(async (item, type) => {
     if (!user?.uid) {
       showToast('Please login to save favorites')
       return { ok: false, requiresAuth: true }
     }
 
     const bucket = getFavoriteBucket(type)
+    const itemId = String(
+      typeof item === 'string'
+        ? item
+        : item?.id ?? item?.doctorId ?? item?.hospitalId ?? '',
+    )
+
+    if (!itemId) {
+      showToast('Unable to save this favorite.')
+      return { ok: false }
+    }
+
+    const pendingKey = createFavoriteKey(itemId, type)
+
+    if (pendingKeysRef.current.has(pendingKey)) {
+      return { ok: false, ignored: true }
+    }
+
     const wasLiked = favorites[bucket].has(itemId)
+
+    addPendingKey(pendingKey)
 
     setFavorites((current) => {
       const next = cloneFavoriteSets(current)
@@ -162,18 +265,79 @@ export function FavoritesProvider({ children }) {
         next[bucket].add(itemId)
       }
 
+      if (type === 'doctor') {
+        if (wasLiked) {
+          next.favoriteDoctors = next.favoriteDoctors.filter(
+            (favorite) => favorite.id !== String(itemId),
+          )
+        } else if (typeof item === 'object' && item) {
+          next.favoriteDoctors = [
+            {
+              id: itemId,
+              doctorId: itemId,
+              name: item.name,
+              image: item.image || '',
+              specialization: item.specialization,
+              location: item.location || item.city || item.district,
+              rating: item.rating ?? null,
+            },
+            ...next.favoriteDoctors,
+          ]
+        }
+      }
+
+      if (type === 'hospital') {
+        if (wasLiked) {
+          next.favoriteHospitals = next.favoriteHospitals.filter(
+            (favorite) => favorite.id !== String(itemId),
+          )
+        } else if (typeof item === 'object' && item) {
+          next.favoriteHospitals = [
+            {
+              id: itemId,
+              hospitalId: itemId,
+              name: item.name,
+              image: item.image,
+              category: item.category || item.speciality || item.type,
+              speciality: item.category || item.speciality || item.type,
+              location: item.location || item.district,
+              rating: item.rating,
+            },
+            ...next.favoriteHospitals,
+          ]
+        }
+      }
+
       return next
     })
 
     try {
-      const isLiked = await persistFavoriteToggle(user.uid, itemId, type, wasLiked)
+      if (type === 'doctor') {
+        if (wasLiked) {
+          await removeFavoriteDoctor(user.uid, itemId)
+        } else if (typeof item === 'object' && item) {
+          await addFavoriteDoctor(user.uid, item)
+        } else {
+          throw new Error('Missing doctor details for saving favorite.')
+        }
+      }
+
+      if (type === 'hospital') {
+        if (wasLiked) {
+          await removeFavoriteHospital(user.uid, itemId)
+        } else if (typeof item === 'object' && item) {
+          await addFavoriteHospital(user.uid, item)
+        } else {
+          throw new Error('Missing hospital details for saving favorite.')
+        }
+      }
+
+      const isLiked = !wasLiked
       showToast(
         isLiked ? 'Added to favorites' : 'Removed from favorites',
       )
       return { ok: true, isLiked }
     } catch (error) {
-      console.error('Unable to update favorites:', error)
-
       setFavorites((current) => {
         const reverted = cloneFavoriteSets(current)
 
@@ -183,13 +347,76 @@ export function FavoritesProvider({ children }) {
           reverted[bucket].delete(itemId)
         }
 
+        if (type === 'doctor') {
+          if (wasLiked && typeof item === 'object' && item) {
+            const exists = reverted.favoriteDoctors.some(
+              (favorite) => favorite.id === itemId,
+            )
+
+            if (!exists) {
+              reverted.favoriteDoctors = [
+                {
+                  id: itemId,
+                  doctorId: itemId,
+                  name: item.name,
+                  image: item.image || '',
+                  specialization: item.specialization,
+                  location: item.location || item.city || item.district,
+                  rating: item.rating ?? null,
+                },
+                ...reverted.favoriteDoctors,
+              ]
+            }
+          } else {
+            reverted.favoriteDoctors = reverted.favoriteDoctors.filter(
+              (favorite) => favorite.id !== itemId,
+            )
+          }
+        }
+
+        if (type === 'hospital') {
+          if (wasLiked && typeof item === 'object' && item) {
+            const exists = reverted.favoriteHospitals.some(
+              (favorite) => favorite.id === itemId,
+            )
+
+            if (!exists) {
+              const category = item.category || item.speciality || item.type
+              reverted.favoriteHospitals = [
+                {
+                  id: itemId,
+                  hospitalId: itemId,
+                  name: item.name,
+                  image: item.image,
+                  category,
+                  speciality: category,
+                  location: item.location || item.district,
+                  rating: item.rating,
+                },
+                ...reverted.favoriteHospitals,
+              ]
+            }
+          } else {
+            reverted.favoriteHospitals = reverted.favoriteHospitals.filter(
+              (favorite) => favorite.id !== itemId,
+            )
+          }
+        }
+
         return reverted
       })
 
       showToast('Unable to save favorites right now.')
       return { ok: false, error }
+    } finally {
+      removePendingKey(pendingKey)
     }
-  }, [favorites, showToast, user?.uid])
+  }, [addPendingKey, favorites, removePendingKey, showToast, user?.uid])
+
+  const isFavoritePending = useCallback(
+    (itemId, type) => pendingKeys.has(createFavoriteKey(itemId, type)),
+    [pendingKeys],
+  )
 
   const value = useMemo(
     () => ({
@@ -197,10 +424,13 @@ export function FavoritesProvider({ children }) {
       favoritesLoading,
       likedDoctors: favorites.likedDoctors,
       likedHospitals: favorites.likedHospitals,
+      favoriteDoctors: favorites.favoriteDoctors,
+      favoriteHospitals: favorites.favoriteHospitals,
       toggleFavorite,
+      isFavoritePending,
       showToast,
     }),
-    [favorites, favoritesLoading, showToast, toggleFavorite],
+    [favorites, favoritesLoading, isFavoritePending, showToast, toggleFavorite],
   )
 
   return (

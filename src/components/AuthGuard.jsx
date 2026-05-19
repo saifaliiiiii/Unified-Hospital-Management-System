@@ -1,4 +1,4 @@
-import { Navigate } from 'react-router-dom'
+import { Navigate, useLocation } from 'react-router-dom'
 import { useAuth } from '../context/AuthContext'
 
 function FullScreenLoader({ label }) {
@@ -13,14 +13,19 @@ function FullScreenLoader({ label }) {
 }
 
 export function ProtectedRoute({ children }) {
-  const { authLoading, isAuthenticated } = useAuth()
+  const { authLoading, authError, isAuthenticated } = useAuth()
+  const location = useLocation()
 
   if (authLoading) {
     return <FullScreenLoader label="Checking your secure session..." />
   }
 
+  if (authError && !isAuthenticated) {
+    return <Navigate to="/login" replace state={{ from: location.pathname + location.search }} />
+  }
+
   if (!isAuthenticated) {
-    return <Navigate to="/login" replace />
+    return <Navigate to="/login" replace state={{ from: location.pathname + location.search }} />
   }
 
   return children
@@ -28,13 +33,15 @@ export function ProtectedRoute({ children }) {
 
 export function PublicOnlyRoute({ children }) {
   const { authLoading, isAuthenticated } = useAuth()
+  const location = useLocation()
+  const from = location.state?.from || '/dashboard'
 
   if (authLoading) {
     return <FullScreenLoader label="Preparing authentication..." />
   }
 
   if (isAuthenticated) {
-    return <Navigate to="/dashboard" replace />
+    return <Navigate to={from} replace />
   }
 
   return children

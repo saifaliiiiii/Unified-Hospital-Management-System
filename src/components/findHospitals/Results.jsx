@@ -10,6 +10,7 @@ function Results({
   favoritesLoading,
   isAuthenticated,
   onToggleFavorite,
+  isFavoritePending,
   onViewDetails,
   visibleCount,
   onLoadMore,
@@ -41,6 +42,7 @@ function Results({
 
   const visibleHospitals = hospitals.slice(0, visibleCount)
   const hasMore = visibleCount < hospitals.length
+  const MotionDiv = motion.div
 
   return (
     <div className="space-y-6">
@@ -62,20 +64,25 @@ function Results({
         </div>
       </div>
 
-      <motion.div
+      <MotionDiv
         layout
         className="grid grid-cols-1 gap-6 md:grid-cols-2 2xl:grid-cols-4"
       >
-        {visibleHospitals.map((hospital, index) => (
+        {visibleHospitals.map((hospital, index) => {
+          const hospitalId = String(hospital.id ?? `${hospital.name}-${index}`)
+
+          return (
           <HospitalCard
-            key={hospital.id ?? `${hospital.name}-${index}`}
+            key={hospitalId}
             hospital={hospital}
-            isFavorite={favorites.has(hospital.id)}
+            isFavorite={favorites.has(hospitalId)}
+            isFavoritePending={isFavoritePending?.(hospitalId) ?? false}
             onToggleFavorite={onToggleFavorite}
             onViewDetails={onViewDetails}
           />
-        ))}
-      </motion.div>
+          )
+        })}
+      </MotionDiv>
 
       {hasMore ? (
         <div className="flex justify-center">

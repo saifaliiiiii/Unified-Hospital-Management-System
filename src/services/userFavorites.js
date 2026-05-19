@@ -1,69 +1,214 @@
 import {
-  arrayRemove,
-  arrayUnion,
+  collection,
+  deleteDoc,
   doc,
   getDoc,
+  getDocs,
+  onSnapshot,
+  orderBy,
+  query,
   serverTimestamp,
   setDoc,
 } from 'firebase/firestore'
 import { db } from '../firebase'
 
-const USER_FAVORITES_COLLECTION = 'userFavorites'
+const FAVORITES_COLLECTION = 'favorites'
+const DOCTORS_DOCUMENT = 'doctors'
+const HOSPITALS_DOCUMENT = 'hospitals'
+const FAVORITE_ITEMS_COLLECTION = 'items'
 
-const FAVORITE_FIELD_MAP = {
-  doctor: 'likedDoctors',
-  hospital: 'likedHospitals',
+function requireUserId(userId) {
+  if (!userId) {
+    throw new Error('A logged-in user is required to access favorites.')
+  }
 }
 
-export const EMPTY_USER_FAVORITES = {
-  likedDoctors: [],
-  likedHospitals: [],
-}
+function getFavoritesCollectionRef(userId, type) {
+  requireUserId(userId)
 
-function getFavoriteField(type) {
-  const field = FAVORITE_FIELD_MAP[type]
-
-  if (!field) {
+  if (type !== DOCTORS_DOCUMENT && type !== HOSPITALS_DOCUMENT) {
     throw new Error(`Unsupported favorite type: ${type}`)
   }
 
-  return field
+  return collection(
+    db,
+    'users',
+    userId,
+    FAVORITES_COLLECTION,
+    type,
+    FAVORITE_ITEMS_COLLECTION,
+  )
 }
 
-export async function getUserFavorites(userId) {
-  if (!userId) {
-    return EMPTY_USER_FAVORITES
+function getFavoriteDocRef(userId, type, itemId) {
+  requireUserId(userId)
+
+  if (type !== DOCTORS_DOCUMENT && type !== HOSPITALS_DOCUMENT) {
+    throw new Error(`Unsupported favorite type: ${type}`)
   }
 
-  const snapshot = await getDoc(doc(db, USER_FAVORITES_COLLECTION, userId))
-
-  if (!snapshot.exists()) {
-    return EMPTY_USER_FAVORITES
-  }
-
-  const data = snapshot.data()
-
-  return {
-    likedDoctors: Array.isArray(data.likedDoctors) ? data.likedDoctors : [],
-    likedHospitals: Array.isArray(data.likedHospitals) ? data.likedHospitals : [],
-  }
+  return doc(
+    db,
+    'users',
+    userId,
+    FAVORITES_COLLECTION,
+    type,
+    FAVORITE_ITEMS_COLLECTION,
+    String(itemId),
+  )
 }
 
-export async function toggleFavorite(userId, itemId, type, isCurrentlyLiked) {
-  if (!userId) {
-    throw new Error('A logged-in user is required to save favorites.')
-  }
+function getFavoriteDoctorsCollectionRef(userId) {
+  return getFavoritesCollectionRef(userId, DOCTORS_DOCUMENT)
+}
 
-  const field = getFavoriteField(type)
+function getFavoriteHospitalsCollectionRef(userId) {
+  return getFavoritesCollectionRef(userId, HOSPITALS_DOCUMENT)
+}
 
-  await setDoc(
-    doc(db, USER_FAVORITES_COLLECTION, userId),
-    {
-      [field]: isCurrentlyLiked ? arrayRemove(itemId) : arrayUnion(itemId),
-      updatedAt: serverTimestamp(),
-    },
-    { merge: true },
+function getFavoriteDoctorDocRef(userId, doctorId) {
+  return getFavoriteDocRef(userId, DOCTORS_DOCUMENT, doctorId)
+}
+
+function getFavoriteHospitalDocRef(userId, hospitalId) {
+  return getFavoriteDocRef(userId, HOSPITALS_DOCUMENT, hospitalId)
+}
+
+function normalizeFavoritePayload(payload) {
+  const cleaned = Object.fromEntries(
+    Object.entries(payload).filter(([, value]) => value !== undefined),
   )
 
-  return !isCurrentlyLiked
+  return cleaned
+}
+
+function mapDoctorFavoriteDoc(docSnap) {
+  const data = docSnap.data()
+
+  return {
+    ...data,
+    id: data.doctorId ?? data.id ?? docSnap.id,
+    doctorId: data.doctorId ?? data.id ?? docSnap.id,
+  }
+}
+
+function mapHospitalFavoriteDoc(docSnap) {
+  const data = docSnap.data()
+
+  return {
+    ...data,
+    id: data.id ?? docSnap.id,
+    speciality: data.category ?? data.speciality,
+  }
+}
+
+export function subscribeFavoriteDoctors(userId, { onNext, onError } = {}) {
+  const ref = getFavoriteDoctorsCollectionRef(userId)
+  const favoritesQuery = query(ref, orderBy('createdAt', 'desc'))
+
+  return onSnapshot(
+    favoritesQuery,
+    (snapshot) => {
+      if (!onNext) {
+        return
+      }
+
+      const favorites = snapshot.docs.map(mapDoctorFavoriteDoc)
+
+      onNext(favorites)
+    },
+    (error) => {
+      if (onError) {
+        onError(error)
+      }
+    },
+  )
+}
+
+export function subscribeFavoriteHospitals(userId, { onNext, onError } = {}) {
+  const ref = getFavoriteHospitalsCollectionRef(userId)
+  const favoritesQuery = query(ref, orderBy('createdAt', 'desc'))
+
+  return onSnapshot(
+    favoritesQuery,
+    (snapshot) => {
+      if (!onNext) {
+        return
+      }
+
+      const favorites = snapshot.docs.map(mapHospitalFavoriteDoc)
+
+      onNext(favorites)
+    },
+    (error) => {
+      if (onError) {
+        onError(error)
+      }
+    },
+  )
+}
+
+export async function getFavoriteDoctors(userId) {
+  const ref = getFavoriteDoctorsCollectionRef(userId)
+  const snapshot = await getDocs(query(ref, orderBy('createdAt', 'desc')))
+  return snapshot.docs.map(mapDoctorFavoriteDoc)
+}
+
+export async function getFavoriteHospitals(userId) {
+  const ref = getFavoriteHospitalsCollectionRef(userId)
+  const snapshot = await getDocs(query(ref, orderBy('createdAt', 'desc')))
+  return snapshot.docs.map(mapHospitalFavoriteDoc)
+}
+
+export async function isDoctorFavorited(userId, doctorId) {
+  const snapshot = await getDoc(getFavoriteDoctorDocRef(userId, doctorId))
+  return snapshot.exists()
+}
+
+export async function isHospitalFavorited(userId, hospitalId) {
+  const snapshot = await getDoc(getFavoriteHospitalDocRef(userId, hospitalId))
+  return snapshot.exists()
+}
+
+export async function addFavoriteDoctor(userId, doctor) {
+  const favoriteId = String(doctor.id ?? doctor.doctorId)
+
+  const payload = normalizeFavoritePayload({
+    id: favoriteId,
+    doctorId: favoriteId,
+    name: doctor.name,
+    image: doctor.image || '',
+    specialization: doctor.specialization,
+    location: doctor.location || doctor.city || doctor.district,
+    rating: doctor.rating ?? null,
+    createdAt: serverTimestamp(),
+  })
+
+  await setDoc(getFavoriteDoctorDocRef(userId, favoriteId), payload, { merge: true })
+  return payload
+}
+
+export async function removeFavoriteDoctor(userId, doctorId) {
+  await deleteDoc(getFavoriteDoctorDocRef(userId, doctorId))
+}
+
+export async function addFavoriteHospital(userId, hospital) {
+  const favoriteId = String(hospital.id ?? hospital.hospitalId)
+
+  const payload = normalizeFavoritePayload({
+    id: favoriteId,
+    name: hospital.name,
+    image: hospital.image,
+    category: hospital.category || hospital.speciality || hospital.type,
+    location: hospital.location || hospital.district,
+    rating: hospital.rating,
+    createdAt: serverTimestamp(),
+  })
+
+  await setDoc(getFavoriteHospitalDocRef(userId, favoriteId), payload, { merge: true })
+  return payload
+}
+
+export async function removeFavoriteHospital(userId, hospitalId) {
+  await deleteDoc(getFavoriteHospitalDocRef(userId, hospitalId))
 }

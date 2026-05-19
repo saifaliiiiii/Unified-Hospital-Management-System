@@ -12,6 +12,7 @@ import {
 export default function HospitalDetailsModal({
   hospital,
   isFavorite,
+  isFavoritePending = false,
   onClose,
   onToggleFavorite,
 }) {
@@ -21,17 +22,20 @@ export default function HospitalDetailsModal({
       )}`
     : '#'
 
+  const MotionOverlay = motion.div
+  const MotionPanel = motion.div
+
   return (
     <AnimatePresence>
       {hospital ? (
-        <motion.div
+        <MotionOverlay
           className="fixed inset-0 z-[60] flex items-center justify-center bg-slate-950/65 px-4 py-8 backdrop-blur-md"
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           onClick={onClose}
         >
-          <motion.div
+          <MotionPanel
             className="w-full max-w-4xl overflow-hidden rounded-[32px] bg-white shadow-2xl"
             initial={{ opacity: 0, scale: 0.96, y: 16 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
@@ -80,13 +84,16 @@ export default function HospitalDetailsModal({
 
                 <button
                   type="button"
-                  onClick={() => onToggleFavorite(hospital.id)}
+                  onClick={() => onToggleFavorite(hospital)}
+                  disabled={isFavoritePending}
                   className={[
                     'inline-flex items-center gap-2 self-start rounded-full border px-4 py-2 text-sm font-medium transition sm:self-auto',
                     isFavorite
                       ? 'border-rose-200 bg-rose-50 text-rose-600'
                       : 'border-white/30 bg-white/10 text-white backdrop-blur hover:bg-white/20',
+                    isFavoritePending ? 'cursor-not-allowed opacity-70' : '',
                   ].join(' ')}
+                  aria-busy={isFavoritePending}
                 >
                   <Heart
                     className={[
@@ -205,8 +212,8 @@ export default function HospitalDetailsModal({
                 </a>
               </div>
             </div>
-          </motion.div>
-        </motion.div>
+          </MotionPanel>
+        </MotionOverlay>
       ) : null}
     </AnimatePresence>
   )

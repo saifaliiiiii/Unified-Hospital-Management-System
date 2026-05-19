@@ -10,6 +10,10 @@ import {
 import { motion } from 'framer-motion'
 
 function getInitials(name) {
+  if (typeof name !== 'string' || !name.trim()) {
+    return 'DR'
+  }
+
   return name
     .split(' ')
     .filter(Boolean)
@@ -18,13 +22,20 @@ function getInitials(name) {
     .join('')
 }
 
-function DoctorCard({ doctor, isFavorite, onToggleFavorite }) {
-  const initials = useMemo(() => getInitials(doctor.name), [doctor.name])
+function DoctorCard({
+  doctor,
+  isFavorite,
+  isFavoritePending = false,
+  onToggleFavorite,
+}) {
+  const doctorName = typeof doctor?.name === 'string' ? doctor.name : 'Doctor'
+  const initials = useMemo(() => getInitials(doctorName), [doctorName])
   const contactHref = doctor.contact ? `tel:${doctor.contact}` : null
   const bookingHref = doctor.bookingLink || contactHref
+  const MotionArticle = motion.article
 
   return (
-    <motion.article
+    <MotionArticle
       layout
       whileHover={{ y: -6, scale: 1.01 }}
       transition={{ duration: 0.22 }}
@@ -34,9 +45,14 @@ function DoctorCard({ doctor, isFavorite, onToggleFavorite }) {
         <div className="absolute right-0 top-0 h-24 w-24 rounded-full bg-sky-300/20 blur-2xl" />
         <button
           type="button"
-          onClick={() => onToggleFavorite(doctor.id)}
-          className="absolute right-5 top-5 inline-flex h-11 w-11 items-center justify-center rounded-full bg-white/90 text-slate-500 shadow-md backdrop-blur transition hover:scale-105 hover:bg-white"
+          onClick={() => onToggleFavorite(doctor)}
+          disabled={isFavoritePending}
+          className={[
+            'absolute right-5 top-5 z-10 inline-flex h-11 w-11 items-center justify-center rounded-full bg-white/90 text-slate-500 shadow-md backdrop-blur transition hover:scale-105 hover:bg-white',
+            isFavoritePending ? 'cursor-not-allowed opacity-70 hover:scale-100' : '',
+          ].join(' ')}
           aria-label={isFavorite ? 'Remove favorite doctor' : 'Save doctor'}
+          aria-busy={isFavoritePending}
         >
           <Heart
             className={[
@@ -56,7 +72,7 @@ function DoctorCard({ doctor, isFavorite, onToggleFavorite }) {
               {doctor.specialization}
             </p>
             <h3 className="mt-2 text-xl font-semibold leading-tight text-slate-950 transition-colors group-hover:text-[#2A7FFF]">
-              {doctor.name}
+              {doctorName}
             </h3>
             <p className="mt-2 flex items-center gap-2 text-sm text-slate-600">
               <BriefcaseMedical className="h-4 w-4 text-emerald-500" />
@@ -136,7 +152,7 @@ function DoctorCard({ doctor, isFavorite, onToggleFavorite }) {
           )}
         </div>
       </div>
-    </motion.article>
+    </MotionArticle>
   )
 }
 

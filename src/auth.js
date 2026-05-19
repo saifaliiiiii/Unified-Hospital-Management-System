@@ -1,15 +1,20 @@
 import {
   createUserWithEmailAndPassword,
   onAuthStateChanged,
-  RecaptchaVerifier,
   signInWithEmailAndPassword,
-  signInWithPhoneNumber,
   signInWithPopup,
   signOut,
   updateProfile,
 } from 'firebase/auth'
 import { doc, serverTimestamp, setDoc } from 'firebase/firestore'
-import { auth, db, getFirebaseDiagnostics, googleProvider, providerMap } from './firebase'
+import {
+  auth,
+  db,
+  ensureAuthPersistence,
+  getFirebaseDiagnostics,
+  googleProvider,
+  providerMap,
+} from './firebase'
 
 const AUTH_ERROR_MESSAGES = {
   'auth/email-already-in-use':
@@ -38,32 +43,7 @@ const AUTH_ERROR_MESSAGES = {
     'Google sign-in is not configured correctly in Firebase Console.',
   'auth/cancelled-popup-request':
     'Another sign-in popup is already open. Close it and try again.',
-  'auth/invalid-phone-number': 'Please enter a valid phone number with country code.',
-  'auth/missing-phone-number': 'Phone number is required to send OTP.',
-  'auth/quota-exceeded':
-    'OTP quota exceeded. Please wait a bit before requesting another code.',
-  'auth/captcha-check-failed':
-    'reCAPTCHA verification failed. Refresh and try again.',
-  'auth/missing-verification-code': 'Please enter the OTP code.',
-  'auth/invalid-verification-code': 'Incorrect OTP. Please check the code and try again.',
-  'auth/code-expired': 'OTP expired. Please request a new code.',
-  'auth/app-not-authorized':
-    'This app is not authorized to use Firebase Authentication with the current project settings.',
-  'auth/invalid-app-credential':
-    'The phone authentication app credential is invalid. Check the site domain, reCAPTCHA, and Firebase Phone provider settings.',
-  'auth/missing-app-credential':
-    'Phone verification could not start because the app credential was missing.',
-  'auth/web-storage-unsupported':
-    'Your browser does not support the storage required for this sign-in flow.',
-  'auth/internal-error':
-    'Firebase Authentication returned an internal error. Check provider configuration and try again.',
-  'auth/argument-error':
-    'A required authentication parameter is missing or invalid.',
 }
-
-let recaptchaVerifierInstance = null
-let confirmationResultInstance = null
-let recaptchaContainerId = null
 
 function getRuntimeAuthContext() {
   if (typeof window === 'undefined') {
@@ -82,10 +62,6 @@ function getRuntimeAuthContext() {
 }
 
 function getFriendlyAuthError(error) {
-  if (error?.message?.includes('BILLING_NOT_ENABLED')) {
-    return 'Phone authentication requires billing to be enabled for this Firebase project. Enable billing in Google Cloud / Firebase and try again.'
-  }
-
   if (error?.code === 'auth/unauthorized-domain') {
     const { hostname } = getRuntimeAuthContext()
     return hostname
@@ -122,16 +98,14 @@ function assertFirebaseAuthReady() {
 }
 
 function logAuthDebug(step, payload) {
-  console.info(`[auth] ${step}`, payload)
+  void step
+  void payload
 }
 
 function logAuthError(step, error, meta = {}) {
-  console.error(`[auth] ${step} failed`, {
-    code: error?.code,
-    message: error?.message,
-    customData: error?.customData,
-    ...meta,
-  })
+  void step
+  void error
+  void meta
 }
 
 async function saveUserProfile(user, profile = {}, options = {}) {
@@ -155,56 +129,14 @@ async function saveUserProfile(user, profile = {}, options = {}) {
       { merge: true },
     )
   } catch (error) {
-    console.warn('Unable to store user profile in Firestore:', error)
+    void error
   }
-}
-
-function normalizePhoneNumber(phoneNumber) {
-  return phoneNumber.replace(/[^\d+]/g, '')
-}
-
-function getRecaptchaVerifier(containerId) {
-  if (typeof window === 'undefined') {
-    throw new Error('Phone authentication is only available in the browser.')
-  }
-
-  if (!containerId) {
-    throw new Error('Missing reCAPTCHA container.')
-  }
-
-  const container = document.getElementById(containerId)
-
-  if (!container) {
-    throw new Error('Unable to initialize phone authentication UI.')
-  }
-
-  if (recaptchaVerifierInstance && recaptchaContainerId === containerId) {
-    return recaptchaVerifierInstance
-  }
-
-  if (recaptchaVerifierInstance && recaptchaContainerId !== containerId) {
-    recaptchaVerifierInstance.clear()
-    recaptchaVerifierInstance = null
-  }
-
-  recaptchaVerifierInstance = new RecaptchaVerifier(auth, containerId, {
-    size: 'invisible',
-    callback: () => {
-      logAuthDebug('phone:recaptcha:solved', {})
-    },
-    'expired-callback': () => {
-      logAuthDebug('phone:recaptcha:expired', {})
-      recaptchaVerifierInstance = null
-    },
-  })
-  recaptchaContainerId = containerId
-
-  return recaptchaVerifierInstance
 }
 
 export async function signup(email, password, profile = {}) {
   try {
     assertFirebaseAuthReady()
+    await ensureAuthPersistence()
     logAuthDebug('signup:start', {
       email,
       hasPassword: Boolean(password),
@@ -239,6 +171,7 @@ export async function signup(email, password, profile = {}) {
 export async function login(email, password) {
   try {
     assertFirebaseAuthReady()
+    await ensureAuthPersistence()
     logAuthDebug('login:start', {
       email,
       hasPassword: Boolean(password),
@@ -264,6 +197,7 @@ export async function login(email, password) {
 export async function loginWithGoogle() {
   try {
     assertFirebaseAuthReady()
+    await ensureAuthPersistence()
     const runtimeContext = getRuntimeAuthContext()
 
     logAuthDebug('google:start', {
@@ -294,92 +228,6 @@ export async function loginWithGoogle() {
   }
 }
 
-export async function sendOTP(phoneNumber, containerId = 'recaptcha-container') {
-  const normalizedPhoneNumber = normalizePhoneNumber(phoneNumber)
-
-  try {
-    assertFirebaseAuthReady()
-    logAuthDebug('phone:send:start', {
-      phoneNumber: normalizedPhoneNumber,
-      containerId,
-    })
-
-    const verifier = getRecaptchaVerifier(containerId)
-    confirmationResultInstance = await signInWithPhoneNumber(
-      auth,
-      normalizedPhoneNumber,
-      verifier,
-    )
-
-    logAuthDebug('phone:send:success', {
-      phoneNumber: normalizedPhoneNumber,
-    })
-
-    return {
-      message: 'OTP sent successfully. Enter the verification code to continue.',
-    }
-  } catch (error) {
-    logAuthError('phone:send', error, {
-      phoneNumber: normalizedPhoneNumber,
-    })
-
-    if (recaptchaVerifierInstance) {
-      recaptchaVerifierInstance.clear()
-      recaptchaVerifierInstance = null
-      recaptchaContainerId = null
-    }
-
-    throw new Error(getFriendlyAuthError(error))
-  }
-}
-
-export async function verifyOTP(code, profile = {}) {
-  const normalizedCode = code.trim()
-
-  if (!confirmationResultInstance) {
-    throw new Error('Please send OTP first.')
-  }
-
-  try {
-    assertFirebaseAuthReady()
-    logAuthDebug('phone:verify:start', {
-      hasCode: Boolean(normalizedCode),
-    })
-
-    const credential = await confirmationResultInstance.confirm(normalizedCode)
-
-    if (profile.fullName && !credential.user.displayName) {
-      await updateProfile(credential.user, {
-        displayName: profile.fullName,
-      })
-    }
-
-    await saveUserProfile(credential.user, profile, {
-      isNewUser: Boolean(profile.fullName),
-    })
-
-    confirmationResultInstance = null
-    if (recaptchaVerifierInstance) {
-      recaptchaVerifierInstance.clear()
-      recaptchaVerifierInstance = null
-      recaptchaContainerId = null
-    }
-
-    logAuthDebug('phone:verify:success', {
-      uid: credential.user.uid,
-      phoneNumber: credential.user.phoneNumber,
-    })
-
-    return {
-      user: credential.user,
-      message: 'Phone number verified successfully.',
-    }
-  } catch (error) {
-    logAuthError('phone:verify', error)
-    throw new Error(getFriendlyAuthError(error))
-  }
-}
-
 export async function loginWithProvider(providerName) {
   const provider = providerMap[providerName]
 
@@ -389,6 +237,7 @@ export async function loginWithProvider(providerName) {
 
   try {
     assertFirebaseAuthReady()
+    await ensureAuthPersistence()
     logAuthDebug('provider:start', {
       providerName,
       authDomain: auth.config.authDomain,
@@ -421,12 +270,6 @@ export async function logout() {
     })
 
     await signOut(auth)
-    confirmationResultInstance = null
-    if (recaptchaVerifierInstance) {
-      recaptchaVerifierInstance.clear()
-      recaptchaVerifierInstance = null
-      recaptchaContainerId = null
-    }
     logAuthDebug('logout:success', {})
     return 'Logged out successfully.'
   } catch (error) {
@@ -435,17 +278,25 @@ export async function logout() {
   }
 }
 
-export function subscribeToAuthChanges(callback) {
+export function subscribeToAuthChanges(onNext, onError) {
   logAuthDebug('listener:attached', {
     authDomain: auth.config.authDomain,
   })
 
-  return onAuthStateChanged(auth, (user) => {
-    logAuthDebug('listener:changed', {
-      uid: user?.uid || null,
-      email: user?.email || null,
-    })
+  return onAuthStateChanged(
+    auth,
+    (user) => {
+      logAuthDebug('listener:changed', {
+        uid: user?.uid || null,
+        email: user?.email || null,
+      })
 
-    callback(user)
-  })
+      onNext(user)
+    },
+    (error) => {
+      logAuthError('listener', error, { authDomain: auth.config.authDomain })
+      onError?.(error)
+      onNext(null)
+    },
+  )
 }

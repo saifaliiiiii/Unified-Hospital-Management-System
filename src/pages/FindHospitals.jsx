@@ -7,7 +7,7 @@ import {
   useState,
 } from 'react'
 import { MapPinned, Sparkles, Stethoscope } from 'lucide-react'
-import { useSearchParams } from 'react-router-dom'
+import { useLocation, useNavigate, useSearchParams } from 'react-router-dom'
 import Filters from '../components/findHospitals/Filters'
 import HospitalDetailsModal from '../components/findHospitals/HospitalDetailsModal'
 import Results from '../components/findHospitals/Results'
@@ -55,7 +55,10 @@ function normalizeFallbackHospital(hospital, index) {
 
 export default function FindHospitals() {
   const { isAuthenticated } = useAuth()
-  const { likedHospitals, favoritesLoading, toggleFavorite } = useFavorites()
+  const { likedHospitals, favoritesLoading, toggleFavorite, isFavoritePending } =
+    useFavorites()
+  const navigate = useNavigate()
+  const location = useLocation()
   const [searchParams, setSearchParams] = useSearchParams()
   const [searchQuery, setSearchQuery] = useState(searchParams.get('search') ?? '')
   const [selectedLocation, setSelectedLocation] = useState('')
@@ -72,10 +75,6 @@ export default function FindHospitals() {
       return hospitals
     }
 
-    console.error(
-      'Failed to load hospitals from extracted PDF data, falling back to mock data.',
-    )
-
     return fallbackHospitals.map(normalizeFallbackHospital)
   }, [])
 
@@ -90,6 +89,17 @@ export default function FindHospitals() {
     const timer = setTimeout(() => setIsLoading(false), 450)
     return () => clearTimeout(timer)
   }, [])
+
+  const handleToggleFavorite = useCallback(
+    async (hospital) => {
+      const result = await toggleFavorite(hospital, 'hospital')
+      if (result?.requiresAuth) {
+        navigate('/login', { state: { from: location.pathname + location.search } })
+      }
+      return result
+    },
+    [location.pathname, location.search, navigate, toggleFavorite],
+  )
 
   const activeFiltersCount = [
     selectedLocation,
@@ -333,8 +343,9 @@ export default function FindHospitals() {
               favorites={likedHospitals}
               favoritesLoading={favoritesLoading}
               isAuthenticated={isAuthenticated}
-              onToggleFavorite={(hospitalId) =>
-                toggleFavorite(hospitalId, 'hospital')
+              onToggleFavorite={handleToggleFavorite}
+              isFavoritePending={(hospitalId) =>
+                isFavoritePending(hospitalId, 'hospital')
               }
               onViewDetails={setSelectedHospital}
               visibleCount={visibleCount}
@@ -347,10 +358,15 @@ export default function FindHospitals() {
       <HospitalDetailsModal
         hospital={selectedHospital}
         isFavorite={
-          selectedHospital ? likedHospitals.has(selectedHospital.id) : false
+          selectedHospital ? likedHospitals.has(String(selectedHospital.id)) : false
         }
         onClose={() => setSelectedHospital(null)}
-        onToggleFavorite={(hospitalId) => toggleFavorite(hospitalId, 'hospital')}
+        onToggleFavorite={handleToggleFavorite}
+        isFavoritePending={
+          selectedHospital
+            ? isFavoritePending(String(selectedHospital.id), 'hospital')
+            : false
+        }
       />
     </div>
   )

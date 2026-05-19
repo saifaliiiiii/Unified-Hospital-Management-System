@@ -1,13 +1,11 @@
 import { useState } from 'react'
-import { Link, useNavigate } from 'react-router-dom'
+import { Link } from 'react-router-dom'
 import { Chrome, Eye, EyeOff, LockKeyhole, Mail } from 'lucide-react'
 import { login, loginWithGoogle } from '../auth'
 import AuthShell from '../components/auth/AuthShell'
-import FirebaseSetupChecklist from '../components/auth/FirebaseSetupChecklist'
-import PhoneAuthPanel from '../components/auth/PhoneAuthPanel'
 
 const initialForm = {
-  email: '',
+  identifier: '',
   password: '',
 }
 
@@ -20,7 +18,6 @@ export default function Login() {
   const [isSubmitting, setIsSubmitting] = useState(false)
   const [isGoogleLoading, setIsGoogleLoading] = useState(false)
   const [successMessage, setSuccessMessage] = useState('')
-  const navigate = useNavigate()
 
   const handleChange = (event) => {
     const { name, value } = event.target
@@ -41,10 +38,13 @@ export default function Login() {
   const validateForm = () => {
     const nextErrors = {}
 
-    if (!formData.email.trim()) {
-      nextErrors.email = 'Email is required.'
-    } else if (!EMAIL_PATTERN.test(formData.email.trim())) {
-      nextErrors.email = 'Please enter a valid email address.'
+    if (!formData.identifier.trim()) {
+      nextErrors.identifier = 'Email or username is required.'
+    } else if (
+      formData.identifier.includes('@') &&
+      !EMAIL_PATTERN.test(formData.identifier.trim())
+    ) {
+      nextErrors.identifier = 'Please enter a valid email address.'
     }
 
     if (!formData.password.trim()) {
@@ -58,12 +58,10 @@ export default function Login() {
 
   const handleSubmit = async (event) => {
     event.preventDefault()
-    console.info('[ui] Login form submitted', { email: formData.email.trim() })
 
     const nextErrors = validateForm()
 
     if (Object.keys(nextErrors).length > 0) {
-      console.warn('[ui] Login validation failed', nextErrors)
       setErrors(nextErrors)
       return
     }
@@ -72,12 +70,11 @@ export default function Login() {
     setSuccessMessage('')
 
     try {
-      const result = await login(formData.email.trim(), formData.password)
+      const result = await login(formData.identifier.trim(), formData.password)
       setErrors({})
       setSuccessMessage(result.message)
-      navigate('/dashboard')
+      // Let the auth state listener resolve before ProtectedRoute evaluates.
     } catch (error) {
-      console.error('[ui] Login request failed', error)
       setErrors({ form: error.message })
     } finally {
       setIsSubmitting(false)
@@ -85,7 +82,6 @@ export default function Login() {
   }
 
   const handleGoogleLogin = async () => {
-    console.info('[ui] Google login button clicked')
     setIsGoogleLoading(true)
     setErrors({})
     setSuccessMessage('')
@@ -93,9 +89,8 @@ export default function Login() {
     try {
       const result = await loginWithGoogle()
       setSuccessMessage(result.message)
-      navigate('/dashboard')
+      // Let the auth state listener resolve before ProtectedRoute evaluates.
     } catch (error) {
-      console.error('[ui] Google login request failed', error)
       setErrors({ form: error.message })
     } finally {
       setIsGoogleLoading(false)
@@ -106,14 +101,13 @@ export default function Login() {
     <AuthShell
       badge="Secure Access"
       title="Login to your hospital portal"
-      description="Use email and password, Google sign-in, or phone OTP to access the Unified Clone patient dashboard and hospital services."
+      description="Use email and password (or Google sign-in) to access the Unified Clone patient dashboard and hospital services."
       accent="emerald"
       asideTitle="Authentication options"
-      asideDescription="This screen now supports multi-method Firebase authentication while preserving the existing portal navigation, protected routes, and responsive Tailwind styling."
+      asideDescription="Use email/password or Google sign-in while preserving the existing portal navigation, protected routes, and responsive Tailwind styling."
       asidePoints={[
         'Email and password login for standard staff and patient access.',
         'Google sign-in for quick onboarding with existing Google accounts.',
-        'Phone OTP flow for mobile-first verification and secure recovery.',
       ]}
     >
       <div className="rounded-[2rem] border border-white/10 bg-slate-950/75 p-6 shadow-2xl shadow-emerald-950/30 backdrop-blur sm:p-8">
@@ -130,21 +124,21 @@ export default function Login() {
         <form className="space-y-5" onSubmit={handleSubmit} noValidate>
           <label className="block">
             <span className="mb-2 block text-sm font-medium text-slate-200">
-              Email
+              Email or Username
             </span>
             <div className="relative">
               <Mail className="pointer-events-none absolute left-4 top-1/2 h-4 w-4 -translate-y-1/2 text-slate-500" />
               <input
-                type="email"
-                name="email"
-                value={formData.email}
+                type="text"
+                name="identifier"
+                value={formData.identifier}
                 onChange={handleChange}
-                placeholder="Enter your email"
+                placeholder="Enter your email or username"
                 className="w-full rounded-2xl border border-white/10 bg-white/5 py-3 pl-11 pr-4 text-sm text-slate-100 outline-none transition placeholder:text-slate-500 focus:border-emerald-300/70 focus:ring-2 focus:ring-emerald-400/20"
               />
             </div>
-            {errors.email ? (
-              <p className="mt-2 text-xs text-rose-300">{errors.email}</p>
+            {errors.identifier ? (
+              <p className="mt-2 text-xs text-rose-300">{errors.identifier}</p>
             ) : null}
           </label>
 
@@ -221,14 +215,6 @@ export default function Login() {
           </Link>
         </p>
       </div>
-
-      <PhoneAuthPanel
-        mode="login"
-        accent="emerald"
-        onSuccess={() => navigate('/dashboard')}
-      />
-
-      <FirebaseSetupChecklist />
     </AuthShell>
   )
 }
