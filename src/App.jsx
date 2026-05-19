@@ -13,9 +13,13 @@ import CuraNex from './pages/CuraNex'
 import Login from './pages/Login'
 import Signup from './pages/Signup'
 import Dashboard from './pages/Dashboard'
+import AIMedicalChatbot from './components/chatbot/AIMedicalChatbot'
 import { ProtectedRoute, PublicOnlyRoute } from './components/AuthGuard'
+import { useAuth } from './context/AuthContext'
 
 function App() {
+  const { isAuthenticated } = useAuth()
+
   return (
     <div className="flex w-full min-h-screen flex-col bg-[#020617] text-slate-100">
       <Navbar />
@@ -58,6 +62,7 @@ function App() {
         </Routes>
       </main>
       <Footer />
+      {isAuthenticated ? <AIMedicalChatbot /> : null}
     </div>
   )
 }

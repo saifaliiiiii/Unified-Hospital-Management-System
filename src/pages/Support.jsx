@@ -3,6 +3,7 @@ import { AnimatePresence, motion } from 'framer-motion'
 import { Loader2 } from 'lucide-react'
 import { useAuth } from '../context/AuthContext'
 import { submitSupportRequest } from '../services/supportRequests'
+import FeedbackSection from '../components/feedback/FeedbackSection'
 
 const initialFormState = {
   name: '',
@@ -41,6 +42,7 @@ function validateSupportForm(formData) {
 }
 
 export default function Support() {
+  const MotionDiv = motion.div
   const { user, isAuthenticated, authLoading } = useAuth()
   const [faqOpen, setFaqOpen] = useState(0)
   const [formData, setFormData] = useState(initialFormState)
@@ -162,7 +164,6 @@ export default function Support() {
         `Support request submitted successfully (Ticket ID: ${result.ticketId})`,
       )
     } catch (error) {
-      console.error('Support request submission failed:', error)
       setSubmitToast('')
       setSubmitError(
         error.message === 'Please login to submit a support request.'
@@ -178,7 +179,7 @@ export default function Support() {
     <div className="bg-[#020617]">
       <AnimatePresence>
         {submitToast ? (
-          <motion.div
+          <MotionDiv
             initial={{ opacity: 0, y: -10, scale: 0.98 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -10, scale: 0.98 }}
@@ -186,7 +187,7 @@ export default function Support() {
             className="fixed right-4 top-20 z-[75] hidden w-96 rounded-2xl border border-emerald-400/20 bg-slate-950/95 px-4 py-3 text-sm text-emerald-100 shadow-2xl shadow-slate-950/40 backdrop-blur md:block"
           >
             {submitToast}
-          </motion.div>
+          </MotionDiv>
         ) : null}
       </AnimatePresence>
 
@@ -315,7 +316,7 @@ export default function Support() {
                 <p className="text-xs uppercase tracking-[0.18em] text-slate-400">
                   Phone
                 </p>
-                <p className="mt-1 font-semibold text-slate-50">0800-111-112</p>
+                <p className="mt-1 font-semibold text-slate-50">7839126072</p>
                 <p className="mt-1 text-xs text-slate-300">24/7 helpline</p>
               </div>
               <div className="rounded-2xl border border-white/10 bg-[#0b1226] p-4">
@@ -323,7 +324,7 @@ export default function Support() {
                   Email
                 </p>
                 <p className="mt-1 font-semibold text-slate-50">
-                  support@punjabhealth.gov.pk
+                  syedsaifali12a39@gmail.com
                 </p>
                 <p className="mt-1 text-xs text-slate-300">
                   Typical response: 1-2 business days
@@ -480,29 +481,7 @@ export default function Support() {
             </div>
           </div>
 
-          <div className="rounded-3xl border border-white/10 bg-white/5 p-6 lg:col-span-2">
-            <h2 className="text-sm font-semibold uppercase tracking-[0.24em] text-emerald-300">
-              Feedback
-            </h2>
-            <div className="mt-5 grid gap-4 sm:grid-cols-2">
-              <div className="rounded-2xl border border-white/10 bg-[#0b1226] p-5">
-                <p className="text-sm font-semibold text-slate-50">
-                  Report a bug
-                </p>
-                <p className="mt-1 text-xs text-slate-300">
-                  Help us fix issues faster by sharing details and screenshots.
-                </p>
-              </div>
-              <div className="rounded-2xl border border-white/10 bg-[#0b1226] p-5">
-                <p className="text-sm font-semibold text-slate-50">
-                  Suggest an improvement
-                </p>
-                <p className="mt-1 text-xs text-slate-300">
-                  Tell us what would make the system easier for you.
-                </p>
-              </div>
-            </div>
-          </div>
+          <FeedbackSection />
         </div>
       </section>
     </div>

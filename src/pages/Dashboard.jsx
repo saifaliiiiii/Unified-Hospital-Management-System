@@ -10,9 +10,6 @@ import {
 } from 'lucide-react'
 import { useAuth } from '../context/AuthContext'
 import { useFavorites } from '../context/FavoritesContext'
-import DoctorCard from '../components/findDoctors/DoctorCard'
-import hospitals from '../data/hospitals'
-import doctorsData from '../data/doctorsData'
 import { FIND_HOSPITALS_PATH } from '../utils/findHospitalRoute'
 
 const quickActions = [
@@ -42,15 +39,30 @@ const quickActions = [
   },
 ]
 
+function getInitials(name) {
+  if (typeof name !== 'string' || !name.trim()) {
+    return 'DR'
+  }
+
+  return name
+    .split(' ')
+    .filter(Boolean)
+    .slice(0, 2)
+    .map((part) => part[0]?.toUpperCase() ?? '')
+    .join('')
+}
+
 export default function Dashboard() {
   const { user } = useAuth()
-  const { likedDoctors, likedHospitals, favoritesLoading, toggleFavorite } =
-    useFavorites()
-
-  const favoriteDoctors = doctorsData.filter((doctor) => likedDoctors.has(doctor.id))
-  const favoriteHospitals = hospitals.filter((hospital) =>
-    likedHospitals.has(hospital.id),
-  )
+  const {
+    likedDoctors,
+    likedHospitals,
+    favoritesLoading,
+    toggleFavorite,
+    isFavoritePending,
+    favoriteDoctors,
+    favoriteHospitals,
+  } = useFavorites()
 
   return (
     <section className="relative min-h-[calc(100vh-145px)] overflow-hidden bg-[#020617] px-4 py-12 sm:px-6 lg:px-8">
@@ -180,16 +192,71 @@ export default function Dashboard() {
                     No liked doctors yet.
                   </p>
                 ) : (
-                  <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
+                  <div className="grid gap-5 md:grid-cols-2">
                     {favoriteDoctors.map((doctor) => (
-                      <DoctorCard
+                      <div
                         key={doctor.id}
-                        doctor={doctor}
-                        isFavorite={likedDoctors.has(doctor.id)}
-                        onToggleFavorite={(doctorId) =>
-                          toggleFavorite(doctorId, 'doctor')
-                        }
-                      />
+                        className="rounded-[1.75rem] border border-white/10 bg-white/5 p-5"
+                      >
+                        <div className="flex items-start justify-between gap-4">
+                          <div className="flex items-start gap-3">
+                            {doctor.image ? (
+                              <img
+                                src={doctor.image}
+                                alt={doctor.name}
+                                className="h-12 w-12 rounded-2xl object-cover ring-1 ring-white/10"
+                                loading="lazy"
+                              />
+                            ) : (
+                              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white/10 text-sm font-semibold text-slate-200 ring-1 ring-white/10">
+                                {getInitials(doctor.name)}
+                              </div>
+                            )}
+                            <div>
+                              <p className="text-lg font-semibold text-slate-50">
+                                {doctor.name}
+                              </p>
+                              <p className="mt-1 text-sm text-slate-400">
+                                {doctor.specialization}
+                              </p>
+                            </div>
+                          </div>
+                          <button
+                            type="button"
+                            onClick={() => toggleFavorite(doctor, 'doctor')}
+                            disabled={isFavoritePending(String(doctor.id), 'doctor')}
+                            className={[
+                              'inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 text-rose-400 transition hover:scale-105 hover:bg-white/10',
+                              isFavoritePending(String(doctor.id), 'doctor')
+                                ? 'cursor-not-allowed opacity-70 hover:scale-100'
+                                : '',
+                            ].join(' ')}
+                            aria-label="Remove favorite doctor"
+                            aria-busy={isFavoritePending(String(doctor.id), 'doctor')}
+                          >
+                            <Heart className="h-4 w-4 fill-rose-500 text-rose-500" />
+                          </button>
+                        </div>
+
+                        <div className="mt-5 grid gap-3 sm:grid-cols-2">
+                          <div className="rounded-2xl bg-white/5 p-4">
+                            <p className="text-xs uppercase tracking-[0.16em] text-slate-500">
+                              Location
+                            </p>
+                            <p className="mt-2 text-sm font-medium text-slate-200">
+                              {doctor.location || 'Punjab'}
+                            </p>
+                          </div>
+                          <div className="rounded-2xl bg-white/5 p-4">
+                            <p className="text-xs uppercase tracking-[0.16em] text-slate-500">
+                              Rating
+                            </p>
+                            <p className="mt-2 text-sm font-medium text-slate-200">
+                              {doctor.rating ?? 'Not rated'}
+                            </p>
+                          </div>
+                        </div>
+                      </div>
                     ))}
                   </div>
                 )}
@@ -222,19 +289,40 @@ export default function Dashboard() {
                         className="rounded-[1.75rem] border border-white/10 bg-white/5 p-5"
                       >
                         <div className="flex items-start justify-between gap-4">
-                          <div>
-                            <p className="text-lg font-semibold text-slate-50">
-                              {hospital.name}
-                            </p>
-                            <p className="mt-1 text-sm text-slate-400">
-                              {hospital.speciality}
-                            </p>
+                          <div className="flex items-start gap-3">
+                            {hospital.image ? (
+                              <img
+                                src={hospital.image}
+                                alt={hospital.name}
+                                className="h-12 w-12 rounded-2xl object-cover ring-1 ring-white/10"
+                                loading="lazy"
+                              />
+                            ) : (
+                              <div className="flex h-12 w-12 items-center justify-center rounded-2xl bg-white/10 text-sm font-semibold text-slate-200 ring-1 ring-white/10">
+                                {hospital.name?.slice(0, 1) ?? 'H'}
+                              </div>
+                            )}
+                            <div>
+                              <p className="text-lg font-semibold text-slate-50">
+                                {hospital.name}
+                              </p>
+                              <p className="mt-1 text-sm text-slate-400">
+                                {hospital.speciality}
+                              </p>
+                            </div>
                           </div>
                           <button
                             type="button"
-                            onClick={() => toggleFavorite(hospital.id, 'hospital')}
-                            className="inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 text-rose-400 transition hover:scale-105 hover:bg-white/10"
+                            onClick={() => toggleFavorite(hospital, 'hospital')}
+                            disabled={isFavoritePending(String(hospital.id), 'hospital')}
+                            className={[
+                              'inline-flex h-10 w-10 items-center justify-center rounded-full border border-white/10 bg-white/5 text-rose-400 transition hover:scale-105 hover:bg-white/10',
+                              isFavoritePending(String(hospital.id), 'hospital')
+                                ? 'cursor-not-allowed opacity-70 hover:scale-100'
+                                : '',
+                            ].join(' ')}
                             aria-label="Remove favorite hospital"
+                            aria-busy={isFavoritePending(String(hospital.id), 'hospital')}
                           >
                             <Heart className="h-4 w-4 fill-rose-500 text-rose-500" />
                           </button>
@@ -254,7 +342,7 @@ export default function Dashboard() {
                               Rating
                             </p>
                             <p className="mt-2 text-sm font-medium text-slate-200">
-                              {hospital.rating}
+                              {hospital.rating ?? 'Not rated'}
                             </p>
                           </div>
                         </div>
